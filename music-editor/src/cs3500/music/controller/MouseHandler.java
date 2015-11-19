@@ -13,14 +13,14 @@ import cs3500.music.view.*;
 
 public class MouseHandler implements MouseListener {
 
-  private GuiView m;
+  private GuiView view;
 
-  public MouseHandler(GuiView m) {
-    this.m = m;
+  public MouseHandler(GuiView view) {
+    this.view = view;
   }
 
   @Override public void mouseClicked(MouseEvent e) {
-    m.setCurrent(e.getX(), e.getY());
+    view.setCurrent(e.getX(), e.getY());
   }
 
   @Override public void mousePressed(MouseEvent e) {

@@ -1,6 +1,7 @@
 package cs3500.music.view;
 
 import javax.sound.midi.*;
+import java.awt.event.KeyListener;
 import java.util.List;
 import java.util.Objects;
 import java.io.*;
@@ -11,7 +12,7 @@ import cs3500.music.model.Note;
 /**
  * Represents the MIDI playback view
  */
-public final class MidiViewImpl implements View {
+public final class MidiViewImpl implements MidiView {
 
   /**
    * Synthesizer object that creates sounds
@@ -189,7 +190,7 @@ public final class MidiViewImpl implements View {
     seq.stop();
   }
 
-  public void resume() {
+  public void play() {
     seq.start();
   }
 
