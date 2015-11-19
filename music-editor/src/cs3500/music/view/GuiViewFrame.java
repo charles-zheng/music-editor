@@ -88,16 +88,32 @@ public final class GuiViewFrame extends javax.swing.JFrame implements GuiView {
   }
 
   public void removeMouseListener(MouseListener ml) {
-    int n = 0;
-    n++;
-    n--;
-    n++;
-    //what is this
+    //TODO: fill this out
   }
 
   public void setCurrent(int x, int y) {
     this.model.setCurrent(x, y);
     this.repaint();
+  }
+
+  public Runnable addNote() {
+    return new AddNewNote();
+  }
+
+  public Runnable extendNote() {
+    return new ExtendNote();
+  }
+
+  public Runnable shortenNote() {
+    return new ShortenNote();
+  }
+
+  public Runnable lowerNote() {
+    return new LowerNote();
+  }
+
+  public Runnable raiseNote() {
+    return new RaiseNote();
   }
 
   //TODO
@@ -124,6 +140,28 @@ public final class GuiViewFrame extends javax.swing.JFrame implements GuiView {
         Note n = model.getNoteIn(new PitchImpl(pitch), beat);
         model.editNoteEndTime(new PitchImpl(pitch), n.getStartTime(),
             n.getEndTime() + 1, n.getInstrument());
+      } catch (Model.IllegalAccessNoteException ex) {
+        //do nothing
+      }
+      repaint();
+    }
+  }
+
+  public class ShortenNote implements Runnable {
+
+    public void run() {
+      int pitch = model.getCurPitch();
+      int beat = model.getCurBeat();
+      try {
+        Note n = model.getNoteIn(new PitchImpl(pitch), beat);
+        model.setCurBeat(n.getStartTime());
+        if (n.getStartTime() == n.getEndTime() - 1) {
+          // Do nothing
+        }
+        else {
+          model.editNoteEndTime(new PitchImpl(pitch), n.getStartTime(), n.getEndTime() - 1,
+              n.getInstrument());
+        }
       } catch (Model.IllegalAccessNoteException ex) {
         //do nothing
       }

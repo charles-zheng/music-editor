@@ -267,7 +267,7 @@ final public class ModelImpl implements Model {
       if (this.musicSheet.containsKey(i)) {
         ArrayList<Note> notes = this.musicSheet.get(i);
         for (Note n : notes) {
-          if (n.getEndTime() >= time && n.getPitch().equals(pitch)) {
+          if (n.getEndTime() > time && n.getPitch().equals(pitch)) {
             return new MusicNote(n.getPitch(), n.getStartTime(), n.getEndTime(),
                 n.getInstrument(), n.getVelocity());
           }

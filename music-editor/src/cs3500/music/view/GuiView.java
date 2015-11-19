@@ -12,4 +12,14 @@ public interface GuiView extends View {
 
   void addListener(KeyListener k);
 
+  Runnable addNote();
+
+  Runnable extendNote();
+
+  Runnable shortenNote();
+
+  Runnable lowerNote();
+
+  Runnable raiseNote();
+
 }

@@ -17,14 +17,17 @@ public class ControllerImpl implements Controller {
   public ControllerImpl(GuiView view) {
     this.view = view;
     this.kh = new KeyboardHandler();
-    GuiViewFrame.AddNewNote add = ((GuiViewFrame)view).new AddNewNote();
-    GuiViewFrame.ExtendNote extend = ((GuiViewFrame)view).new ExtendNote();
-    GuiViewFrame.LowerNote lower = ((GuiViewFrame)view).new LowerNote();
-    GuiViewFrame.RaiseNote raise = ((GuiViewFrame)view).new RaiseNote();
+    //TODO
+    Runnable add = view.addNote();
+    Runnable extend = view.extendNote();
+    Runnable lower = view.lowerNote();
+    Runnable raise = view.raiseNote();
+    Runnable shorten = view.shortenNote();
     this.kh.addTypedEvent(65, add);
     this.kh.addTypedEvent(69, extend);
     this.kh.addTypedEvent(45, lower);
     this.kh.addTypedEvent(521, raise);
+    this.kh.addTypedEvent(83, shorten);
     this.view.addListener(this.kh);
   }
 
