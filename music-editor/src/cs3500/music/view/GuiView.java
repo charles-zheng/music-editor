@@ -12,4 +12,5 @@ public interface GuiView extends View {
 
   void addListener(KeyListener k);
 
+  Runnable newAddNote();
 }

@@ -88,7 +88,7 @@ public final class GuiViewFrame extends javax.swing.JFrame implements GuiView {
   }
 
   public void removeMouseListener(MouseListener ml) {
-    
+
   }
 
   public void setCurrent(int x, int y) {
@@ -109,6 +109,10 @@ public final class GuiViewFrame extends javax.swing.JFrame implements GuiView {
       }
       repaint();
     }
+  }
+
+  public Runnable newAddNote() {
+    return new AddNewNote();
   }
 
   public class ExtendNote implements Runnable {
