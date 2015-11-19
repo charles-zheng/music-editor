@@ -68,40 +68,8 @@ public class KeyboardHandler implements KeyListener {
           + ")";
     }
 
-    int modifiersEx = e.getModifiersEx();
-    String modString = "extended modifiers = " + modifiersEx;
-    String tmpString = KeyEvent.getModifiersExText(modifiersEx);
-    if (tmpString.length() > 0) {
-      modString += " (" + tmpString + ")";
-    } else {
-      modString += " (no extended modifiers)";
-    }
-
-    String actionString = "action key? ";
-    if (e.isActionKey()) {
-      actionString += "YES";
-    } else {
-      actionString += "NO";
-    }
-
-    String locationString = "key location: ";
-    int location = e.getKeyLocation();
-    if (location == KeyEvent.KEY_LOCATION_STANDARD) {
-      locationString += "standard";
-    } else if (location == KeyEvent.KEY_LOCATION_LEFT) {
-      locationString += "left";
-    } else if (location == KeyEvent.KEY_LOCATION_RIGHT) {
-      locationString += "right";
-    } else if (location == KeyEvent.KEY_LOCATION_NUMPAD) {
-      locationString += "numpad";
-    } else { // (location == KeyEvent.KEY_LOCATION_UNKNOWN)
-      locationString += "unknown";
-    }
 
     System.out.println(keyString);
-    System.out.println(modString);
-    System.out.println(actionString);
-    System.out.println(locationString);
     System.out.println(e.getExtendedKeyCode());
   }
 }

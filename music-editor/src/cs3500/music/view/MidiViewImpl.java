@@ -34,6 +34,8 @@ public final class MidiViewImpl implements MidiView {
    */
   private final Model m;
 
+  private boolean paused;
+
   /**
    * Whether or not to create a mock MidiDevice
    */
@@ -64,6 +66,7 @@ public final class MidiViewImpl implements MidiView {
     Synthesizer s = null;
     Sequencer sq = null;
     Receiver r = null;
+    this.paused = true;
     this.mock = mock;
     this.output = "";
     if (!mock) {
@@ -141,8 +144,8 @@ public final class MidiViewImpl implements MidiView {
     for (int i = 0; i < mySeq.getTracks().length; i++) {
       seq.recordEnable(mySeq.getTracks()[i], i);
     }
-    seq.startRecording();
 
+    seq.startRecording();
     int t = m.getTempo();
     for (int i = 0; i <= m.getFinalStartBeat(); i++) {
       List<Note> ns = m.getNotesAtTime(i);
@@ -186,17 +189,24 @@ public final class MidiViewImpl implements MidiView {
   }
 
   public void pauseSong() {
+    paused = true;
     seq.stop();
   }
 
-  public void playSong() {
+  public void playSong() throws InvalidMidiDataException {
+    paused = false;
     seq.start();
+    while (!paused) {
+      if (m.getTimeStamp() != (int) (seq.getMicrosecondPosition() / m.getTempo())) {
+        m.setTimeStamp((int) (seq.getMicrosecondPosition() / m.getTempo()));
+      }
+    }
   }
 
   public void rewindSong() {
+    paused = true;
     seq.stop();
     seq.setTickPosition(0);
-    seq.start();
   }
 
   public Runnable play() {
@@ -214,7 +224,11 @@ public final class MidiViewImpl implements MidiView {
   public class Play implements Runnable {
 
     public void run() {
-      playSong();
+      try {
+        playSong();
+      } catch (InvalidMidiDataException e) {
+        e.printStackTrace();
+      }
     }
   }
 

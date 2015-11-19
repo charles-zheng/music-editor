@@ -167,6 +167,13 @@ public interface Model {
   void advanceTimestamp();
 
   /**
+   * Sets the timestamp of this piece of this piece to the given timestamp
+   *
+   * @param t the new timestamp
+   */
+  void setTimeStamp(int t);
+
+  /**
    * Resets the timestamp of this piece to 0
    */
   void resetTimestamp();

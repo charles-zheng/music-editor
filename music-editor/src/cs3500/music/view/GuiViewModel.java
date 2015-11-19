@@ -94,6 +94,8 @@ public class GuiViewModel implements ViewModel {
     m.advanceTimestamp();
   }
 
+  @Override public void setTimeStamp(int t) {m.setTimeStamp(t);}
+
   @Override public void resetTimestamp() {
     m.resetTimestamp();
   }

@@ -437,6 +437,15 @@ final public class ModelImpl implements Model {
   }
 
   /**
+   * Sets the timestamp of this piece of this piece to the given timestamp
+   *
+   * @param t the new timestamp
+   */
+  public void setTimeStamp(int t) {
+    this.timeStamp = t;
+  }
+
+  /**
    * Resets the timestamp of this piece to 0
    */
   public void resetTimestamp() {
