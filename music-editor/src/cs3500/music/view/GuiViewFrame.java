@@ -88,11 +88,7 @@ public final class GuiViewFrame extends javax.swing.JFrame implements GuiView {
   }
 
   public void removeMouseListener(MouseListener ml) {
-    int n = 0;
-    n++;
-    n--;
-    n++;
-    //what is this
+    
   }
 
   public void setCurrent(int x, int y) {
