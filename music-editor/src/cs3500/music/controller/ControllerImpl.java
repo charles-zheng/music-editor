@@ -8,13 +8,13 @@ import java.awt.event.MouseListener;
 /**
  * Created by Charles on 11/18/15.
  */
-public class GuiController implements Controller {
+public class ControllerImpl implements Controller {
 
-  private GuiView view;
+  private CompositeView view;
   private KeyboardHandler kh;
   private MouseHandler mh;
 
-  public GuiController(GuiView view) {
+  public ControllerImpl(CompositeView view) {
     this.view = view;
     this.kh = new KeyboardHandler();
     //TODO
@@ -23,11 +23,17 @@ public class GuiController implements Controller {
     Runnable lower = view.lowerNote();
     Runnable raise = view.raiseNote();
     Runnable shorten = view.shortenNote();
-    this.kh.addTypedEvent(65, add);
-    this.kh.addTypedEvent(69, extend);
-    this.kh.addTypedEvent(45, lower);
-    this.kh.addTypedEvent(521, raise);
-    this.kh.addTypedEvent(83, shorten);
+    Runnable play = view.play();
+    Runnable pause = view.pause();
+    Runnable rewind = view.rewind();
+    this.kh.addTypedEvent(65, add); //       'a'
+    this.kh.addTypedEvent(69, extend); //    'e'
+    this.kh.addTypedEvent(45, lower); //     '-'
+    this.kh.addTypedEvent(521, raise); //    '+'
+    this.kh.addTypedEvent(83, shorten); //   's'
+    this.kh.addTypedEvent(46, play); //      '.'
+    this.kh.addTypedEvent(47, pause); //     '/'
+    this.kh.addTypedEvent(44, rewind); //    ','
     this.view.addListener(this.kh);
   }
 

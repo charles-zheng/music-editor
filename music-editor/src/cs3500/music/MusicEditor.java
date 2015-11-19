@@ -43,7 +43,7 @@ public class MusicEditor {
     // Creates new view according to the user input
     View view = builder.build();
 
-    Controller controller = new ControllerImpl((GuiView)view);
+    Controller controller = new ControllerImpl((CompositeView)view);
 
     // runs the view
     controller.initialize();

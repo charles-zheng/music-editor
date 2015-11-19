@@ -7,9 +7,9 @@ import java.awt.event.KeyListener;
  */
 public interface MidiView extends View {
 
-  void pause();
+  Runnable pause();
 
-  void play();
+  Runnable play();
 
-  void rewind();
+  Runnable rewind();
 }

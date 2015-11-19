@@ -116,6 +116,7 @@ public final class GuiViewFrame extends javax.swing.JFrame implements GuiView {
     return new RaiseNote();
   }
 
+
   //TODO
   public class AddNewNote implements Runnable {
 
@@ -208,5 +209,6 @@ public final class GuiViewFrame extends javax.swing.JFrame implements GuiView {
       repaint();
     }
   }
+
 }
 

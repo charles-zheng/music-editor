@@ -23,16 +23,16 @@ public class CompositeView implements GuiView, MidiView {
     gv.addListener(k);
   }
 
-  @Override public void pause() {
-    mv.pause();
+  @Override public Runnable pause() {
+    return mv.pause();
   }
 
-  @Override public void play() {
-    mv.play();
+  @Override public Runnable play() {
+    return mv.play();
   }
 
-  @Override public void rewind() {
-    mv.rewind();
+  @Override public Runnable rewind() {
+    return mv.rewind();
   }
 
   @Override public Runnable addNote() {
@@ -59,6 +59,7 @@ public class CompositeView implements GuiView, MidiView {
    * Initializes this view
    */
   @Override public void initialize() throws InvalidMidiDataException {
-
+    gv.initialize();
+    mv.initialize();
   }
 }

@@ -161,7 +161,6 @@ public final class MidiViewImpl implements MidiView {
 
     seq.stopRecording();
     seq.setTickPosition(0);
-    seq.start();
 
     // for testing purposes, store the output stream in a string field
     if (this.mock) {
@@ -186,18 +185,49 @@ public final class MidiViewImpl implements MidiView {
     return this.output;
   }
 
-  public void pause() {
+  public void pauseSong() {
     seq.stop();
   }
 
-  public void play() {
+  public void playSong() {
     seq.start();
   }
 
-  public void rewind() {
+  public void rewindSong() {
     seq.stop();
     seq.setTickPosition(0);
     seq.start();
+  }
+
+  public Runnable play() {
+    return new Play();
+  }
+
+  public Runnable pause() {
+    return new Pause();
+  }
+
+  public Runnable rewind() {
+    return new Rewind();
+  }
+
+  public class Play implements Runnable {
+
+    public void run() {
+      playSong();
+    }
+  }
+
+  public class Pause implements Runnable {
+    public void run() {
+      pauseSong();
+    }
+  }
+
+  public class Rewind implements Runnable {
+    public void run() {
+      rewindSong();
+    }
   }
 }
 
