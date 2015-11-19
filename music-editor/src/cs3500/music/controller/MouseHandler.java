@@ -8,13 +8,15 @@ import cs3500.music.model.*;
 import cs3500.music.view.*;
 
 /**
- * Created by Charles on 11/18/15.
+ * Handles all of the Mouse events
  */
-
 public class MouseHandler implements MouseListener {
 
+  /**
+   * Represents the view that mouse events will interact
+   */
   private GuiView view;
-
+  
   public MouseHandler(GuiView view) {
     this.view = view;
   }

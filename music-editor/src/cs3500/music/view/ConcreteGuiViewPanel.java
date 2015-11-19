@@ -104,19 +104,9 @@ public final class ConcreteGuiViewPanel extends JPanel {
       g.fillRect((m.getCurBeat() + 2) * BOX_SIZE,
           BOX_SIZE * (highest.getValue() - m.getCurPitch() + 1), BOX_SIZE, BOX_SIZE);
     }
-    /*
-    for (Note n : m.getNotesAtTime(m.getCurBeat())) {
-      if (n.getPitch().equals(m.getCurPitch())) {
-        g.setColor(Color.cyan);
-        g.fillRect((n.getStartTime() + 2) * BOX_SIZE,
-            BOX_SIZE * (highest.getValue() - n.getPitch().getValue() + 1),
-            (n.getEndTime() - n.getStartTime()) * BOX_SIZE, BOX_SIZE);
-      }
-    }
-    if (m.getNotesAtTime(m.getCurBeat()).size() == 0) {
-      g.setColor(Color.cyan);
-      g.fillRect((m.getCurBeat() + 2) * BOX_SIZE,
-          BOX_SIZE * (highest.getValue() - m.getCurPitch() + 1), BOX_SIZE, BOX_SIZE);
-    }*/
+
+    g.setColor(Color.red);
+    g.drawLine(250, 0, 250, 500);
   }
+
 }

@@ -22,4 +22,6 @@ public interface GuiView extends View {
 
   Runnable raiseNote();
 
+  void addLine();
+
 }

@@ -6,14 +6,30 @@ import javax.sound.midi.InvalidMidiDataException;
 import java.awt.event.MouseListener;
 
 /**
- * Created by Charles on 11/18/15.
+ * Controls the interactions between Model and the Composite and Gui views
  */
 public class ControllerImpl implements Controller {
 
+  /**
+   * The composite view, a combination of midi and gui views
+   */
   private CompositeView view;
+
+  /**
+   * The Keyboard handler, deals with key events
+   */
   private KeyboardHandler kh;
+
+  /**
+   * The mouse handler, deals with mouse events
+   */
   private MouseHandler mh;
 
+  /**
+   * Makes a new Controller with the given view
+   *
+   * @param view The composite view that this controller will control
+   */
   public ControllerImpl(CompositeView view) {
     this.view = view;
     this.kh = new KeyboardHandler();
@@ -37,6 +53,11 @@ public class ControllerImpl implements Controller {
     this.view.addListener(this.kh);
   }
 
+  /**
+   * Initializes this controller by initializing the view
+   *
+   * @throws InvalidMidiDataException
+   */
   public void initialize() throws InvalidMidiDataException {
     this.view.initialize();
   }

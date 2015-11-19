@@ -3,8 +3,14 @@ package cs3500.music.controller;
 import javax.sound.midi.InvalidMidiDataException;
 
 /**
- * Created by Charles on 11/18/15.
+ * Controls the interactions between the Model and the View
  */
 public interface Controller {
+
+  /**
+   * Initializes this controller
+   *
+   * @throws InvalidMidiDataException if the midi data is invalid
+   */
   void initialize() throws InvalidMidiDataException;
 }

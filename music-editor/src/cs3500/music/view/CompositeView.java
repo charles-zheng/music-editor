@@ -55,6 +55,10 @@ public class CompositeView implements GuiView, MidiView {
     return gv.raiseNote();
   }
 
+  @Override public void addLine() {
+
+  }
+
   /**
    * Initializes this view
    */

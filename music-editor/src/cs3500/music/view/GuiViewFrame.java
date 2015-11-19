@@ -116,6 +116,22 @@ public final class GuiViewFrame extends javax.swing.JFrame implements GuiView {
     return new RaiseNote();
   }
 
+  @Override public void addLine() {
+    repaint();
+  }
+
+  @Override public void paint(Graphics g) {
+    Graphics2D g2d = (Graphics2D)g;
+    g2d.setColor(Color.red);
+    g2d.drawLine(350, 0, 350, 500);
+  }
+
+  /*public void paintComponent(Graphics g){
+    g.setColor(Color.red);
+    g.drawLine(350, 0, 350, 500);
+    displayPanel.paintComponents(g);
+  }*/
+
 
   //TODO
   public class AddNewNote implements Runnable {

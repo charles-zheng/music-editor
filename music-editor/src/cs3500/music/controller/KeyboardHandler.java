@@ -5,21 +5,42 @@ import java.awt.event.KeyListener;
 import java.util.*;
 
 /**
- * Created by Charles on 11/18/15.
+ * Listens to and handles key events
  */
-
 public class KeyboardHandler implements KeyListener {
 
+  /**
+   * Represents all the events that should happen when a key is types
+   * mapped to the key's int representation
+   */
   private Map<Integer, Runnable> typed;
+
+  /**
+   * Represents all the events that should happen when a key is pressed
+   * mapped to the key's int representation
+   */
   private Map<Integer, Runnable> pressed;
+
+  /**
+   * Represents all the events that should happen when a key is released
+   * mapped to the key's int representation
+   */
   private Map<Integer, Runnable> released;
 
+  /**
+   * Makes a new KeyBoard handler. Initializes all the fields to empty
+   */
   public KeyboardHandler() {
     this.typed = new HashMap<Integer, Runnable>();
     this.pressed = new HashMap<Integer, Runnable>();
     this.released = new HashMap<Integer, Runnable>();
   }
 
+  /**
+   *
+   *
+   * @param e
+   */
   @Override public void keyTyped(KeyEvent e) {
     if (this.typed.containsKey(e.getExtendedKeyCode())) {
       this.typed.get(e.getExtendedKeyCode()).run();
