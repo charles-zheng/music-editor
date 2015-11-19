@@ -8,13 +8,13 @@ import java.awt.event.MouseListener;
 /**
  * Created by Charles on 11/18/15.
  */
-public class ControllerImpl implements Controller {
+public class GuiController implements Controller {
 
   private GuiView view;
   private KeyboardHandler kh;
   private MouseHandler mh;
 
-  public ControllerImpl(GuiView view) {
+  public GuiController(GuiView view) {
     this.view = view;
     this.kh = new KeyboardHandler();
     //TODO
