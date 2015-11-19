@@ -16,7 +16,7 @@ public final class MidiViewImpl implements View {
   /**
    * Synthesizer object that creates sounds
    */
-  private final Synthesizer synth;
+ // private final Synthesizer synth;
 
   /**
    * Receiver object that receives playback messages
@@ -69,13 +69,13 @@ public final class MidiViewImpl implements View {
       try {
         s = MidiSystem.getSynthesizer();
         sq = MidiSystem.getSequencer();
-        r = s.getReceiver();
+        r = sq.getReceiver();
         s.open();
         sq.open();
       } catch (MidiUnavailableException e) {
         e.printStackTrace();
       }
-      synth = s;
+     // synth = s;
       receiver = r;
       seq = sq;
     } else {
@@ -85,7 +85,7 @@ public final class MidiViewImpl implements View {
       } catch (MidiUnavailableException e) {
         e.printStackTrace();
       }
-      synth = s;
+      //synth = s;
       receiver = r;
       seq = null;
     }
@@ -129,14 +129,18 @@ public final class MidiViewImpl implements View {
    * @throws InvalidMidiDataException if the given data is not valid in Midi
    */
   public void initialize() throws InvalidMidiDataException {
-    // sets each channel to its respective instrument
-    if (!this.mock) {
-      MidiChannel[] chan = synth.getChannels();
-      for (int i = 1; i < 16; i++) {
-        MidiChannel mc = chan[i];
-        mc.programChange(i);
-      }
+
+    Sequence mySeq = null;
+    try{
+      mySeq = new Sequence(Sequence.PPQ, 20, 16);
+    } catch (Exception ex) {
+      ex.printStackTrace();
     }
+    seq.setSequence(mySeq);
+    for (int i = 0; i < mySeq.getTracks().length; i++) {
+      seq.recordEnable(mySeq.getTracks()[i], i);
+    }
+    seq.startRecording();
 
     int t = m.getTempo();
     for (int i = 0; i <= m.getFinalStartBeat(); i++) {
@@ -153,6 +157,10 @@ public final class MidiViewImpl implements View {
       }
     }
     receiver.close();
+
+    seq.stopRecording();
+    seq.setTickPosition(0);
+    seq.start();
 
     // for testing purposes, store the output stream in a string field
     if (this.mock) {
@@ -175,6 +183,20 @@ public final class MidiViewImpl implements View {
 
   public String getOutput() {
     return this.output;
+  }
+
+  public void pause() {
+    seq.stop();
+  }
+
+  public void resume() {
+    seq.start();
+  }
+
+  public void rewind() {
+    seq.stop();
+    seq.setTickPosition(0);
+    seq.start();
   }
 }
 
