@@ -120,11 +120,11 @@ public final class GuiViewFrame extends javax.swing.JFrame implements GuiView {
     repaint();
   }
 
-  @Override public void paint(Graphics g) {
+  /*@Override public void paint(Graphics g) {
     Graphics2D g2d = (Graphics2D)g;
     g2d.setColor(Color.red);
     g2d.drawLine(350, 0, 350, 500);
-  }
+  }*/
 
   /*public void paintComponent(Graphics g){
     g.setColor(Color.red);
@@ -140,7 +140,7 @@ public final class GuiViewFrame extends javax.swing.JFrame implements GuiView {
       int pitch = model.getCurPitch();
       int beat = model.getCurBeat();
       if (beat != -1 && pitch != -1) {
-        model.addNote(new PitchImpl(pitch), beat, beat + 2, 0, 80);
+        model.addNote(new PitchImpl(pitch), beat, beat + 2, 1, 80);
         model.setCurPitch(-1);
         model.setCurBeat(-1);
       }

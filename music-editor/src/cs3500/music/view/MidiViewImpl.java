@@ -17,17 +17,17 @@ public final class MidiViewImpl implements MidiView {
   /**
    * Synthesizer object that creates sounds
    */
- // private final Synthesizer synth;
+  private Synthesizer synth;
 
   /**
    * Receiver object that receives playback messages
    */
-  private final Receiver receiver;
+  private Receiver receiver;
 
   /**
    * Allows for the playback of multiple notes in multiple channels
    */
-  private final Sequencer seq;
+  private Sequencer seq;
 
   /**
    * The model that this view is playing
@@ -39,7 +39,7 @@ public final class MidiViewImpl implements MidiView {
   /**
    * Whether or not to create a mock MidiDevice
    */
-  private final boolean mock;
+  private boolean mock;
 
   /**
    * The output produced by a mock receiver
@@ -79,7 +79,7 @@ public final class MidiViewImpl implements MidiView {
       } catch (MidiUnavailableException e) {
         e.printStackTrace();
       }
-     // synth = s;
+      synth = s;
       receiver = r;
       seq = sq;
     } else {
@@ -89,7 +89,7 @@ public final class MidiViewImpl implements MidiView {
       } catch (MidiUnavailableException e) {
         e.printStackTrace();
       }
-      //synth = s;
+      synth = s;
       receiver = r;
       seq = null;
     }
@@ -133,6 +133,36 @@ public final class MidiViewImpl implements MidiView {
    * @throws InvalidMidiDataException if the given data is not valid in Midi
    */
   public void initialize() throws InvalidMidiDataException {
+    Synthesizer s = null;
+    Sequencer sq = null;
+    Receiver r = null;
+    this.paused = true;
+    this.mock = mock;
+    this.output = "";
+    if (!mock) {
+      try {
+        s = MidiSystem.getSynthesizer();
+        sq = MidiSystem.getSequencer();
+        r = sq.getReceiver();
+        s.open();
+        sq.open();
+      } catch (MidiUnavailableException e) {
+        e.printStackTrace();
+      }
+      synth = s;
+      receiver = r;
+      seq = sq;
+    } else {
+      try {
+        s = new MockMidiDevice();
+        r = s.getReceiver();
+      } catch (MidiUnavailableException e) {
+        e.printStackTrace();
+      }
+      synth = s;
+      receiver = r;
+      seq = null;
+    }
 
     Sequence mySeq = null;
     try{
@@ -161,8 +191,8 @@ public final class MidiViewImpl implements MidiView {
       }
     }
     receiver.close();
-
     seq.stopRecording();
+
     seq.setTickPosition(0);
 
     // for testing purposes, store the output stream in a string field
@@ -194,13 +224,13 @@ public final class MidiViewImpl implements MidiView {
   }
 
   public void playSong() throws InvalidMidiDataException {
-    paused = false;
-    seq.start();
-    while (!paused) {
-      if (m.getTimeStamp() != (int) (seq.getMicrosecondPosition() / m.getTempo())) {
-        m.setTimeStamp((int) (seq.getMicrosecondPosition() / m.getTempo()));
-      }
+    if (paused) {
+      long time = seq.getTickPosition();
+      initialize();
+      seq.setTickPosition(time);
+      seq.start();
     }
+    paused = false;
   }
 
   public void rewindSong() {
@@ -242,6 +272,10 @@ public final class MidiViewImpl implements MidiView {
     public void run() {
       rewindSong();
     }
+  }
+
+  public boolean isPaused() {
+    return this.paused;
   }
 }
 
