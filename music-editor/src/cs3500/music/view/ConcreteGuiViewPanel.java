@@ -93,20 +93,25 @@ public final class ConcreteGuiViewPanel extends JPanel {
     //TODO
     System.out.println("cur: " + m.getCurBeat() + " " + m.getCurPitch());
     // draws selected box
-    try {
-      Note n = m.getNoteIn(new PitchImpl(m.getCurPitch()), m.getCurBeat());
-      g.setColor(Color.cyan);
-      g.fillRect((n.getStartTime() + 2) * BOX_SIZE,
-          BOX_SIZE * (highest.getValue() - n.getPitch().getValue() + 1),
-          (n.getEndTime() - n.getStartTime()) * BOX_SIZE, BOX_SIZE);
-    } catch (Model.IllegalAccessNoteException e) {
-      g.setColor(Color.cyan);
-      g.fillRect((m.getCurBeat() + 2) * BOX_SIZE,
-          BOX_SIZE * (highest.getValue() - m.getCurPitch() + 1), BOX_SIZE, BOX_SIZE);
+    int beat = m.getCurBeat();
+    int pitch = m.getCurPitch();
+    if (beat != -1 && pitch != -1) {
+      try {
+        Note n = m.getNoteIn(new PitchImpl(pitch), beat);
+        g.setColor(Color.cyan);
+        g.fillRect((n.getStartTime() + 2) * BOX_SIZE,
+            BOX_SIZE * (highest.getValue() - n.getPitch().getValue() + 1),
+            (n.getEndTime() - n.getStartTime()) * BOX_SIZE, BOX_SIZE);
+      } catch (Model.IllegalAccessNoteException e) {
+        g.setColor(Color.cyan);
+        g.fillRect((beat + 2) * BOX_SIZE,
+            BOX_SIZE * (highest.getValue() - pitch + 1), BOX_SIZE, BOX_SIZE);
+      }
     }
 
     g.setColor(Color.red);
-    g.drawLine(250, 0, 250, 500);
+    g.drawLine((beat + 3) * BOX_SIZE, 0, (beat + 3) * BOX_SIZE,
+        (highest.getValue() - lowest.getValue() + 1) * BOX_SIZE);
   }
 
 }

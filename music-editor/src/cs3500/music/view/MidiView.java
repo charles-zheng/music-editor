@@ -1,5 +1,6 @@
 package cs3500.music.view;
 
+import javax.sound.midi.InvalidMidiDataException;
 import java.awt.event.KeyListener;
 
 /**
@@ -7,9 +8,11 @@ import java.awt.event.KeyListener;
  */
 public interface MidiView extends View {
 
-  Runnable pause();
+  void play() throws InvalidMidiDataException;
 
-  Runnable play();
+  void pause();
 
-  Runnable rewind();
+  void rewind();
+
+  boolean isPaused();
 }

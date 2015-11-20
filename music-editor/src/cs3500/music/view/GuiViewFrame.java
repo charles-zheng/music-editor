@@ -96,26 +96,6 @@ public final class GuiViewFrame extends javax.swing.JFrame implements GuiView {
     this.repaint();
   }
 
-  public Runnable addNote() {
-    return new AddNewNote();
-  }
-
-  public Runnable extendNote() {
-    return new ExtendNote();
-  }
-
-  public Runnable shortenNote() {
-    return new ShortenNote();
-  }
-
-  public Runnable lowerNote() {
-    return new LowerNote();
-  }
-
-  public Runnable raiseNote() {
-    return new RaiseNote();
-  }
-
   @Override public void addLine() {
     repaint();
   }
@@ -132,98 +112,9 @@ public final class GuiViewFrame extends javax.swing.JFrame implements GuiView {
     displayPanel.paintComponents(g);
   }*/
 
-
-  //TODO
-  public class AddNewNote implements Runnable {
-
-    public void run() {
-      int pitch = model.getCurPitch();
-      int beat = model.getCurBeat();
-      if (beat != -1 && pitch != -1) {
-        model.addNote(new PitchImpl(pitch), beat, beat + 2, 1, 80);
-        model.setCurPitch(-1);
-        model.setCurBeat(-1);
-      }
-      repaint();
-    }
-  }
-
-  public class ExtendNote implements Runnable {
-
-    public void run() {
-      int pitch = model.getCurPitch();
-      int beat = model.getCurBeat();
-      try {
-        Note n = model.getNoteIn(new PitchImpl(pitch), beat);
-        model.editNoteEndTime(new PitchImpl(pitch), n.getStartTime(),
-            n.getEndTime() + 1, n.getInstrument());
-      } catch (Model.IllegalAccessNoteException ex) {
-        //do nothing
-      }
-      repaint();
-    }
-  }
-
-  public class ShortenNote implements Runnable {
-
-    public void run() {
-      int pitch = model.getCurPitch();
-      int beat = model.getCurBeat();
-      try {
-        Note n = model.getNoteIn(new PitchImpl(pitch), beat);
-        model.setCurBeat(n.getStartTime());
-        if (n.getStartTime() == n.getEndTime() - 1) {
-          // Do nothing
-        }
-        else {
-          model.editNoteEndTime(new PitchImpl(pitch), n.getStartTime(), n.getEndTime() - 1,
-              n.getInstrument());
-        }
-      } catch (Model.IllegalAccessNoteException ex) {
-        //do nothing
-      }
-      repaint();
-    }
-  }
-
-  public class LowerNote implements Runnable {
-
-    public void run() {
-      int pitch = model.getCurPitch();
-      int beat = model.getCurBeat();
-      try {
-        Note n = model.getNoteIn(new PitchImpl(pitch), beat);
-        if (pitch != 0) {
-          model.addNote(new PitchImpl(n.getPitch().getValue() - 1), n.getStartTime(),
-              n.getEndTime(), n.getInstrument(), n.getVelocity());
-          model.deleteNote(n.getPitch(), n.getStartTime(), n.getInstrument());
-          model.setCurPitch(pitch - 1);
-        }
-      } catch (Model.IllegalAccessNoteException ex) {
-        //do nothing
-      }
-      repaint();
-    }
-  }
-
-  public class RaiseNote implements Runnable {
-
-    public void run() {
-      int pitch = model.getCurPitch();
-      int beat = model.getCurBeat();
-      try {
-        Note n = model.getNoteIn(new PitchImpl(pitch), beat);
-        if (pitch != 127) {
-          model.addNote(new PitchImpl(n.getPitch().getValue() + 1), n.getStartTime(),
-              n.getEndTime(), n.getInstrument(), n.getVelocity());
-          model.deleteNote(n.getPitch(), n.getStartTime(), n.getInstrument());
-          model.setCurPitch(pitch + 1);
-        }
-      } catch (Model.IllegalAccessNoteException ex) {
-        //do nothing
-      }
-      repaint();
-    }
+  @Override public void paintAgain() {
+    repaint();
+    this.displayPanel.repaint();
   }
 
 }

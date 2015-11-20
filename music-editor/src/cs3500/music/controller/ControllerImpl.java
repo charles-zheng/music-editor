@@ -1,6 +1,7 @@
 package cs3500.music.controller;
 
 import cs3500.music.view.*;
+import cs3500.music.model.*;
 
 import javax.sound.midi.InvalidMidiDataException;
 import java.awt.event.MouseListener;
@@ -15,41 +16,32 @@ public class ControllerImpl implements Controller {
    */
   private CompositeView view;
 
+  private ViewModel model;
+
   /**
    * The Keyboard handler, deals with key events
    */
   private KeyboardHandler kh;
 
   /**
-   * The mouse handler, deals with mouse events
-   */
-  private MouseHandler mh;
-
-  /**
    * Makes a new Controller with the given view
    *
-   * @param view The composite view that this controller will control
+   * @param m The composite view that this controller will control
    */
-  public ControllerImpl(CompositeView view) {
-    this.view = view;
+  public ControllerImpl(Model m) {
+    this.model = new GuiViewModel(m);
+    this.view = new CompositeView(new MidiViewImpl(m), new GuiViewFrame(model));
     this.kh = new KeyboardHandler();
     //TODO
-    Runnable add = view.addNote();
-    Runnable extend = view.extendNote();
-    Runnable lower = view.lowerNote();
-    Runnable raise = view.raiseNote();
-    Runnable shorten = view.shortenNote();
-    Runnable play = view.play();
-    Runnable pause = view.pause();
-    Runnable rewind = view.rewind();
-    this.kh.addTypedEvent(65, add); //       'a'
-    this.kh.addTypedEvent(69, extend); //    'e'
-    this.kh.addTypedEvent(45, lower); //     '-'
-    this.kh.addTypedEvent(521, raise); //    '+'
-    this.kh.addTypedEvent(83, shorten); //   's'
-    this.kh.addTypedEvent(46, play); //      '.'
-    this.kh.addTypedEvent(47, pause); //     '/'
-    this.kh.addTypedEvent(44, rewind); //    ','
+
+    this.kh.addTypedEvent(65, new AddNewNote()); //       'a'
+    this.kh.addTypedEvent(69, new ExtendNote()); //    'e'
+    this.kh.addTypedEvent(45, new LowerNote()); //     '-'
+    this.kh.addTypedEvent(521, new RaiseNote()); //    '+'
+    this.kh.addTypedEvent(83, new ShortenNote()); //   's'
+    this.kh.addTypedEvent(46, new Play()); //      '.'
+    this.kh.addTypedEvent(47, new Pause()); //     '/'
+    this.kh.addTypedEvent(44, new Rewind()); //    ','
     this.view.addListener(this.kh);
   }
 
@@ -61,7 +53,120 @@ public class ControllerImpl implements Controller {
   public void initialize() throws InvalidMidiDataException {
     this.view.initialize();
   }
+  //TODO
+  public class AddNewNote implements Runnable {
 
+    public void run() {
+      int pitch = model.getCurPitch();
+      int beat = model.getCurBeat();
+      if (beat != -1 && pitch != -1) {
+        model.addNote(new PitchImpl(pitch), beat, beat + 2, 1, 80);
+        model.setCurPitch(-1);
+        model.setCurBeat(-1);
+      }
+      view.paintAgain();
+    }
 
+  }
 
+  public class ExtendNote implements Runnable {
+
+    public void run() {
+      int pitch = model.getCurPitch();
+      int beat = model.getCurBeat();
+      try {
+        Note n = model.getNoteIn(new PitchImpl(pitch), beat);
+        model.editNoteEndTime(new PitchImpl(pitch), n.getStartTime(),
+            n.getEndTime() + 1, n.getInstrument());
+      } catch (Model.IllegalAccessNoteException ex) {
+        //do nothing
+      }
+      view.paintAgain();
+    }
+  }
+
+  public class ShortenNote implements Runnable {
+
+    public void run() {
+      int pitch = model.getCurPitch();
+      int beat = model.getCurBeat();
+      try {
+        Note n = model.getNoteIn(new PitchImpl(pitch), beat);
+        model.setCurBeat(n.getStartTime());
+        if (n.getStartTime() == n.getEndTime() - 1) {
+          // Do nothing
+        }
+        else {
+          model.editNoteEndTime(new PitchImpl(pitch), n.getStartTime(), n.getEndTime() - 1,
+              n.getInstrument());
+        }
+      } catch (Model.IllegalAccessNoteException ex) {
+        //do nothing
+      }
+      view.paintAgain();
+    }
+  }
+
+  public class LowerNote implements Runnable {
+
+    public void run() {
+      int pitch = model.getCurPitch();
+      int beat = model.getCurBeat();
+      try {
+        Note n = model.getNoteIn(new PitchImpl(pitch), beat);
+        if (pitch != 0) {
+          model.addNote(new PitchImpl(n.getPitch().getValue() - 1), n.getStartTime(),
+              n.getEndTime(), n.getInstrument(), n.getVelocity());
+          model.deleteNote(n.getPitch(), n.getStartTime(), n.getInstrument());
+          model.setCurPitch(pitch - 1);
+        }
+      } catch (Model.IllegalAccessNoteException ex) {
+        //do nothing
+      }
+      view.paintAgain();
+    }
+  }
+
+  public class RaiseNote implements Runnable {
+
+    public void run() {
+      int pitch = model.getCurPitch();
+      int beat = model.getCurBeat();
+      try {
+        Note n = model.getNoteIn(new PitchImpl(pitch), beat);
+        if (pitch != 127) {
+          model.addNote(new PitchImpl(n.getPitch().getValue() + 1), n.getStartTime(),
+              n.getEndTime(), n.getInstrument(), n.getVelocity());
+          model.deleteNote(n.getPitch(), n.getStartTime(), n.getInstrument());
+          model.setCurPitch(pitch + 1);
+        }
+      } catch (Model.IllegalAccessNoteException ex) {
+        //do nothing
+      }
+      view.paintAgain();
+    }
+  }
+
+  public class Play implements Runnable {
+
+    public void run() {
+      try {
+        view.play();
+      } catch (InvalidMidiDataException e) {
+        e.printStackTrace();
+      }
+    }
+  }
+
+  public class Pause implements Runnable {
+    public void run() {
+      view.pause();
+    }
+  }
+
+  public class Rewind implements Runnable {
+    public void run() {
+      view.rewind();
+    }
+  }
 }

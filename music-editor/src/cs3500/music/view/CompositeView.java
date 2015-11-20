@@ -23,42 +23,29 @@ public class CompositeView implements GuiView, MidiView {
     gv.addListener(k);
   }
 
-  @Override public Runnable pause() {
-    return mv.pause();
-  }
-
-  @Override public Runnable play() {
-    return mv.play();
-  }
-
-  @Override public Runnable rewind() {
-    return mv.rewind();
-  }
-
-  @Override public Runnable addNote() {
-    return gv.addNote();
-  }
-
-  @Override public Runnable extendNote() {
-    return gv.extendNote();
-  }
-
-  @Override public Runnable shortenNote() {
-    return gv.shortenNote();
-  }
-
-  @Override public Runnable lowerNote() {
-    return gv.lowerNote();
-  }
-
-  @Override public Runnable raiseNote() {
-    return gv.raiseNote();
-  }
-
   @Override public void addLine() {
 
   }
 
+  @Override public void paintAgain() {
+    gv.paintAgain();
+  }
+
+  @Override public void play() throws InvalidMidiDataException {
+    mv.play();
+  }
+
+  @Override public void pause() {
+    mv.pause();
+  }
+
+  @Override public void rewind() {
+    mv.rewind();
+  }
+
+  @Override public boolean isPaused() {
+    return mv.isPaused();
+  }
   /**
    * Initializes this view
    */

@@ -218,12 +218,12 @@ public final class MidiViewImpl implements MidiView {
     return this.output;
   }
 
-  public void pauseSong() {
+  @Override public void pause() {
     paused = true;
     seq.stop();
   }
 
-  public void playSong() throws InvalidMidiDataException {
+  @Override public void play() throws InvalidMidiDataException {
     if (paused) {
       long time = seq.getTickPosition();
       initialize();
@@ -233,45 +233,10 @@ public final class MidiViewImpl implements MidiView {
     paused = false;
   }
 
-  public void rewindSong() {
+  @Override public void rewind() {
     paused = true;
     seq.stop();
     seq.setTickPosition(0);
-  }
-
-  public Runnable play() {
-    return new Play();
-  }
-
-  public Runnable pause() {
-    return new Pause();
-  }
-
-  public Runnable rewind() {
-    return new Rewind();
-  }
-
-  public class Play implements Runnable {
-
-    public void run() {
-      try {
-        playSong();
-      } catch (InvalidMidiDataException e) {
-        e.printStackTrace();
-      }
-    }
-  }
-
-  public class Pause implements Runnable {
-    public void run() {
-      pauseSong();
-    }
-  }
-
-  public class Rewind implements Runnable {
-    public void run() {
-      rewindSong();
-    }
   }
 
   public boolean isPaused() {

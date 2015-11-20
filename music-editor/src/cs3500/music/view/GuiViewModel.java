@@ -105,9 +105,12 @@ public class GuiViewModel implements ViewModel {
   }
 
   public void setCurrent(int x, int y) {
-    this.curBeat = (x - 50) / ConcreteGuiViewPanel.BOX_SIZE;
-    this.curPitch = m.getHighestPitch().getValue() -
-        ((y - ConcreteGuiViewPanel.BOX_SIZE) / ConcreteGuiViewPanel.BOX_SIZE);
+    this.curBeat = (x >= 50 && x <= (m.getFinalEndBeat() + 2) * ConcreteGuiViewPanel.BOX_SIZE)
+        ? (x - 50) / ConcreteGuiViewPanel.BOX_SIZE : -1;
+    this.curPitch = (y >= 25 && y <= ((m.getHighestPitch().getValue() -
+        m.getLowestPitch().getValue() + 2) * ConcreteGuiViewPanel.BOX_SIZE)) ?
+        m.getHighestPitch().getValue() -
+        ((y - ConcreteGuiViewPanel.BOX_SIZE) / ConcreteGuiViewPanel.BOX_SIZE) : -1;
   }
 
   public int getCurPitch() {
