@@ -222,7 +222,7 @@ public final class MidiViewImpl implements MidiView {
   @Override public void play() throws InvalidMidiDataException {
     if (paused) {
       long time = seq.getTickPosition();
-      // initialize();
+     // initialize();
       seq.setTickPosition(time);
       seq.start();
     }

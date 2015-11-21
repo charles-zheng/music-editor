@@ -16,7 +16,7 @@ public class MouseHandler implements MouseListener {
    * Represents the view that mouse events will interact
    */
   private GuiView view;
-  
+
   public MouseHandler(GuiView view) {
     this.view = view;
   }

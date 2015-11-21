@@ -1,5 +1,6 @@
 package cs3500.music.view;
 
+import javax.sound.midi.InvalidMidiDataException;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
 
