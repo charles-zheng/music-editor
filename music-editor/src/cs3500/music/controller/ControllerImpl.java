@@ -23,6 +23,8 @@ public class ControllerImpl implements Controller {
 
   private Timer timer;
 
+  private boolean playing;
+
   /**
    * The Keyboard handler, deals with key events
    */
@@ -38,10 +40,11 @@ public class ControllerImpl implements Controller {
     this.view = new CompositeView(new MidiViewImpl(m), new GuiViewFrame(model));
     this.kh = new KeyboardHandler();
     this.timer = new Timer();
+    this.playing = false;
 
     int t = model.getTempo() / 1000;
     //timer.schedule(new AdvanceTime(), 5000, t);
-    timer.schedule(new Record(), 5000, t);
+    timer.schedule(new Record(), 0, t);
 
     //TODO
 
@@ -160,16 +163,18 @@ public class ControllerImpl implements Controller {
   public class Record extends TimerTask {
 
     public void run() {
-      model.advanceTimestamp();
-      view.paintAgain();
-      System.out.println(model.getTimeStamp());
-      try {
-        view.recordNotes(model.getTimeStamp());
-      } catch (InvalidMidiDataException e) {
-        e.printStackTrace();
-      } catch (MidiUnavailableException e) {
-        e.printStackTrace();
+      if (playing) {
+        model.advanceTimestamp();
       }
+        view.paintAgain();
+        try {
+          view.recordNotes(model.getTimeStamp());
+        } catch (InvalidMidiDataException e) {
+          e.printStackTrace();
+        } catch (MidiUnavailableException e) {
+          e.printStackTrace();
+        }
+      System.out.println(model.getTimeStamp());
     }
   }
 /*
@@ -185,16 +190,19 @@ public class ControllerImpl implements Controller {
   public class Play implements Runnable {
 
     public void run() {
+      playing = true;
       try {
         view.play();
       } catch (InvalidMidiDataException e) {
         e.printStackTrace();
       }
+
     }
   }
 
   public class Pause implements Runnable {
     public void run() {
+      playing = false;
       view.pause();
     }
   }
