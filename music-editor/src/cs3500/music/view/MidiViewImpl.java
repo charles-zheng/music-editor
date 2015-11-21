@@ -210,6 +210,9 @@ public final class MidiViewImpl implements MidiView {
               n.getVelocity());
       receiver.send(start, t * n.getStartTime());
       receiver.send(stop, t * (n.getStartTime() + (n.getEndTime() - n.getStartTime())));
+      //receiver.send(start, seq.getMicrosecondPosition());
+      //receiver.send(stop, seq.getMicrosecondPosition() +
+      //    (t * (n.getEndTime() - n.getStartTime())));
     }
     receiver.close();
   }
