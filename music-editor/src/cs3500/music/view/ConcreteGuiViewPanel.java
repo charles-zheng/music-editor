@@ -109,9 +109,16 @@ public final class ConcreteGuiViewPanel extends JPanel {
       }
     }
 
+    int time = m.getTimeStamp();
     g.setColor(Color.red);
-    g.drawLine((beat + 3) * BOX_SIZE, 0, (beat + 3) * BOX_SIZE,
-        (highest.getValue() - lowest.getValue() + 1) * BOX_SIZE);
+    if (time >= 0) {
+      g.drawLine((time * BOX_SIZE) + 50 + BOX_SIZE / 2,
+          lowest.getValue(), (time * BOX_SIZE) + 50 + BOX_SIZE /2,
+          (highest.getValue() - lowest.getValue() + 1) * BOX_SIZE);
+    }
+  }
+
+  public void setLine() {
   }
 
 }

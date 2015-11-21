@@ -5,6 +5,8 @@ import cs3500.music.model.*;
 
 import javax.sound.midi.InvalidMidiDataException;
 import java.awt.event.MouseListener;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Controls the interactions between Model and the Composite and Gui views
@@ -17,6 +19,8 @@ public class ControllerImpl implements Controller {
   private CompositeView view;
 
   private ViewModel model;
+
+  private Timer timer;
 
   /**
    * The Keyboard handler, deals with key events
@@ -31,6 +35,7 @@ public class ControllerImpl implements Controller {
   public ControllerImpl(Model m) {
     this.model = new GuiViewModel(m);
     this.view = new CompositeView(new MidiViewImpl(m), new GuiViewFrame(model));
+    this.timer = new Timer();
     this.kh = new KeyboardHandler();
     //TODO
 
@@ -43,6 +48,7 @@ public class ControllerImpl implements Controller {
     this.kh.addTypedEvent(47, new Pause()); //     '/'
     this.kh.addTypedEvent(44, new Rewind()); //    ','
     this.view.addListener(this.kh);
+    this.timerAdvance();
   }
 
   /**
@@ -52,6 +58,10 @@ public class ControllerImpl implements Controller {
    */
   public void initialize() throws InvalidMidiDataException {
     this.view.initialize();
+  }
+
+  public void timerAdvance() {
+    timer.schedule(new PlayNext(), 5000, model.getTempo() / 1000);
   }
   //TODO
   public class AddNewNote implements Runnable {
@@ -66,7 +76,6 @@ public class ControllerImpl implements Controller {
       }
       view.paintAgain();
     }
-
   }
 
   public class ExtendNote implements Runnable {
@@ -167,6 +176,18 @@ public class ControllerImpl implements Controller {
   public class Rewind implements Runnable {
     public void run() {
       view.rewind();
+    }
+  }
+
+  public class PlayNext extends TimerTask {
+
+    /**
+     * The action to be performed by this timer task.
+     */
+    @Override public void run() {
+      model.advanceTimestamp();
+      view.paintAgain();
+      System.out.println(model.getTimeStamp());
     }
   }
 }
