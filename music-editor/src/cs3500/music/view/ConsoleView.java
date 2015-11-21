@@ -44,4 +44,6 @@ public final class ConsoleView implements View {
       System.out.print("\n");
     }
   }
+
+
 }

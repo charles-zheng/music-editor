@@ -8,6 +8,7 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseListener; // Possibly of interest for handling mouse events
 import java.util.Objects;
 
+import javax.sound.midi.InvalidMidiDataException;
 import javax.swing.*;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -96,10 +97,6 @@ public final class GuiViewFrame extends javax.swing.JFrame implements GuiView {
     this.repaint();
   }
 
-  @Override public void addLine() {
-    repaint();
-  }
-
   /*@Override public void paint(Graphics g) {
     Graphics2D g2d = (Graphics2D)g;
     g2d.setColor(Color.red);
@@ -112,10 +109,11 @@ public final class GuiViewFrame extends javax.swing.JFrame implements GuiView {
     displayPanel.paintComponents(g);
   }*/
 
-  @Override public void paintAgain() {
+  public void paintAgain() {
     repaint();
     this.displayPanel.repaint();
   }
+
 
 }
 

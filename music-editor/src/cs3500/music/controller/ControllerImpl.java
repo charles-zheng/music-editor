@@ -2,11 +2,12 @@ package cs3500.music.controller;
 
 import cs3500.music.view.*;
 import cs3500.music.model.*;
-import java.util.Timer;
-import java.util.TimerTask;
+
 import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.MidiUnavailableException;
 import java.awt.event.MouseListener;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Controls the interactions between Model and the Composite and Gui views
@@ -20,12 +21,12 @@ public class ControllerImpl implements Controller {
 
   private ViewModel model;
 
+  private Timer timer;
+
   /**
    * The Keyboard handler, deals with key events
    */
   private KeyboardHandler kh;
-
-  private Timer timer;
 
   /**
    * Makes a new Controller with the given view
@@ -76,7 +77,6 @@ public class ControllerImpl implements Controller {
       }
       view.paintAgain();
     }
-
   }
 
   public class ExtendNote implements Runnable {
@@ -201,5 +201,15 @@ public class ControllerImpl implements Controller {
     }
   }
 
+  public class PlayNext extends TimerTask {
 
+    /**
+     * The action to be performed by this timer task.
+     */
+    @Override public void run() {
+      model.advanceTimestamp();
+      view.paintAgain();
+      System.out.println(model.getTimeStamp());
+    }
+  }
 }

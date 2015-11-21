@@ -1,5 +1,6 @@
 package cs3500.music.view;
 
+import javax.sound.midi.InvalidMidiDataException;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
 
@@ -11,9 +12,6 @@ public interface GuiView extends View {
   void setCurrent(int x, int y);
 
   void addListener(KeyListener k);
-
-
-  void addLine();
 
   void paintAgain();
 

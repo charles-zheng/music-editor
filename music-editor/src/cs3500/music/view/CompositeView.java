@@ -24,10 +24,6 @@ public class CompositeView implements GuiView, MidiView {
     gv.addListener(k);
   }
 
-  @Override public void addLine() {
-
-  }
-
   @Override public void paintAgain() {
     gv.paintAgain();
   }
@@ -52,6 +48,7 @@ public class CompositeView implements GuiView, MidiView {
   @Override public boolean isPaused() {
     return mv.isPaused();
   }
+
   /**
    * Initializes this view
    */
