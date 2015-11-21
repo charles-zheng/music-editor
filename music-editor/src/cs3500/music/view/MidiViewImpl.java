@@ -51,7 +51,7 @@ public final class MidiViewImpl implements MidiView {
    *
    * @param m
    */
-  public MidiViewImpl(Model m) {
+  public MidiViewImpl(Model m) throws InvalidMidiDataException {
     this(m, false);
   }
 
@@ -61,78 +61,8 @@ public final class MidiViewImpl implements MidiView {
    * @param m the model that this view will play back
    * @param mock whether or not to create a mock MidiDevice
    */
-  public MidiViewImpl(Model m, boolean mock) {
+  public MidiViewImpl(Model m, boolean mock) throws InvalidMidiDataException {
     this.m = Objects.requireNonNull(m);
-    Synthesizer s = null;
-    Sequencer sq = null;
-    Receiver r = null;
-    this.paused = true;
-    this.mock = mock;
-    this.output = "";
-    if (!mock) {
-      try {
-        s = MidiSystem.getSynthesizer();
-        sq = MidiSystem.getSequencer();
-        r = sq.getReceiver();
-        s.open();
-        sq.open();
-      } catch (MidiUnavailableException e) {
-        e.printStackTrace();
-      }
-      synth = s;
-      receiver = r;
-      seq = sq;
-    } else {
-      try {
-        s = new MockMidiDevice();
-        r = s.getReceiver();
-      } catch (MidiUnavailableException e) {
-        e.printStackTrace();
-      }
-      synth = s;
-      receiver = r;
-      seq = null;
-    }
-  }
-
-
-  /**
-   * Relevant classes and methods from the javax.sound.midi library:
-   * <ul>
-   *  <li>{@link MidiSystem#getSynthesizer()}</li>
-   *  <li>{@link Synthesizer}
-   *    <ul>
-   *      <li>{@link Synthesizer#open()}</li>
-   *      <li>{@link Synthesizer#getReceiver()}</li>
-   *      <li>{@link Synthesizer#getChannels()}</li>
-   *    </ul>
-   *  </li>
-   *  <li>{@link Receiver}
-   *    <ul>
-   *      <li>{@link Receiver#send(MidiMessage, long)}</li>
-   *      <li>{@link Receiver#close()}</li>
-   *    </ul>
-   *  </li>
-   *  <li>{@link MidiMessage}</li>
-   *  <li>{@link ShortMessage}</li>
-   *  <li>{@link MidiChannel}
-   *    <ul>
-   *      <li>{@link MidiChannel#getProgram()}</li>
-   *      <li>{@link MidiChannel#programChange(int)}</li>
-   *    </ul>
-   *  </li>
-   * </ul>
-   * @see <a href="https://en.wikipedia.org/wiki/General_MIDI">
-   *   https://en.wikipedia.org/wiki/General_MIDI
-   *   </a>
-   */
-
-  /**
-   * Plays the midi view
-   *
-   * @throws InvalidMidiDataException if the given data is not valid in Midi
-   */
-  public void initialize() throws InvalidMidiDataException {
     Synthesizer s = null;
     Sequencer sq = null;
     Receiver r = null;
@@ -174,8 +104,57 @@ public final class MidiViewImpl implements MidiView {
     for (int i = 0; i < mySeq.getTracks().length; i++) {
       seq.recordEnable(mySeq.getTracks()[i], i);
     }
+  }
+
+
+  /**
+   * Relevant classes and methods from the javax.sound.midi library:
+   * <ul>
+   *  <li>{@link MidiSystem#getSynthesizer()}</li>
+   *  <li>{@link Synthesizer}
+   *    <ul>
+   *      <li>{@link Synthesizer#open()}</li>
+   *      <li>{@link Synthesizer#getReceiver()}</li>
+   *      <li>{@link Synthesizer#getChannels()}</li>
+   *    </ul>
+   *  </li>
+   *  <li>{@link Receiver}
+   *    <ul>
+   *      <li>{@link Receiver#send(MidiMessage, long)}</li>
+   *      <li>{@link Receiver#close()}</li>
+   *    </ul>
+   *  </li>
+   *  <li>{@link MidiMessage}</li>
+   *  <li>{@link ShortMessage}</li>
+   *  <li>{@link MidiChannel}
+   *    <ul>
+   *      <li>{@link MidiChannel#getProgram()}</li>
+   *      <li>{@link MidiChannel#programChange(int)}</li>
+   *    </ul>
+   *  </li>
+   * </ul>
+   * @see <a href="https://en.wikipedia.org/wiki/General_MIDI">
+   *   https://en.wikipedia.org/wiki/General_MIDI
+   *   </a>
+   */
+
+  /**
+   * Plays the midi view
+   *
+   * @throws InvalidMidiDataException if the given data is not valid in Midi
+   */
+  public void initialize() throws InvalidMidiDataException {
 
     seq.startRecording();
+    /*for (int i = 20; i < 100; i++) {
+      try {
+        recordNotes(i);
+      } catch (MidiUnavailableException e) {
+        e.printStackTrace();
+      }
+    }*/
+
+    /*
     int t = m.getTempo();
     for (int i = 0; i <= m.getFinalStartBeat(); i++) {
       List<Note> ns = m.getNotesAtTime(i);
@@ -191,7 +170,7 @@ public final class MidiViewImpl implements MidiView {
       }
     }
     receiver.close();
-    seq.stopRecording();
+    seq.stopRecording();*/
 
     seq.setTickPosition(0);
 
@@ -218,6 +197,23 @@ public final class MidiViewImpl implements MidiView {
     return this.output;
   }
 
+  public void recordNotes(int time) throws InvalidMidiDataException, MidiUnavailableException{
+    receiver = seq.getReceiver();
+    int t = m.getTempo();
+    List<Note> ns = m.getNotesAtTime(time);
+    for (Note n : ns) {
+      MidiMessage start =
+          new ShortMessage(ShortMessage.NOTE_ON, n.getInstrument() - 1, n.getPitch().getValue(),
+              n.getVelocity());
+      MidiMessage stop =
+          new ShortMessage(ShortMessage.NOTE_OFF, n.getInstrument() - 1, n.getPitch().getValue(),
+              n.getVelocity());
+      receiver.send(start, t * n.getStartTime());
+      receiver.send(stop, t * (n.getStartTime() + (n.getEndTime() - n.getStartTime())));
+    }
+    receiver.close();
+  }
+
   @Override public void pause() {
     paused = true;
     seq.stop();
@@ -226,7 +222,7 @@ public final class MidiViewImpl implements MidiView {
   @Override public void play() throws InvalidMidiDataException {
     if (paused) {
       long time = seq.getTickPosition();
-      initialize();
+      // initialize();
       seq.setTickPosition(time);
       seq.start();
     }
@@ -243,4 +239,3 @@ public final class MidiViewImpl implements MidiView {
     return this.paused;
   }
 }
-

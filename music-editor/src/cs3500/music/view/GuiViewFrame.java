@@ -96,10 +96,6 @@ public final class GuiViewFrame extends javax.swing.JFrame implements GuiView {
     this.repaint();
   }
 
-  @Override public void addLine() {
-    repaint();
-  }
-
   /*@Override public void paint(Graphics g) {
     Graphics2D g2d = (Graphics2D)g;
     g2d.setColor(Color.red);

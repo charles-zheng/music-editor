@@ -1,6 +1,7 @@
 package cs3500.music.view;
 
 import javax.sound.midi.InvalidMidiDataException;
+import javax.sound.midi.MidiUnavailableException;
 import java.awt.event.KeyListener;
 
 /**
@@ -23,12 +24,13 @@ public class CompositeView implements GuiView, MidiView {
     gv.addListener(k);
   }
 
-  @Override public void addLine() {
-
-  }
-
   @Override public void paintAgain() {
     gv.paintAgain();
+  }
+
+  @Override public void recordNotes(int time) throws InvalidMidiDataException,
+      MidiUnavailableException {
+    mv.recordNotes(time);
   }
 
   @Override public void play() throws InvalidMidiDataException {
@@ -46,6 +48,7 @@ public class CompositeView implements GuiView, MidiView {
   @Override public boolean isPaused() {
     return mv.isPaused();
   }
+
   /**
    * Initializes this view
    */

@@ -12,9 +12,6 @@ public interface GuiView extends View {
 
   void addListener(KeyListener k);
 
-
-  void addLine();
-
   void paintAgain();
 
 }

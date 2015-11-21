@@ -4,7 +4,10 @@ import cs3500.music.view.*;
 import cs3500.music.model.*;
 
 import javax.sound.midi.InvalidMidiDataException;
+import javax.sound.midi.MidiUnavailableException;
 import java.awt.event.MouseListener;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Controls the interactions between Model and the Composite and Gui views
@@ -18,6 +21,8 @@ public class ControllerImpl implements Controller {
 
   private ViewModel model;
 
+  private Timer timer;
+
   /**
    * The Keyboard handler, deals with key events
    */
@@ -28,10 +33,16 @@ public class ControllerImpl implements Controller {
    *
    * @param m The composite view that this controller will control
    */
-  public ControllerImpl(Model m) {
+  public ControllerImpl(Model m) throws InvalidMidiDataException {
     this.model = new GuiViewModel(m);
     this.view = new CompositeView(new MidiViewImpl(m), new GuiViewFrame(model));
     this.kh = new KeyboardHandler();
+    this.timer = new Timer();
+
+    int t = model.getTempo() / 1000;
+    timer.schedule(new AdvanceTime(), 5000, t);
+    timer.schedule(new Record(), 5000, t);
+
     //TODO
 
     this.kh.addTypedEvent(65, new AddNewNote()); //       'a'
@@ -53,6 +64,7 @@ public class ControllerImpl implements Controller {
   public void initialize() throws InvalidMidiDataException {
     this.view.initialize();
   }
+
   //TODO
   public class AddNewNote implements Runnable {
 
@@ -66,8 +78,8 @@ public class ControllerImpl implements Controller {
       }
       view.paintAgain();
     }
-
   }
+
 
   public class ExtendNote implements Runnable {
 
@@ -76,14 +88,14 @@ public class ControllerImpl implements Controller {
       int beat = model.getCurBeat();
       try {
         Note n = model.getNoteIn(new PitchImpl(pitch), beat);
-        model.editNoteEndTime(new PitchImpl(pitch), n.getStartTime(),
-            n.getEndTime() + 1, n.getInstrument());
+        model.editNoteEndTime(new PitchImpl(pitch), n.getStartTime(), n.getEndTime() + 1, n.getInstrument());
       } catch (Model.IllegalAccessNoteException ex) {
         //do nothing
       }
       view.paintAgain();
     }
   }
+
 
   public class ShortenNote implements Runnable {
 
@@ -95,8 +107,7 @@ public class ControllerImpl implements Controller {
         model.setCurBeat(n.getStartTime());
         if (n.getStartTime() == n.getEndTime() - 1) {
           // Do nothing
-        }
-        else {
+        } else {
           model.editNoteEndTime(new PitchImpl(pitch), n.getStartTime(), n.getEndTime() - 1,
               n.getInstrument());
         }
@@ -106,6 +117,7 @@ public class ControllerImpl implements Controller {
       view.paintAgain();
     }
   }
+
 
   public class LowerNote implements Runnable {
 
@@ -127,6 +139,7 @@ public class ControllerImpl implements Controller {
     }
   }
 
+
   public class RaiseNote implements Runnable {
 
     public void run() {
@@ -147,6 +160,31 @@ public class ControllerImpl implements Controller {
     }
   }
 
+
+  public class Record extends TimerTask {
+
+    public void run() {
+      try {
+        view.recordNotes(model.getTimeStamp());
+      } catch (InvalidMidiDataException e) {
+        e.printStackTrace();
+      } catch (MidiUnavailableException e) {
+        e.printStackTrace();
+      }
+    }
+  }
+
+
+  public class AdvanceTime extends TimerTask {
+
+    public void run() {
+      model.advanceTimestamp();
+      view.paintAgain();
+      System.out.println(model.getTimeStamp());
+    }
+  }
+
+
   public class Play implements Runnable {
 
     public void run() {
@@ -158,11 +196,13 @@ public class ControllerImpl implements Controller {
     }
   }
 
+
   public class Pause implements Runnable {
     public void run() {
       view.pause();
     }
   }
+
 
   public class Rewind implements Runnable {
     public void run() {
