@@ -3,6 +3,8 @@ package cs3500.music.util;
 import cs3500.music.model.*;
 import cs3500.music.view.*;
 
+import javax.sound.midi.InvalidMidiDataException;
+
 /**
  * Represents a builder of views. View can be built with a model, and
  * a specific type of view (visual, console, or midi)
@@ -47,7 +49,7 @@ public final class ViewBuilderImpl implements ViewBuilder {
    * @param s the view to create, either "console", "visual", or "midi"
    * @return this builder with the current view set to the given view
    */
-  @Override public ViewBuilder setView(String s) {
+  @Override public ViewBuilder setView(String s) throws InvalidMidiDataException {
     switch (s) {
       case "console":
         this.v = new ConsoleView(new ModelToViewImpl(m));
@@ -72,7 +74,7 @@ public final class ViewBuilderImpl implements ViewBuilder {
    *
    * @return this builder
    */
-  public ViewBuilder setTesting() {
+  public ViewBuilder setTesting() throws InvalidMidiDataException {
     this.v = new MidiViewImpl(m, true);
     return this;
   }

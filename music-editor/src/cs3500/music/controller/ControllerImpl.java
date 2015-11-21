@@ -2,8 +2,10 @@ package cs3500.music.controller;
 
 import cs3500.music.view.*;
 import cs3500.music.model.*;
-
+import java.util.Timer;
+import java.util.TimerTask;
 import javax.sound.midi.InvalidMidiDataException;
+import javax.sound.midi.MidiUnavailableException;
 import java.awt.event.MouseListener;
 
 /**
@@ -23,15 +25,23 @@ public class ControllerImpl implements Controller {
    */
   private KeyboardHandler kh;
 
+  private Timer timer;
+
   /**
    * Makes a new Controller with the given view
    *
    * @param m The composite view that this controller will control
    */
-  public ControllerImpl(Model m) {
+  public ControllerImpl(Model m) throws InvalidMidiDataException {
     this.model = new GuiViewModel(m);
     this.view = new CompositeView(new MidiViewImpl(m), new GuiViewFrame(model));
     this.kh = new KeyboardHandler();
+    this.timer = new Timer();
+
+    int t = model.getTempo() / 1000;
+    timer.schedule(new AdvanceTime(), t-1, t);
+    timer.schedule(new Record(), 0, t);
+
     //TODO
 
     this.kh.addTypedEvent(65, new AddNewNote()); //       'a'
@@ -147,6 +157,27 @@ public class ControllerImpl implements Controller {
     }
   }
 
+  public class Record extends TimerTask {
+
+    public void run() {
+      try {
+        view.recordNotes(model.getTimeStamp());
+      } catch (InvalidMidiDataException e) {
+        e.printStackTrace();
+      } catch (MidiUnavailableException e) {
+        e.printStackTrace();
+      }
+    }
+  }
+
+  public class AdvanceTime extends TimerTask {
+
+    public void run() {
+      model.advanceTimestamp();
+      System.out.println(model.getTimeStamp());
+    }
+  }
+
   public class Play implements Runnable {
 
     public void run() {
@@ -169,4 +200,6 @@ public class ControllerImpl implements Controller {
       view.rewind();
     }
   }
+
+
 }
