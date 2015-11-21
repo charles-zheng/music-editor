@@ -109,6 +109,13 @@ public final class ConcreteGuiViewPanel extends JPanel {
       }
     }
 
+    addLine(g);
+  }
+
+  public void addLine(Graphics g) {
+    Pitch highest = Objects.requireNonNull(m.getHighestPitch());
+    Pitch lowest = Objects.requireNonNull(m.getLowestPitch());
+
     int time = m.getTimeStamp();
     g.setColor(Color.red);
     if (time > 0) {

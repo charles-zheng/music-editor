@@ -31,6 +31,8 @@ public final class GuiViewFrame extends javax.swing.JFrame implements GuiView {
    */
   private final JPanel displayPanel; // You may want to refine this to a subtype of JPanel
 
+  private JScrollPane js;
+
   /**
    * Represents the model to be displayed
    */
@@ -46,19 +48,24 @@ public final class GuiViewFrame extends javax.swing.JFrame implements GuiView {
     this.displayPanel = new ConcreteGuiViewPanel(this.model);
     this.displayPanel.addMouseListener(new MouseHandler(this));
 
+    this.setFocusable(true);
+
     ////frame = new JFrame("Music Editor");
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
     this.displayPanel.setPreferredSize(this.getPreferredSize());
     JScrollPane jScrollPane = new JScrollPane();
     jScrollPane.setViewportBorder(new LineBorder(Color.RED));
-    jScrollPane.setViewportView(displayPanel);
-    jScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-    jScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+    JViewport viewport = new JViewport();
+    viewport.setView(displayPanel);
+    viewport.setViewPosition(new Point(0, 0));
+    jScrollPane.setViewport(viewport);
+    jScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+    jScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 
-    this.setFocusable(true);
     this.add(jScrollPane, BorderLayout.CENTER);
     this.setSize(700, 500);
+    this.js = jScrollPane;
   }
 
   /**
@@ -97,23 +104,16 @@ public final class GuiViewFrame extends javax.swing.JFrame implements GuiView {
     this.repaint();
   }
 
-  /*@Override public void paint(Graphics g) {
-    Graphics2D g2d = (Graphics2D)g;
-    g2d.setColor(Color.red);
-    g2d.drawLine(350, 0, 350, 500);
-  }*/
-
-  /*public void paintComponent(Graphics g){
-    g.setColor(Color.red);
-    g.drawLine(350, 0, 350, 500);
-    displayPanel.paintComponents(g);
-  }*/
-
   public void paintAgain() {
+    JViewport jv = this.js.getViewport();
+    int limit = (int)(jv.getViewPosition().getX() + jv.getExtentSize().getWidth());
+    int curX = (model.getTimeStamp() + 2) * ConcreteGuiViewPanel.BOX_SIZE;
+
+    if (curX > limit) {
+      jv.setViewPosition(new Point(limit, 0));
+    }
     repaint();
     this.displayPanel.repaint();
   }
-
-
 }
 

@@ -82,7 +82,7 @@ public class KeyboardHandler implements KeyListener {
       char c = e.getKeyChar();
       keyString = "key character = '" + c + "'";
     } else {
-      int keyCode = e.getKeyCode();
+      int keyCode = e.getExtendedKeyCode();
       keyString = "key code = " + keyCode
           + " ("
           + KeyEvent.getKeyText(keyCode)

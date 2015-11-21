@@ -49,13 +49,14 @@ public class ControllerImpl implements Controller {
     //TODO
 
     this.kh.addTypedEvent(65, new AddNewNote()); //       'a'
-    this.kh.addTypedEvent(69, new ExtendNote()); //    'e'
-    this.kh.addTypedEvent(45, new LowerNote()); //     '-'
-    this.kh.addTypedEvent(521, new RaiseNote()); //    '+'
-    this.kh.addTypedEvent(83, new ShortenNote()); //   's'
-    this.kh.addTypedEvent(46, new Play()); //      '.'
-    this.kh.addTypedEvent(47, new Pause()); //     '/'
-    this.kh.addTypedEvent(44, new Rewind()); //    ','
+    this.kh.addTypedEvent(8, new DeleteNote());//         'backspace'
+    this.kh.addTypedEvent(69, new ExtendNote()); //       'e'
+    this.kh.addTypedEvent(45, new LowerNote()); //        '-'
+    this.kh.addTypedEvent(521, new RaiseNote()); //       '+'
+    this.kh.addTypedEvent(83, new ShortenNote()); //      's'
+    this.kh.addTypedEvent(46, new Play()); //             '.'
+    this.kh.addTypedEvent(47, new Pause()); //            '/'
+    this.kh.addTypedEvent(44, new Rewind()); //           ','
     this.view.addListener(this.kh);
   }
 
@@ -77,6 +78,24 @@ public class ControllerImpl implements Controller {
         model.addNote(new PitchImpl(pitch), beat, beat + 2, 1, 80);
         model.setCurPitch(-1);
         model.setCurBeat(-1);
+      }
+      view.paintAgain();
+    }
+  }
+
+  public class DeleteNote implements Runnable {
+
+    public void run() {
+      int pitch = model.getCurPitch();
+      int beat = model.getCurBeat();
+      if (beat != -1 && pitch != -1) {
+        try {
+          Note n = model.getNoteIn(new PitchImpl(pitch), beat);
+          model.deleteNote(n.getPitch(), n.getStartTime(), n.getInstrument());
+          model.setCurBeat(-1);
+        } catch (Model.IllegalAccessNoteException e) {
+          //do nothing
+        }
       }
       view.paintAgain();
     }
