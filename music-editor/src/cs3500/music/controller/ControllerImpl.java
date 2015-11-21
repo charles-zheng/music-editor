@@ -49,14 +49,15 @@ public class ControllerImpl implements Controller {
     //TODO
 
     this.kh.addTypedEvent(65, new AddNewNote()); //       'a'
-    this.kh.addTypedEvent(8, new DeleteNote());//         'backspace'
-    this.kh.addTypedEvent(69, new ExtendNote()); //       'e'
-    this.kh.addTypedEvent(45, new LowerNote()); //        '-'
-    this.kh.addTypedEvent(521, new RaiseNote()); //       '+'
-    this.kh.addTypedEvent(83, new ShortenNote()); //      's'
-    this.kh.addTypedEvent(46, new Play()); //             '.'
-    this.kh.addTypedEvent(47, new Pause()); //            '/'
-    this.kh.addTypedEvent(44, new Rewind()); //           ','
+    this.kh.addTypedEvent(69, new ExtendNote()); //    'e'
+    this.kh.addTypedEvent(45, new LowerNote()); //     '-'
+    this.kh.addTypedEvent(521, new RaiseNote()); //    '+'
+    this.kh.addTypedEvent(83, new ShortenNote()); //   's'
+    this.kh.addTypedEvent(46, new Play()); //      '.'
+    this.kh.addTypedEvent(47, new Pause()); //     '/'
+    this.kh.addTypedEvent(44, new Rewind()); //    ','
+    this.kh.addTypedEvent(77, new MoveNoteRight()); // 'm'
+    this.kh.addTypedEvent(78, new MoveNoteLeft()); //  'n'
     this.view.addListener(this.kh);
   }
 
@@ -232,6 +233,45 @@ public class ControllerImpl implements Controller {
     public void run() {
       model.resetTimestamp();
       view.rewind();
+      view.paintAgain();
+    }
+  }
+
+
+  public class MoveNoteLeft implements Runnable {
+    public void run() {
+      int pitch = model.getCurPitch();
+      int beat = model.getCurBeat();
+      try {
+        Note n = model.getNoteIn(new PitchImpl(pitch), beat);
+        if (n.getStartTime() != 0) {
+          model.editNoteStartTime(new PitchImpl(pitch), n.getStartTime(), n.getStartTime() - 1, n.getInstrument());
+          model.editNoteEndTime(new PitchImpl(pitch), n.getStartTime() - 1, n.getEndTime() - 1, n.getInstrument());
+          model.setCurBeat(n.getStartTime() - 1);
+        }
+      } catch (Model.IllegalAccessNoteException ex) {
+        //do nothing
+      }
+      view.paintAgain();
+    }
+  }
+
+
+  public class MoveNoteRight implements Runnable {
+    public void run() {
+      int pitch = model.getCurPitch();
+      int beat = model.getCurBeat();
+      try {
+        Note n = model.getNoteIn(new PitchImpl(pitch), beat);
+        model.setCurBeat(n.getStartTime());
+        model.editNoteEndTime(new PitchImpl(pitch), n.getStartTime(), n.getEndTime() + 1,
+            n.getInstrument());
+        model.editNoteStartTime(new PitchImpl(pitch), n.getStartTime(), n.getStartTime() + 1,
+            n.getInstrument());
+        model.setCurBeat(n.getStartTime() + 1);
+      } catch (Model.IllegalAccessNoteException ex) {
+        //do nothing
+      }
       view.paintAgain();
     }
   }
