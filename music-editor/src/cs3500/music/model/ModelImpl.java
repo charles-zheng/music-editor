@@ -259,6 +259,7 @@ final public class ModelImpl implements Model {
    * @param instrument The instrument of the note you want to retrieve
    * @return The Note at the given start time and pitch and instrument
    * @throws IllegalAccessNoteException if
+   * @throws IllegalAccessNoteException if
    *                                    there is no note at the given pitch and time
    */
   public Note getNoteAt(Pitch pitch, int time, int instrument) {
@@ -278,12 +279,30 @@ final public class ModelImpl implements Model {
   }
 
   //TODO
+  public Note getNoteIn(Pitch pitch, int time, int instrument) {
+    for (int i = 0; i <= time; i++) {
+      if (this.musicSheet.containsKey(i)) {
+        ArrayList<Note> notes = this.musicSheet.get(i);
+        for (Note n : notes) {
+          if (n.getEndTime() > time &&
+              n.getPitch().equals(pitch) &&
+              n.getInstrument() == instrument) {
+            return new MusicNote(n.getPitch(), n.getStartTime(), n.getEndTime(),
+                n.getInstrument(), n.getVelocity());
+          }
+        }
+      }
+    }
+    throw new IllegalAccessNoteException("No notes at this pitch and time");
+  }
+
   public Note getNoteIn(Pitch pitch, int time) {
     for (int i = 0; i <= time; i++) {
       if (this.musicSheet.containsKey(i)) {
         ArrayList<Note> notes = this.musicSheet.get(i);
         for (Note n : notes) {
-          if (n.getEndTime() > time && n.getPitch().equals(pitch)) {
+          if (n.getEndTime() > time &&
+              n.getPitch().equals(pitch)) {
             return new MusicNote(n.getPitch(), n.getStartTime(), n.getEndTime(),
                 n.getInstrument(), n.getVelocity());
           }
