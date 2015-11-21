@@ -186,6 +186,22 @@ final public class ModelImpl implements Model {
     return copy;
   }
 
+  //TODO
+  public List<Note> getEndNotesAtTime(int time) {
+    ArrayList<Note> result = new ArrayList<Note>();
+    for (int i = 0; i <= time; i++) {
+      if (this.musicSheet.containsKey(i)) {
+        ArrayList<Note> notes = this.musicSheet.get(i);
+        for (Note n : notes) {
+          if (n.getEndTime() == time) {
+            result.add(n);
+          }
+        }
+      }
+    }
+    return result;
+  }
+
   /**
    * Adds a note to the music sheet at the given pitch and startTime
    * Updates this.lowestPitch, this.highestPitch, and this.finalBeat

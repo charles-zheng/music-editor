@@ -73,7 +73,7 @@ public final class MidiViewImpl implements MidiView {
       try {
         s = MidiSystem.getSynthesizer();
         sq = MidiSystem.getSequencer();
-        r = sq.getReceiver();
+        r = s.getReceiver();
         s.open();
         sq.open();
       } catch (MidiUnavailableException e) {
@@ -144,8 +144,17 @@ public final class MidiViewImpl implements MidiView {
    * @throws InvalidMidiDataException if the given data is not valid in Midi
    */
   public void initialize() throws InvalidMidiDataException {
+    // sets each channel to its respective instrument
+    if (!this.mock) {
+      MidiChannel[] chan = synth.getChannels();
+      for (int i = 1; i < 16; i++) {
+        MidiChannel mc = chan[i];
+        mc.programChange(i);
+      }
+    }
 
-    seq.startRecording();
+
+   // seq.startRecording();
     /*for (int i = 20; i < 100; i++) {
       try {
         recordNotes(i);
@@ -172,7 +181,8 @@ public final class MidiViewImpl implements MidiView {
     receiver.close();
     seq.stopRecording();*/
 
-    seq.setTickPosition(0);
+    //seq.setTickPosition(0);
+    //seq.start();
 
     // for testing purposes, store the output stream in a string field
     if (this.mock) {
@@ -198,10 +208,19 @@ public final class MidiViewImpl implements MidiView {
   }
 
   public void recordNotes(int time) throws InvalidMidiDataException, MidiUnavailableException{
-    receiver = seq.getReceiver();
+    receiver = synth.getReceiver();
+    MidiChannel[] chan = synth.getChannels();
     int t = m.getTempo();
-    List<Note> ns = m.getNotesAtTime(time);
-    for (Note n : ns) {
+    List<Note> ons = m.getNotesAtTime(time);
+    for (Note n : ons) {
+      chan[n.getInstrument() - 1].noteOn(n.getPitch().getValue(), n.getVelocity());
+    }
+
+    List<Note> offs = m.getEndNotesAtTime(time);
+    for (Note n : offs) {
+      chan[n.getInstrument() - 1].noteOff(n.getPitch().getValue(), n.getVelocity());
+    }
+/*
       MidiMessage start =
           new ShortMessage(ShortMessage.NOTE_ON, n.getInstrument() - 1, n.getPitch().getValue(),
               n.getVelocity());
@@ -209,33 +228,38 @@ public final class MidiViewImpl implements MidiView {
           new ShortMessage(ShortMessage.NOTE_OFF, n.getInstrument() - 1, n.getPitch().getValue(),
               n.getVelocity());
       receiver.send(start, t * n.getStartTime());
-      receiver.send(stop, t * (n.getStartTime() + (n.getEndTime() - n.getStartTime())));
-    }
+      receiver.send(stop, t * (n.getStartTime() + (n.getEndTime() - n.getStartTime())));*/
+
     receiver.close();
   }
 
   @Override public void pause() {
+    MidiChannel[] chan = synth.getChannels();
+    for (MidiChannel mc : chan) {
+      mc.allNotesOff();
+    }
     paused = true;
-    seq.stop();
+    //seq.stop();
   }
 
   @Override public void play() throws InvalidMidiDataException {
-    if (paused) {
+    /*if (paused) {
       long time = seq.getTickPosition();
      // initialize();
       seq.setTickPosition(time);
       seq.start();
     }
-    paused = false;
+    paused = false;*/
   }
 
   @Override public void rewind() {
     paused = true;
-    seq.stop();
-    seq.setTickPosition(0);
+    //seq.stop();
+    //seq.setTickPosition(0);
   }
 
   public boolean isPaused() {
     return this.paused;
   }
 }
+
