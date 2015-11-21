@@ -81,6 +81,7 @@ public interface Model {
    */
   List<Note> getNotesAtTime(int time);
 
+  List<Note> getEndNotesAtTime(int time);
 
   /**
    * Adds a note to the music sheet at the given pitch and startTime

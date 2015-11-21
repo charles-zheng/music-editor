@@ -59,6 +59,8 @@ public class GuiViewModel implements ViewModel {
     return m.getNotesAtTime(time);
   }
 
+  @Override public List<Note> getEndNotesAtTime(int time) { return m.getEndNotesAtTime(time); }
+
   @Override
   public void addNote(Pitch pitch, int startTime, int endTime, int instrument, int velocity) {
     m.addNote(pitch, startTime, endTime, instrument, velocity);

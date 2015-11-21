@@ -164,8 +164,6 @@ public class ControllerImpl implements Controller {
 
     public void run() {
       if (playing) {
-        model.advanceTimestamp();
-      }
         view.paintAgain();
         try {
           view.recordNotes(model.getTimeStamp());
@@ -174,7 +172,10 @@ public class ControllerImpl implements Controller {
         } catch (MidiUnavailableException e) {
           e.printStackTrace();
         }
-      System.out.println(model.getTimeStamp());
+
+        model.advanceTimestamp();
+        System.out.println(model.getTimeStamp());
+      }
     }
   }
 /*
@@ -204,11 +205,13 @@ public class ControllerImpl implements Controller {
     public void run() {
       playing = false;
       view.pause();
+
     }
   }
 
   public class Rewind implements Runnable {
     public void run() {
+      model.resetTimestamp();
       view.rewind();
     }
   }
