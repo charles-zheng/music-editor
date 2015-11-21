@@ -40,8 +40,8 @@ public class ControllerImpl implements Controller {
     this.timer = new Timer();
 
     int t = model.getTempo() / 1000;
-    timer.schedule(new AdvanceTime(), 100, t);
-    timer.schedule(new Record(), 0, t);
+    //timer.schedule(new AdvanceTime(), 5000, t);
+    timer.schedule(new Record(), 5000, t);
 
     //TODO
 
@@ -86,8 +86,8 @@ public class ControllerImpl implements Controller {
       int beat = model.getCurBeat();
       try {
         Note n = model.getNoteIn(new PitchImpl(pitch), beat);
-        model.editNoteEndTime(new PitchImpl(pitch), n.getStartTime(),
-            n.getEndTime() + 1, n.getInstrument());
+        model.editNoteEndTime(new PitchImpl(pitch), n.getStartTime(), n.getEndTime() + 1,
+            n.getInstrument());
       } catch (Model.IllegalAccessNoteException ex) {
         //do nothing
       }
@@ -160,6 +160,9 @@ public class ControllerImpl implements Controller {
   public class Record extends TimerTask {
 
     public void run() {
+      model.advanceTimestamp();
+      view.paintAgain();
+      System.out.println(model.getTimeStamp());
       try {
         view.recordNotes(model.getTimeStamp());
       } catch (InvalidMidiDataException e) {
@@ -169,14 +172,15 @@ public class ControllerImpl implements Controller {
       }
     }
   }
-
+/*
   public class AdvanceTime extends TimerTask {
 
     public void run() {
       model.advanceTimestamp();
+      view.paintAgain();
       System.out.println(model.getTimeStamp());
     }
-  }
+  }*/
 
   public class Play implements Runnable {
 
@@ -201,15 +205,4 @@ public class ControllerImpl implements Controller {
     }
   }
 
-  public class PlayNext extends TimerTask {
-
-    /**
-     * The action to be performed by this timer task.
-     */
-    @Override public void run() {
-      model.advanceTimestamp();
-      view.paintAgain();
-      System.out.println(model.getTimeStamp());
-    }
-  }
 }
