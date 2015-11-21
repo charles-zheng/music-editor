@@ -4,6 +4,7 @@ import cs3500.music.view.*;
 import cs3500.music.model.*;
 
 import javax.sound.midi.InvalidMidiDataException;
+import javax.sound.midi.MidiUnavailableException;
 import java.awt.event.MouseListener;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -32,11 +33,16 @@ public class ControllerImpl implements Controller {
    *
    * @param m The composite view that this controller will control
    */
-  public ControllerImpl(Model m) {
+  public ControllerImpl(Model m) throws InvalidMidiDataException {
     this.model = new GuiViewModel(m);
     this.view = new CompositeView(new MidiViewImpl(m), new GuiViewFrame(model));
-    this.timer = new Timer();
     this.kh = new KeyboardHandler();
+    this.timer = new Timer();
+
+    int t = model.getTempo() / 1000;
+    timer.schedule(new AdvanceTime(), t-1, t);
+    timer.schedule(new Record(), 0, t);
+
     //TODO
 
     this.kh.addTypedEvent(65, new AddNewNote()); //       'a'
@@ -48,7 +54,6 @@ public class ControllerImpl implements Controller {
     this.kh.addTypedEvent(47, new Pause()); //     '/'
     this.kh.addTypedEvent(44, new Rewind()); //    ','
     this.view.addListener(this.kh);
-    this.timerAdvance();
   }
 
   /**
@@ -58,10 +63,6 @@ public class ControllerImpl implements Controller {
    */
   public void initialize() throws InvalidMidiDataException {
     this.view.initialize();
-  }
-
-  public void timerAdvance() {
-    timer.schedule(new PlayNext(), 5000, model.getTempo() / 1000);
   }
   //TODO
   public class AddNewNote implements Runnable {
@@ -153,6 +154,27 @@ public class ControllerImpl implements Controller {
         //do nothing
       }
       view.paintAgain();
+    }
+  }
+
+  public class Record extends TimerTask {
+
+    public void run() {
+      try {
+        view.recordNotes(model.getTimeStamp());
+      } catch (InvalidMidiDataException e) {
+        e.printStackTrace();
+      } catch (MidiUnavailableException e) {
+        e.printStackTrace();
+      }
+    }
+  }
+
+  public class AdvanceTime extends TimerTask {
+
+    public void run() {
+      model.advanceTimestamp();
+      System.out.println(model.getTimeStamp());
     }
   }
 
