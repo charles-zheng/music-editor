@@ -69,6 +69,7 @@ public class ControllerImpl implements Controller {
   public void initialize() throws InvalidMidiDataException {
     this.view.initialize();
   }
+
   //TODO
   public class AddNewNote implements Runnable {
 
@@ -84,23 +85,6 @@ public class ControllerImpl implements Controller {
     }
   }
 
-  public class DeleteNote implements Runnable {
-
-    public void run() {
-      int pitch = model.getCurPitch();
-      int beat = model.getCurBeat();
-      if (beat != -1 && pitch != -1) {
-        try {
-          Note n = model.getNoteIn(new PitchImpl(pitch), beat);
-          model.deleteNote(n.getPitch(), n.getStartTime(), n.getInstrument());
-          model.setCurBeat(-1);
-        } catch (Model.IllegalAccessNoteException e) {
-          //do nothing
-        }
-      }
-      view.paintAgain();
-    }
-  }
 
   public class ExtendNote implements Runnable {
 
@@ -118,6 +102,7 @@ public class ControllerImpl implements Controller {
     }
   }
 
+
   public class ShortenNote implements Runnable {
 
     public void run() {
@@ -128,8 +113,7 @@ public class ControllerImpl implements Controller {
         model.setCurBeat(n.getStartTime());
         if (n.getStartTime() == n.getEndTime() - 1) {
           // Do nothing
-        }
-        else {
+        } else {
           model.editNoteEndTime(new PitchImpl(pitch), n.getStartTime(), n.getEndTime() - 1,
               n.getInstrument());
         }
@@ -139,6 +123,7 @@ public class ControllerImpl implements Controller {
       view.paintAgain();
     }
   }
+
 
   public class LowerNote implements Runnable {
 
@@ -173,6 +158,7 @@ public class ControllerImpl implements Controller {
     }
   }
 
+
   public class RaiseNote implements Runnable {
 
     public void run() {
@@ -206,6 +192,7 @@ public class ControllerImpl implements Controller {
     }
   }
 
+
   public class Record extends TimerTask {
 
     public void run() {
@@ -224,15 +211,7 @@ public class ControllerImpl implements Controller {
       }
     }
   }
-/*
-  public class AdvanceTime extends TimerTask {
 
-    public void run() {
-      model.advanceTimestamp();
-      view.paintAgain();
-      System.out.println(model.getTimeStamp());
-    }
-  }*/
 
   public class Play implements Runnable {
 
@@ -247,6 +226,7 @@ public class ControllerImpl implements Controller {
     }
   }
 
+
   public class Pause implements Runnable {
     public void run() {
       playing = false;
@@ -254,6 +234,7 @@ public class ControllerImpl implements Controller {
 
     }
   }
+
 
   public class Rewind implements Runnable {
     public void run() {
@@ -285,7 +266,7 @@ public class ControllerImpl implements Controller {
           catch (Model.IllegalAccessNoteException ex) {
             model.deleteNote(new PitchImpl(pitch), n.getStartTime(), n.getInstrument());
             model.addNote(new PitchImpl(pitch), n.getStartTime() - 1, n.getEndTime() - 1, n.getInstrument(), n.getVelocity());
-            model.setCurBeat(n.getStartTime() - 1);
+            model.setCurBeat(n.getEndTime() - 2);
             view.paintAgain();
           }
         }
