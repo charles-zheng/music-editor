@@ -211,15 +211,16 @@ public final class MidiViewImpl implements MidiView {
     receiver = synth.getReceiver();
     MidiChannel[] chan = synth.getChannels();
     int t = m.getTempo();
+    List<Note> offs = m.getEndNotesAtTime(time);
+    for (Note n : offs) {
+      chan[n.getInstrument() - 1].noteOff(n.getPitch().getValue(), n.getVelocity());
+    }
+
     List<Note> ons = m.getNotesAtTime(time);
     for (Note n : ons) {
       chan[n.getInstrument() - 1].noteOn(n.getPitch().getValue(), n.getVelocity());
     }
 
-    List<Note> offs = m.getEndNotesAtTime(time);
-    for (Note n : offs) {
-      chan[n.getInstrument() - 1].noteOff(n.getPitch().getValue(), n.getVelocity());
-    }
 /*
       MidiMessage start =
           new ShortMessage(ShortMessage.NOTE_ON, n.getInstrument() - 1, n.getPitch().getValue(),

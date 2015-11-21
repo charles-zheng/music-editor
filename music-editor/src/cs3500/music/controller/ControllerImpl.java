@@ -213,6 +213,7 @@ public class ControllerImpl implements Controller {
     public void run() {
       model.resetTimestamp();
       view.rewind();
+      view.paintAgain();
     }
   }
 
