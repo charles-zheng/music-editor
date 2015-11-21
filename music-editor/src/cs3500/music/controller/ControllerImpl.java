@@ -40,7 +40,7 @@ public class ControllerImpl implements Controller {
     this.timer = new Timer();
 
     int t = model.getTempo() / 1000;
-    timer.schedule(new AdvanceTime(), t-1, t);
+    timer.schedule(new AdvanceTime(), 100, t);
     timer.schedule(new Record(), 0, t);
 
     //TODO
