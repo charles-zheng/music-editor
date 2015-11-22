@@ -218,6 +218,5 @@ public interface Model {
       super();
     }
   }
-
 }
 

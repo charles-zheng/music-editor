@@ -8,7 +8,7 @@ import java.awt.event.KeyListener;
  * Created by catherinemclean1 on 11/19/15.
  */
 
-public class CompositeView implements GuiView, MidiView {
+public class CompositeView implements CompositeViewable {
 
   private GuiView gv;
   private MidiView mv;
