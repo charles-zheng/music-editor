@@ -12,7 +12,12 @@ public interface ViewModel extends Model, View {
 
   int getCurBeat();
 
+  int getCurInstrument();
+
   void setCurPitch(int pitch);
 
   void setCurBeat(int beat);
+
+  void setCurInstrument(int instrument);
+
 }

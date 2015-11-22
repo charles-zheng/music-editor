@@ -16,11 +16,13 @@ public class GuiViewModel implements ViewModel {
   private Model m;
   private int curPitch;
   private int curBeat;
+  private int curInstrument;
 
   public GuiViewModel(Model m) {
     this.m = m;
     this.curPitch = -1;
     this.curBeat = -1;
+    this.curInstrument = -1;
   }
 
   @Override public int getTimeStamp() {
@@ -70,6 +72,10 @@ public class GuiViewModel implements ViewModel {
     return m.getNoteAt(pitch, time, instrument);
   }
 
+  @Override public Note getNoteIn(Pitch pitch, int time, int instrument) {
+    return m.getNoteIn(pitch, time, instrument);
+  }
+
   @Override public Note getNoteIn(Pitch pitch, int time) {
     return m.getNoteIn(pitch, time);
   }
@@ -113,14 +119,24 @@ public class GuiViewModel implements ViewModel {
         m.getLowestPitch().getValue() + 2) * ConcreteGuiViewPanel.BOX_SIZE)) ?
         m.getHighestPitch().getValue() -
         ((y - ConcreteGuiViewPanel.BOX_SIZE) / ConcreteGuiViewPanel.BOX_SIZE) : -1;
+    try {
+      this.curInstrument = m.getNoteIn(new PitchImpl(curPitch), curBeat).getInstrument();
+    }
+    catch(IllegalAccessNoteException ex) {
+      this.curInstrument = -1;
+    }
   }
 
   public int getCurPitch() {
     return this.curPitch;
-  }
+}
 
   public int getCurBeat() {
     return this.curBeat;
+  }
+
+  public int getCurInstrument() {
+    return this.curInstrument;
   }
 
   public void setCurPitch(int pitch) {
@@ -129,6 +145,10 @@ public class GuiViewModel implements ViewModel {
 
   public void setCurBeat(int beat) {
     this.curBeat = beat;
+  }
+
+  public void setCurInstrument(int instrument) {
+    this.curInstrument = instrument;
   }
 
 }

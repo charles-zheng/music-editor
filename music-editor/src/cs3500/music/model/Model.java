@@ -115,6 +115,9 @@ public interface Model {
   Note getNoteAt(Pitch pitch, int time, int instrument);
 
   //TODO
+  Note getNoteIn(Pitch pitch, int time, int instrument);
+
+  //TODO
   Note getNoteIn(Pitch pitch, int time);
 
   /**

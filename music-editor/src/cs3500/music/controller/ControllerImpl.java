@@ -122,6 +122,7 @@ public class ControllerImpl implements Controller {
     }
   }
 
+
   public class ShortenNote implements Runnable {
 
     public void run() {
@@ -132,8 +133,7 @@ public class ControllerImpl implements Controller {
         model.setCurBeat(n.getStartTime());
         if (n.getStartTime() == n.getEndTime() - 1) {
           // Do nothing
-        }
-        else {
+        } else {
           model.editNoteEndTime(new PitchImpl(pitch), n.getStartTime(), n.getEndTime() - 1,
               n.getInstrument());
         }
@@ -144,18 +144,32 @@ public class ControllerImpl implements Controller {
     }
   }
 
+
   public class LowerNote implements Runnable {
 
     public void run() {
       int pitch = model.getCurPitch();
       int beat = model.getCurBeat();
+      int instrument = model.getCurInstrument();
+      Note n;
       try {
-        Note n = model.getNoteIn(new PitchImpl(pitch), beat);
-        if (pitch != 0) {
-          model.addNote(new PitchImpl(n.getPitch().getValue() - 1), n.getStartTime(),
-              n.getEndTime(), n.getInstrument(), n.getVelocity());
-          model.deleteNote(n.getPitch(), n.getStartTime(), n.getInstrument());
-          model.setCurPitch(pitch - 1);
+        n = model.getNoteIn(new PitchImpl(pitch), beat, instrument);
+      } catch (Model.IllegalAccessNoteException ex) {
+        //do nothing
+        return;
+      }
+      try {
+        try {
+          model.getNoteAt(new PitchImpl(n.getPitch().getValue() - 1),
+              n.getStartTime(), instrument);
+        }
+        catch(Model.IllegalAccessNoteException ex) {
+          if (pitch != 0) {
+            model.addNote(new PitchImpl(n.getPitch().getValue() - 1), n.getStartTime(),
+                n.getEndTime(), n.getInstrument(), n.getVelocity());
+            model.deleteNote(n.getPitch(), n.getStartTime(), n.getInstrument());
+            model.setCurPitch(pitch - 1);
+          }
         }
       } catch (Model.IllegalAccessNoteException ex) {
         //do nothing
@@ -169,13 +183,26 @@ public class ControllerImpl implements Controller {
     public void run() {
       int pitch = model.getCurPitch();
       int beat = model.getCurBeat();
+      int instrument = model.getCurInstrument();
+      Note n;
       try {
-        Note n = model.getNoteIn(new PitchImpl(pitch), beat);
-        if (pitch != 127) {
-          model.addNote(new PitchImpl(n.getPitch().getValue() + 1), n.getStartTime(),
-              n.getEndTime(), n.getInstrument(), n.getVelocity());
-          model.deleteNote(n.getPitch(), n.getStartTime(), n.getInstrument());
-          model.setCurPitch(pitch + 1);
+        n = model.getNoteIn(new PitchImpl(pitch), beat, instrument);
+      } catch (Model.IllegalAccessNoteException ex) {
+        //do nothing
+        return;
+      }
+      try {
+        try {
+          model.getNoteAt(new PitchImpl(n.getPitch().getValue() + 1),
+              n.getStartTime(), instrument);
+        }
+        catch(Model.IllegalAccessNoteException ex) {
+          if (pitch != 127) {
+            model.addNote(new PitchImpl(n.getPitch().getValue() + 1), n.getStartTime(),
+                n.getEndTime(), n.getInstrument(), n.getVelocity());
+            model.deleteNote(n.getPitch(), n.getStartTime(), n.getInstrument());
+            model.setCurPitch(pitch + 1);
+          }
         }
       } catch (Model.IllegalAccessNoteException ex) {
         //do nothing
@@ -183,6 +210,7 @@ public class ControllerImpl implements Controller {
       view.paintAgain();
     }
   }
+
 
   public class Record extends TimerTask {
 
@@ -202,6 +230,7 @@ public class ControllerImpl implements Controller {
       }
     }
   }
+
 
   public class Play implements Runnable {
 
@@ -237,17 +266,36 @@ public class ControllerImpl implements Controller {
     public void run() {
       int pitch = model.getCurPitch();
       int beat = model.getCurBeat();
+      int instrument = model.getCurInstrument();
+      Note n;
       try {
-        Note n = model.getNoteIn(new PitchImpl(pitch), beat);
-        if (n.getStartTime() != 0) {
-          model.editNoteStartTime(new PitchImpl(pitch), n.getStartTime(), n.getStartTime() - 1, n.getInstrument());
-          model.editNoteEndTime(new PitchImpl(pitch), n.getStartTime() - 1, n.getEndTime() - 1, n.getInstrument());
-          model.setCurBeat(n.getStartTime() - 1);
-        }
+        n = model.getNoteIn(new PitchImpl(pitch), beat, instrument);
       } catch (Model.IllegalAccessNoteException ex) {
         //do nothing
+        return;
       }
-      view.paintAgain();
+
+      try {
+        if (n.getStartTime() != 0) {
+          try {
+            model.getNoteAt(new PitchImpl(pitch), n.getStartTime() - 1, instrument);
+          }
+          catch (Model.IllegalAccessNoteException ex) {
+            model.deleteNote(new PitchImpl(pitch), n.getStartTime(), n.getInstrument());
+            model.addNote(new PitchImpl(pitch), n.getStartTime() - 1, n.getEndTime() - 1, n.getInstrument(), n.getVelocity());
+            model.setCurBeat(n.getEndTime() - 2);
+            view.paintAgain();
+          }
+        }
+      }
+      catch (Model.IllegalAddException ex) {
+        //do nothing
+        return;
+      }
+      catch (IllegalArgumentException ex) {
+        //do nothing
+        return;
+      }
     }
   }
 
@@ -256,18 +304,34 @@ public class ControllerImpl implements Controller {
     public void run() {
       int pitch = model.getCurPitch();
       int beat = model.getCurBeat();
+      int instrument = model.getCurInstrument();
+      Note n;
       try {
-        Note n = model.getNoteIn(new PitchImpl(pitch), beat);
-        model.setCurBeat(n.getStartTime());
-        model.editNoteEndTime(new PitchImpl(pitch), n.getStartTime(), n.getEndTime() + 1,
-            n.getInstrument());
-        model.editNoteStartTime(new PitchImpl(pitch), n.getStartTime(), n.getStartTime() + 1,
-            n.getInstrument());
-        model.setCurBeat(n.getStartTime() + 1);
+        n = model.getNoteIn(new PitchImpl(pitch), beat, instrument);
       } catch (Model.IllegalAccessNoteException ex) {
         //do nothing
+        return;
       }
-      view.paintAgain();
+      try {
+        try {
+          model.getNoteAt(new PitchImpl(pitch), n.getStartTime() + 1, instrument);
+        }
+        catch(Model.IllegalAccessNoteException ex) {
+          model.deleteNote(new PitchImpl(pitch), n.getStartTime(), n.getInstrument());
+          model.addNote(new PitchImpl(pitch), n.getStartTime() + 1, n.getEndTime() + 1,
+              n.getInstrument(), n.getVelocity());
+          model.setCurBeat(n.getEndTime());
+          view.paintAgain();
+        }
+      }
+      catch (Model.IllegalAddException ex) {
+        //do nothing
+        return;
+      }
+      catch (IllegalArgumentException ex) {
+        //do nothing
+        return;
+      }
     }
   }
 
