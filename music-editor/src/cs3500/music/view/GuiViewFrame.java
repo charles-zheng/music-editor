@@ -115,6 +115,7 @@ public final class GuiViewFrame extends javax.swing.JFrame implements GuiView {
     }
     repaint();
     this.displayPanel.repaint();
+    //llama
   }
 
   public void skipToFront() {
