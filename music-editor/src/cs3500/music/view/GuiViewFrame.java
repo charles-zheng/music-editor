@@ -117,6 +117,16 @@ public final class GuiViewFrame extends javax.swing.JFrame implements GuiView {
     this.displayPanel.repaint();
   }
 
+  public void skipToFront() {
+    JViewport jv = this.js.getViewport();
+    jv.setViewPosition(new Point(0, 0));
+  }
+
+  public void skipToEnd() {
+    JViewport jv = this.js.getViewport();
+    jv.setViewPosition(new Point(model.getFinalEndBeat() * ConcreteGuiViewPanel.BOX_SIZE, 0));
+  }
+
   public void shiftLeft() {
     JViewport jv = this.js.getViewport();
     int curX = (int)jv.getViewPosition().getX();

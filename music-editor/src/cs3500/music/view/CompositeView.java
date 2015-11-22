@@ -29,6 +29,14 @@ public class CompositeView implements GuiView, MidiView {
     gv.paintAgain();
   }
 
+  @Override public void skipToFront() {
+    gv.skipToFront();
+  }
+
+  @Override public void skipToEnd() {
+    gv.skipToEnd();
+  }
+
   @Override public void shiftLeft() {
     gv.shiftLeft();
   }
