@@ -15,6 +15,10 @@ public interface GuiView extends View {
 
   void paintAgain();
 
+  void skipToFront();
+
+  void skipToEnd();
+
   void shiftLeft();
 
   void shiftRight();

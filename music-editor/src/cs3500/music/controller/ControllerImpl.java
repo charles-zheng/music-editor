@@ -62,6 +62,8 @@ public class ControllerImpl implements Controller {
     this.kh.addPressedEvent(38, new MoveScreenUp()); // 'up'
     this.kh.addPressedEvent(39, new MoveScreenRight()); // 'right'
     this.kh.addPressedEvent(40, new MoveScreenDown()); // 'down
+    this.kh.addTypedEvent(71, new ToEnd()); //       'g'
+    this.kh.addTypedEvent(72, new ToHome()); //      'h'
     this.view.addListener(this.kh);
   }
 
@@ -332,6 +334,18 @@ public class ControllerImpl implements Controller {
         //do nothing
         return;
       }
+    }
+  }
+
+  public class ToHome implements Runnable {
+    public void run() {
+      view.skipToFront();
+    }
+  }
+
+  public class ToEnd implements Runnable {
+    public void run() {
+      view.skipToEnd();
     }
   }
 

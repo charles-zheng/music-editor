@@ -105,6 +105,7 @@ public final class GuiViewFrame extends javax.swing.JFrame implements GuiView {
   }
 
   public void paintAgain() {
+    this.displayPanel.setPreferredSize(this.getPreferredSize());
     JViewport jv = this.js.getViewport();
     int limit = (int)(jv.getViewPosition().getX() + jv.getExtentSize().getWidth());
     int curX = (model.getTimeStamp() + 2) * ConcreteGuiViewPanel.BOX_SIZE;
@@ -114,6 +115,16 @@ public final class GuiViewFrame extends javax.swing.JFrame implements GuiView {
     }
     repaint();
     this.displayPanel.repaint();
+  }
+
+  public void skipToFront() {
+    JViewport jv = this.js.getViewport();
+    jv.setViewPosition(new Point(0, 0));
+  }
+
+  public void skipToEnd() {
+    JViewport jv = this.js.getViewport();
+    jv.setViewPosition(new Point(model.getFinalEndBeat() * ConcreteGuiViewPanel.BOX_SIZE, 0));
   }
 
   public void shiftLeft() {
