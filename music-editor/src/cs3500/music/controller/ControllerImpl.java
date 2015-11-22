@@ -17,7 +17,7 @@ public class ControllerImpl implements Controller {
   /**
    * The composite view, a combination of midi and gui views
    */
-  private CompositeView view;
+  private CompositeViewable view;
 
   private ViewModel model;
 
@@ -259,6 +259,7 @@ public class ControllerImpl implements Controller {
     public void run() {
       model.resetTimestamp();
       view.rewind();
+      view.skipToFront();
       view.paintAgain();
     }
   }
