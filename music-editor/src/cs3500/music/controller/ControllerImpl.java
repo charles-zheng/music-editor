@@ -243,7 +243,7 @@ public class ControllerImpl implements Controller {
       } catch (InvalidMidiDataException e) {
         e.printStackTrace();
       }
-
+      view.paintAgain();
     }
   }
 

@@ -113,6 +113,11 @@ public final class GuiViewFrame extends javax.swing.JFrame implements GuiView {
     if (curX > limit) {
       jv.setViewPosition(new Point(limit, 0));
     }
+
+    if (curX < (int)(jv.getViewPosition().getX())) {
+      jv.setViewPosition(new Point(curX, 0));
+    }
+
     repaint();
     this.displayPanel.repaint();
     //llama
