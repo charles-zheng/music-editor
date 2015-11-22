@@ -7,6 +7,7 @@ import java.awt.event.KeyListener;
 /**
  * Created by catherinemclean1 on 11/19/15.
  */
+
 public class CompositeView implements GuiView, MidiView {
 
   private GuiView gv;
@@ -26,6 +27,23 @@ public class CompositeView implements GuiView, MidiView {
 
   @Override public void paintAgain() {
     gv.paintAgain();
+  }
+
+  @Override public void shiftLeft() {
+    gv.shiftLeft();
+  }
+
+  @Override public void shiftRight() {
+    gv.shiftRight();
+    System.out.println("ran");
+  }
+
+  @Override public void shiftUp() {
+    gv.shiftUp();
+  }
+
+  @Override public void shiftDown() {
+    gv.shiftDown();
   }
 
   @Override public void recordNotes(int time) throws InvalidMidiDataException,

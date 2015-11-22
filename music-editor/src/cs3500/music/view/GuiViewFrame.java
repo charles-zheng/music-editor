@@ -115,5 +115,42 @@ public final class GuiViewFrame extends javax.swing.JFrame implements GuiView {
     repaint();
     this.displayPanel.repaint();
   }
+
+  public void shiftLeft() {
+    JViewport jv = this.js.getViewport();
+    int curX = (int)jv.getViewPosition().getX();
+    int curY = (int)jv.getViewPosition().getY();
+    if (curX > 50) {
+      jv.setViewPosition(new Point(curX - 50, curY));
+    }
+  }
+
+  public void shiftRight() {
+    JViewport jv = this.js.getViewport();
+    int curX = (int)jv.getViewPosition().getX();
+    int curY = (int)jv.getViewPosition().getY();
+    if (curX < (model.getFinalEndBeat() + 2) * ConcreteGuiViewPanel.BOX_SIZE - 50) {
+      jv.setViewPosition(new Point(curX + 50, curY));
+    }
+  }
+
+  public void shiftUp() {
+    JViewport jv = this.js.getViewport();
+    int curX = (int)jv.getViewPosition().getX();
+    int curY = (int)jv.getViewPosition().getY();
+    if (curY > 50) {
+      jv.setViewPosition(new Point(curX, curY - 50));
+    }
+  }
+
+  public void shiftDown() {
+    JViewport jv = this.js.getViewport();
+    int curX = (int)jv.getViewPosition().getX();
+    int curY = (int)jv.getViewPosition().getY();
+    if (curY < (model.getHighestPitch().getValue() - model.getLowestPitch().getValue() + 1)
+        * ConcreteGuiViewPanel.BOX_SIZE) {
+      jv.setViewPosition(new Point(curX, curY + 50));
+    }
+  }
 }
 

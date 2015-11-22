@@ -43,12 +43,12 @@ public class ControllerImpl implements Controller {
     this.playing = false;
 
     int t = model.getTempo() / 1000;
-    //timer.schedule(new AdvanceTime(), 5000, t);
     timer.schedule(new Record(), 0, t);
 
     //TODO
 
     this.kh.addTypedEvent(65, new AddNewNote()); //       'a'
+    this.kh.addTypedEvent(8, new DeleteNote()); //     'delete'
     this.kh.addTypedEvent(69, new ExtendNote()); //    'e'
     this.kh.addTypedEvent(45, new LowerNote()); //     '-'
     this.kh.addTypedEvent(521, new RaiseNote()); //    '+'
@@ -58,6 +58,10 @@ public class ControllerImpl implements Controller {
     this.kh.addTypedEvent(44, new Rewind()); //    ','
     this.kh.addTypedEvent(77, new MoveNoteRight()); // 'm'
     this.kh.addTypedEvent(78, new MoveNoteLeft()); //  'n'
+    this.kh.addPressedEvent(37, new MoveScreenLeft()); //  'left'
+    this.kh.addPressedEvent(38, new MoveScreenUp()); // 'up'
+    this.kh.addPressedEvent(39, new MoveScreenRight()); // 'right'
+    this.kh.addPressedEvent(40, new MoveScreenDown()); // 'down
     this.view.addListener(this.kh);
   }
 
@@ -183,7 +187,7 @@ public class ControllerImpl implements Controller {
   public class Record extends TimerTask {
 
     public void run() {
-      if (playing) {
+      if (playing && model.getTimeStamp() < model.getFinalEndBeat()) {
         view.paintAgain();
         try {
           view.recordNotes(model.getTimeStamp());
@@ -198,15 +202,6 @@ public class ControllerImpl implements Controller {
       }
     }
   }
-/*
-  public class AdvanceTime extends TimerTask {
-
-    public void run() {
-      model.advanceTimestamp();
-      view.paintAgain();
-      System.out.println(model.getTimeStamp());
-    }
-  }*/
 
   public class Play implements Runnable {
 
@@ -275,5 +270,34 @@ public class ControllerImpl implements Controller {
       view.paintAgain();
     }
   }
+
+  public class MoveScreenLeft implements Runnable {
+
+    public void run() {
+      view.shiftLeft();
+    }
+  }
+
+  public class MoveScreenRight implements Runnable {
+
+    public void run() {
+      view.shiftRight();
+    }
+  }
+
+  public class MoveScreenUp implements Runnable {
+
+    public void run() {
+      view.shiftUp();
+    }
+  }
+
+  public class MoveScreenDown implements Runnable {
+
+    public void run() {
+      view.shiftDown();
+    }
+  }
+
 
 }
