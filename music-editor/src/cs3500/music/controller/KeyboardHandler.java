@@ -5,7 +5,7 @@ import java.awt.event.KeyListener;
 import java.util.*;
 
 /**
- * Listens to and handles key events
+ * Listens to and handles key events.
  */
 public class KeyboardHandler implements KeyListener {
 
@@ -37,9 +37,9 @@ public class KeyboardHandler implements KeyListener {
   }
 
   /**
+   * Reacts to a key-typed event from the user!
    *
-   *
-   * @param e
+   * @param e the KeyEvent that was typed
    */
   @Override public void keyTyped(KeyEvent e) {
     if (this.typed.containsKey(e.getExtendedKeyCode())) {
@@ -48,26 +48,54 @@ public class KeyboardHandler implements KeyListener {
     displayInfo(e, "KEY TYPED: ");
   }
 
+  /**
+   * Reacts to key-pressed events from the user!
+   *
+   * @param e the KeyEvent that was pressed
+   */
   @Override public void keyPressed(KeyEvent e) {
     if (this.pressed.containsKey(e.getExtendedKeyCode())) {
       this.pressed.get(e.getExtendedKeyCode()).run();
     }
   }
 
+  /**
+   * Reacts to key-released events from the user!
+   *
+   * @param e the KeyEvent that was released
+   */
   @Override public void keyReleased(KeyEvent e) {
     if (this.released.containsKey(e.getExtendedKeyCode())) {
       this.released.get(e.getExtendedKeyCode()).run();
     }
   }
 
+  /**
+   * Adds the given Runnable function to be run on the given key-typed event!
+   *
+   * @param e the key code to be associated with this Runnable
+   * @param r the Runnable to be executed on the given key-typed event
+   */
   public void addTypedEvent(int e, Runnable r) {
     this.typed.put(e, r);
   }
 
+  /**
+   * Adds the given Runnable function to be run on the given key-pressed event!
+   *
+   * @param e the key code to be associated with this Runnable
+   * @param r the Runnable to be executed on the given key-pressed event
+   */
   public void addPressedEvent(int e, Runnable r) {
     this.pressed.put(e, r);
   }
 
+  /**
+   * Adds the given Runnable function to be run on the given key-pressed event!
+   *
+   * @param e the key code to be associated with this Runnable
+   * @param r the Runnable to be executed on the given key-pressed event
+   */
   public void addReleasedEvent(int e, Runnable r) {
     this.released.put(e, r);
   }

@@ -11,11 +11,7 @@ public interface MidiView extends View {
 
   void recordNotes(int time) throws InvalidMidiDataException, MidiUnavailableException;
 
-  void play() throws InvalidMidiDataException;
-
   void pause();
-
-  void rewind();
 
   boolean isPaused();
 }

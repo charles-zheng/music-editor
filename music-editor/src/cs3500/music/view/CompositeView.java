@@ -59,16 +59,8 @@ public class CompositeView implements CompositeViewable {
     mv.recordNotes(time);
   }
 
-  @Override public void play() throws InvalidMidiDataException {
-    mv.play();
-  }
-
   @Override public void pause() {
     mv.pause();
-  }
-
-  @Override public void rewind() {
-    mv.rewind();
   }
 
   @Override public boolean isPaused() {

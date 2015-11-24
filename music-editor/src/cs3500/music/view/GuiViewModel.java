@@ -7,10 +7,10 @@ import javax.sound.midi.InvalidMidiDataException;
 import java.util.List;
 
 /**
- * Created by Charles on 11/18/15.
+ * Represents a ViewModel that adds additional functionality to our model.
+ * This functionality includes keeping track of selected notes, and keeping
+ * a timestamp.
  */
-
-//TODO
 public class GuiViewModel implements ViewModel {
 
   private Model m;

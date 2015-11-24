@@ -92,11 +92,11 @@ public final class GuiViewFrame extends javax.swing.JFrame implements GuiView {
   }
 
   public void removeKeyListener(KeyListener kl) {
-
+    super.removeKeyListener(kl);
   }
 
   public void removeMouseListener(MouseListener ml) {
-    //TODO: fill this out
+    super.removeMouseListener(ml);
   }
 
   public void setCurrent(int x, int y) {
