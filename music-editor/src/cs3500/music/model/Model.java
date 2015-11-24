@@ -19,13 +19,6 @@ public interface Model {
   int DEFAULT_TEMPO = 100000;
 
   /**
-   * Gets the current timestamp of the piece.
-   *
-   * @return the current timestamp
-   */
-  int getTimeStamp();
-
-  /**
    * Gets the lowest pitch of the piece.
    *
    * @return the lowest pitch
@@ -47,40 +40,47 @@ public interface Model {
   int getFinalStartBeat();
 
   /**
-   * Gets the beat after the last note of the piece ends
+   * Gets the beat after the last note of the piece ends.
    *
    * @return the final end beat
    */
   int getFinalEndBeat();
 
   /**
-   * Gets the measure for the piece
+   * Gets the measure for the piece.
    *
    * @return the measure of the piece
    */
   int getMeasure();
 
   /**
-   * Gets the tempo of this piece
+   * Gets the tempo of this piece.
    *
    * @return the tempo
    */
   int getTempo();
 
   /**
-   * Sets the tempo of this piece to the given tempo
+   * Sets the tempo of this piece to the given tempo.
    *
    * @param tempo the new tempo of the piece
    */
   void setTempo(int tempo);
 
   /**
-   * Gets a list of notes that should be played at the given time
+   * Gets a list of notes that should be played at the given time.
    *
-   * @return the list of notes that should be played at the given timestamp
+   * @param time the time at which to get the notes that start
+   * @return the list of notes that should be played at the given time
    */
   List<Note> getNotesAtTime(int time);
 
+  /**
+   * Gets a list of notes that should be turned off at the given time.
+   *
+   * @param time the time at which to get the notes that end
+   * @return the list of notes that should be turned off at the given time
+   */
   List<Note> getEndNotesAtTime(int time);
 
   /**
@@ -114,7 +114,14 @@ public interface Model {
    */
   Note getNoteAt(Pitch pitch, int time, int instrument);
 
-  //TODO
+  /**
+   * Get the notes at 
+   *
+   * @param pitch
+   * @param time
+   * @param instrument
+   * @return
+   */
   Note getNoteIn(Pitch pitch, int time, int instrument);
 
   //TODO
