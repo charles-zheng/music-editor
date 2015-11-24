@@ -1,8 +1,8 @@
 package cs3500.music;
 
 import cs3500.music.model.*;
-import cs3500.music.util.*;
-import cs3500.music.view.*;
+import cs3500.music.view.GuiViewModel;
+import cs3500.music.view.ViewModel;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -14,7 +14,7 @@ import static org.junit.Assert.assertNotEquals;
 /**
  * Represents tests for {@link cs3500.music.model}
  */
-/*public class ModelTest {
+public class ModelTest {
 
 
   Note n1 = new MusicNote(new PitchImpl(2), 3, 4, 0, 0); //one beat long
@@ -72,18 +72,26 @@ import static org.junit.Assert.assertNotEquals;
         new MusicNote(new PitchImpl(3), 2, 6, 4, 9));
   }
 
+
   @Test public void testModelGetters() {
     assertEquals(m1.getFinalStartBeat(), 0);
-    assertEquals(m1.getTimeStamp(), 0);
     assertEquals(m1.getHighestPitch(), new PitchImpl(-1));
     assertEquals(m1.getLowestPitch(), new PitchImpl(-1));
     assertEquals(m1.getMeasure(), 4);
     assertEquals(m1.getTempo(), 120);
   }
 
+  @Test public void testModelGetters1() {
+    assertEquals(m3.getFinalStartBeat(), 0);
+    assertEquals(m3.getTimeStamp(), 0);
+    assertEquals(m3.getHighestPitch(), new PitchImpl(-1));
+    assertEquals(m3.getLowestPitch(), new PitchImpl(-1));
+    assertEquals(m3.getMeasure(), 4);
+    assertEquals(m3.getTempo(), 120);
+  }
+
   @Test public void testModel2Getters() {
     assertEquals(m2.getFinalStartBeat(), 0);
-    assertEquals(m2.getTimeStamp(), 0);
     assertEquals(m2.getHighestPitch(), new PitchImpl(-1));
     assertEquals(m2.getLowestPitch(), new PitchImpl(-1));
     assertEquals(m2.getMeasure(), 3);
@@ -98,26 +106,26 @@ import static org.junit.Assert.assertNotEquals;
 
   @Test public void testToStringModel() {
     assertEquals(m1.toString(),
-        "Time: 0\n" + " Measure: 4\n" + " Low Pitch: -1\n" + " High Pitch: -1\n" +
+        "Measure: 4\n" + " Low Pitch: -1\n" + " High Pitch: -1\n" +
             " finalStartBeat: 0\n");
     assertEquals(m2.toString(),
-        "Time: 0\n" + " Measure: 3\n" + " Low Pitch: -1\n" + " High Pitch: -1\n"
+        "Measure: 3\n" + " Low Pitch: -1\n" + " High Pitch: -1\n"
             + " finalStartBeat: 0\n");
   }
 
   @Test public void testAddNote() {
     m1.addNote(new PitchImpl(2), 3, 4, 0, 5);
     assertEquals(m1.toString(),
-        "Time: 0\n" + " Measure: 4\n" + " Low Pitch: 2\n" + " High Pitch: 2\n" +
+        "Measure: 4\n" + " Low Pitch: 2\n" + " High Pitch: 2\n" +
             " finalStartBeat: 3\n" + "Pitch: 2, StartTime: 3, EndTime: 4\n");
     m1.addNote(new PitchImpl(4), 5, 9, 0, 4);
     assertEquals(m1.toString(),
-        "Time: 0\n" + " Measure: 4\n" + " Low Pitch: 2\n" + " High Pitch: 4\n" +
+        "Measure: 4\n" + " Low Pitch: 2\n" + " High Pitch: 4\n" +
             " finalStartBeat: 5\n" + "Pitch: 2, StartTime: 3, EndTime: 4\n" +
             "Pitch: 4, StartTime: 5, EndTime: 9\n");
     m1.addNote(new PitchImpl(1), 1, 2, 0, 5);
     assertEquals(m1.toString(),
-        "Time: 0\n" + " Measure: 4\n" + " Low Pitch: 1\n" + " High Pitch: 4\n"
+        "Measure: 4\n" + " Low Pitch: 1\n" + " High Pitch: 4\n"
             + " finalStartBeat: 5\n" +
             "Pitch: 1, StartTime: 1, EndTime: 2\n" +
             "Pitch: 2, StartTime: 3, EndTime: 4\n" +
@@ -127,16 +135,16 @@ import static org.junit.Assert.assertNotEquals;
   @Test public void testAddNote2() {
     m2.addNote(new PitchImpl(2), 3, 4, 0, 6);
     assertEquals(m2.toString(),
-        "Time: 0\n" + " Measure: 3\n" + " Low Pitch: 2\n" + " High Pitch: 2\n" +
+        "Measure: 3\n" + " Low Pitch: 2\n" + " High Pitch: 2\n" +
             " finalStartBeat: 3\n" + "Pitch: 2, StartTime: 3, EndTime: 4\n");
     m2.addNote(new PitchImpl(4), 5, 9, 0, 7);
     assertEquals(m2.toString(),
-        "Time: 0\n" + " Measure: 3\n" + " Low Pitch: 2\n" + " High Pitch: 4\n" +
+        "Measure: 3\n" + " Low Pitch: 2\n" + " High Pitch: 4\n" +
             " finalStartBeat: 5\n" + "Pitch: 2, StartTime: 3, EndTime: 4\n" +
             "Pitch: 4, StartTime: 5, EndTime: 9\n");
     m2.addNote(new PitchImpl(1), 1, 2, 0, 5);
     assertEquals(m2.toString(),
-        "Time: 0\n" + " Measure: 3\n" + " Low Pitch: 1\n" + " High Pitch: 4\n"
+        "Measure: 3\n" + " Low Pitch: 1\n" + " High Pitch: 4\n"
             + " finalStartBeat: 5\n" + "Pitch: 1, StartTime: 1, EndTime: 2\n" +
             "Pitch: 2, StartTime: 3, EndTime: 4\n" +
             "Pitch: 4, StartTime: 5, EndTime: 9\n");
@@ -147,13 +155,13 @@ import static org.junit.Assert.assertNotEquals;
     assertEquals(m2.getFinalStartBeat(), 3);
     assertEquals(m2.getLowestPitch(), new PitchImpl(2));
     assertEquals(m2.getHighestPitch(), new PitchImpl(2));
-    assertEquals(m2.toString(), "Time: 0\n" + " Measure: 3\n" + " Low Pitch: 2\n" +
+    assertEquals(m2.toString(), "Measure: 3\n" + " Low Pitch: 2\n" +
         " High Pitch: 2\n" + " finalStartBeat: 3\n" + "Pitch: 2, StartTime: 3, EndTime: 4\n");
     m2.addNote(new PitchImpl(2), 4, 9, 0, 6);
     assertEquals(m2.getFinalStartBeat(), 4);
     assertEquals(m2.getLowestPitch(), new PitchImpl(2));
     assertEquals(m2.getHighestPitch(), new PitchImpl(2));
-    assertEquals(m2.toString(), "Time: 0\n" + " Measure: 3\n" + " Low Pitch: 2\n" +
+    assertEquals(m2.toString(), "Measure: 3\n" + " Low Pitch: 2\n" +
         " High Pitch: 2\n" + " finalStartBeat: 4\n" + "Pitch: 2, StartTime: 3, EndTime: 4\n" +
         "Pitch: 2, StartTime: 4, EndTime: 9\n");
     m2.addNote(new PitchImpl(2), 7, 11, 0, 8);
@@ -161,7 +169,7 @@ import static org.junit.Assert.assertNotEquals;
     assertEquals(m2.getLowestPitch(), new PitchImpl(2));
     assertEquals(m2.getHighestPitch(), new PitchImpl(2));
     assertEquals(m2.toString(),
-        "Time: 0\n" + " Measure: 3\n" + " Low Pitch: 2\n" + " High Pitch: 2\n"
+        "Measure: 3\n" + " Low Pitch: 2\n" + " High Pitch: 2\n"
             + " finalStartBeat: 7\n" + "Pitch: 2, StartTime: 3, EndTime: 4\n" +
             "Pitch: 2, StartTime: 4, EndTime: 9\n" +
             "Pitch: 2, StartTime: 7, EndTime: 11\n");
@@ -173,14 +181,14 @@ import static org.junit.Assert.assertNotEquals;
     assertEquals(m1.getLowestPitch(), new PitchImpl(2));
     assertEquals(m1.getHighestPitch(), new PitchImpl(2));
     assertEquals(m1.toString(),
-        "Time: 0\n" + " Measure: 4\n" + " Low Pitch: 2\n" + " High Pitch: 2\n" +
+        "Measure: 4\n" + " Low Pitch: 2\n" + " High Pitch: 2\n" +
             " finalStartBeat: 3\n" + "Pitch: 2, StartTime: 3, EndTime: 4\n");
     m1.addNote(new PitchImpl(2), 4, 9, 0, 6);
     assertEquals(m1.getFinalStartBeat(), 4);
     assertEquals(m1.getLowestPitch(), new PitchImpl(2));
     assertEquals(m1.getHighestPitch(), new PitchImpl(2));
     assertEquals(m1.toString(),
-        "Time: 0\n" + " Measure: 4\n" + " Low Pitch: 2\n" + " High Pitch: 2\n" +
+        "Measure: 4\n" + " Low Pitch: 2\n" + " High Pitch: 2\n" +
             " finalStartBeat: 4\n" + "Pitch: 2, StartTime: 3, EndTime: 4\n" +
             "Pitch: 2, StartTime: 4, EndTime: 9\n");
     m1.addNote(new PitchImpl(2), 7, 11, 0, 8);
@@ -188,7 +196,7 @@ import static org.junit.Assert.assertNotEquals;
     assertEquals(m1.getLowestPitch(), new PitchImpl(2));
     assertEquals(m1.getHighestPitch(), new PitchImpl(2));
     assertEquals(m1.toString(),
-        "Time: 0\n" + " Measure: 4\n" + " Low Pitch: 2\n" + " High Pitch: 2\n"
+        "Measure: 4\n" + " Low Pitch: 2\n" + " High Pitch: 2\n"
             + " finalStartBeat: 7\n" + "Pitch: 2, StartTime: 3, EndTime: 4\n" +
             "Pitch: 2, StartTime: 4, EndTime: 9\n" +
             "Pitch: 2, StartTime: 7, EndTime: 11\n");
@@ -197,16 +205,16 @@ import static org.junit.Assert.assertNotEquals;
   @Test public void testAddNote5() {
     m2.addNote(new PitchImpl(2), 3, 4, 0, 4);
     assertEquals(m2.toString(),
-        "Time: 0\n" + " Measure: 3\n" + " Low Pitch: 2\n" + " High Pitch: 2\n" +
+        "Measure: 3\n" + " Low Pitch: 2\n" + " High Pitch: 2\n" +
             " finalStartBeat: 3\n" + "Pitch: 2, StartTime: 3, EndTime: 4\n");
     m2.addNote(new PitchImpl(3), 3, 4, 0, 10);
     assertEquals(m2.toString(),
-        "Time: 0\n" + " Measure: 3\n" + " Low Pitch: 2\n" + " High Pitch: 3\n" +
+        "Measure: 3\n" + " Low Pitch: 2\n" + " High Pitch: 3\n" +
             " finalStartBeat: 3\n" + "Pitch: 2, StartTime: 3, EndTime: 4\n" +
             "Pitch: 3, StartTime: 3, EndTime: 4\n");
     m2.addNote(new PitchImpl(5), 3, 10, 0, 109);
     assertEquals(m2.toString(),
-        "Time: 0\n" + " Measure: 3\n" + " Low Pitch: 2\n" + " High Pitch: 5\n"
+        "Measure: 3\n" + " Low Pitch: 2\n" + " High Pitch: 5\n"
             + " finalStartBeat: 3\n" +
             "Pitch: 2, StartTime: 3, EndTime: 4\n" +
             "Pitch: 3, StartTime: 3, EndTime: 4\n" +
@@ -216,16 +224,16 @@ import static org.junit.Assert.assertNotEquals;
   @Test public void testAddNote6() {
     m1.addNote(new PitchImpl(2), 3, 4, 0, 127);
     assertEquals(m1.toString(),
-        "Time: 0\n" + " Measure: 4\n" + " Low Pitch: 2\n" + " High Pitch: 2\n" +
+        "Measure: 4\n" + " Low Pitch: 2\n" + " High Pitch: 2\n" +
             " finalStartBeat: 3\n" + "Pitch: 2, StartTime: 3, EndTime: 4\n");
     m1.addNote(new PitchImpl(3), 3, 4, 0, 126);
     assertEquals(m1.toString(),
-        "Time: 0\n" + " Measure: 4\n" + " Low Pitch: 2\n" + " High Pitch: 3\n" +
+        "Measure: 4\n" + " Low Pitch: 2\n" + " High Pitch: 3\n" +
             " finalStartBeat: 3\n" + "Pitch: 2, StartTime: 3, EndTime: 4\n" +
             "Pitch: 3, StartTime: 3, EndTime: 4\n");
     m1.addNote(new PitchImpl(5), 3, 10, 0, 125);
     assertEquals(m1.toString(),
-        "Time: 0\n" + " Measure: 4\n" + " Low Pitch: 2\n" + " High Pitch: 5\n"
+        "Measure: 4\n" + " Low Pitch: 2\n" + " High Pitch: 5\n"
             + " finalStartBeat: 3\n" +
             "Pitch: 2, StartTime: 3, EndTime: 4\n" +
             "Pitch: 3, StartTime: 3, EndTime: 4\n" +
@@ -235,16 +243,16 @@ import static org.junit.Assert.assertNotEquals;
   @Test public void testAddNote7() {
     m1.addNote(new PitchImpl(5), 5, 10, 0, 124);
     assertEquals(m1.toString(),
-        "Time: 0\n" + " Measure: 4\n" + " Low Pitch: 5\n" + " High Pitch: 5\n" +
+        "Measure: 4\n" + " Low Pitch: 5\n" + " High Pitch: 5\n" +
             " finalStartBeat: 5\n" + "Pitch: 5, StartTime: 5, EndTime: 10\n");
     m1.addNote(new PitchImpl(5), 7, 17, 0, 123);
     assertEquals(m1.toString(),
-        "Time: 0\n" + " Measure: 4\n" + " Low Pitch: 5\n" + " High Pitch: 5\n" +
+        "Measure: 4\n" + " Low Pitch: 5\n" + " High Pitch: 5\n" +
             " finalStartBeat: 7\n" + "Pitch: 5, StartTime: 5, EndTime: 10\n" +
             "Pitch: 5, StartTime: 7, EndTime: 17\n");
     m1.addNote(new PitchImpl(5), 10, 23, 0, 0);
     assertEquals(m1.toString(),
-        "Time: 0\n" + " Measure: 4\n" + " Low Pitch: 5\n" + " High Pitch: 5\n"
+        "Measure: 4\n" + " Low Pitch: 5\n" + " High Pitch: 5\n"
             + " finalStartBeat: 10\n" +
             "Pitch: 5, StartTime: 5, EndTime: 10\n" +
             "Pitch: 5, StartTime: 7, EndTime: 17\n" +
@@ -254,16 +262,16 @@ import static org.junit.Assert.assertNotEquals;
   @Test public void testAddNote8() {
     m2.addNote(new PitchImpl(5), 5, 10, 0, 1);
     assertEquals(m2.toString(),
-        "Time: 0\n" + " Measure: 3\n" + " Low Pitch: 5\n" + " High Pitch: 5\n" +
+        "Measure: 3\n" + " Low Pitch: 5\n" + " High Pitch: 5\n" +
             " finalStartBeat: 5\n" + "Pitch: 5, StartTime: 5, EndTime: 10\n");
     m2.addNote(new PitchImpl(5), 7, 17, 0, 2);
     assertEquals(m2.toString(),
-        "Time: 0\n" + " Measure: 3\n" + " Low Pitch: 5\n" + " High Pitch: 5\n" +
+        "Measure: 3\n" + " Low Pitch: 5\n" + " High Pitch: 5\n" +
             " finalStartBeat: 7\n" + "Pitch: 5, StartTime: 5, EndTime: 10\n" +
             "Pitch: 5, StartTime: 7, EndTime: 17\n");
     m2.addNote(new PitchImpl(5), 10, 23, 0, 45);
     assertEquals(m2.toString(),
-        "Time: 0\n" + " Measure: 3\n" + " Low Pitch: 5\n" + " High Pitch: 5\n"
+        "Measure: 3\n" + " Low Pitch: 5\n" + " High Pitch: 5\n"
             + " finalStartBeat: 10\n" +
             "Pitch: 5, StartTime: 5, EndTime: 10\n" +
             "Pitch: 5, StartTime: 7, EndTime: 17\n" +
@@ -275,12 +283,12 @@ import static org.junit.Assert.assertNotEquals;
     m1.addNote(new PitchImpl(9), 2, 10, 0, 90);
     m1.editNoteEndTime(new PitchImpl(3), 4, 9, 0);
     assertEquals(m1.toString(),
-        "Time: 0\n" + " Measure: 4\n" + " Low Pitch: 3\n" + " High Pitch: 9\n" +
+        "Measure: 4\n" + " Low Pitch: 3\n" + " High Pitch: 9\n" +
             " finalStartBeat: 4\n" + "Pitch: 9, StartTime: 2, EndTime: 10\n" +
             "Pitch: 3, StartTime: 4, EndTime: 9\n");
     m1.editNoteStartTime(new PitchImpl(9), 2, 7, 0);
     assertEquals(m1.toString(),
-        "Time: 0\n" + " Measure: 4\n" + " Low Pitch: 3\n" + " High Pitch: 9\n" +
+        "Measure: 4\n" + " Low Pitch: 3\n" + " High Pitch: 9\n" +
             " finalStartBeat: 7\n" + "Pitch: 3, StartTime: 4, EndTime: 9\n"
             + "Pitch: 9, StartTime: 7, EndTime: 10\n");
   }
@@ -290,12 +298,12 @@ import static org.junit.Assert.assertNotEquals;
     m2.addNote(new PitchImpl(9), 2, 10, 0, 30);
     m2.editNoteEndTime(new PitchImpl(3), 4, 9, 0);
     assertEquals(m2.toString(),
-        "Time: 0\n" + " Measure: 3\n" + " Low Pitch: 3\n" + " High Pitch: 9\n" +
+        "Measure: 3\n" + " Low Pitch: 3\n" + " High Pitch: 9\n" +
             " finalStartBeat: 4\n" + "Pitch: 9, StartTime: 2, EndTime: 10\n" +
             "Pitch: 3, StartTime: 4, EndTime: 9\n");
     m2.editNoteStartTime(new PitchImpl(9), 2, 7, 0);
     assertEquals(m2.toString(),
-        "Time: 0\n" + " Measure: 3\n" + " Low Pitch: 3\n" + " High Pitch: 9\n" +
+        "Measure: 3\n" + " Low Pitch: 3\n" + " High Pitch: 9\n" +
             " finalStartBeat: 7\n" + "Pitch: 3, StartTime: 4, EndTime: 9\n"
             + "Pitch: 9, StartTime: 7, EndTime: 10\n");
   }
@@ -306,14 +314,14 @@ import static org.junit.Assert.assertNotEquals;
     m2.addNote(new PitchImpl(9), 8, 14, 0, 35);
     m2.editNoteEndTime(new PitchImpl(3), 4, 9, 0);
     assertEquals(m2.toString(),
-        "Time: 0\n" + " Measure: 3\n" + " Low Pitch: 3\n" + " High Pitch: 9\n" +
+        "Measure: 3\n" + " Low Pitch: 3\n" + " High Pitch: 9\n" +
             " finalStartBeat: 8\n" + "Pitch: 9, StartTime: 2, EndTime: 10\n" +
             "Pitch: 3, StartTime: 4, EndTime: 9\n" +
             "Pitch: 9, StartTime: 8, EndTime: 14\n");
     m2.editNoteStartTime(new PitchImpl(9), 2, 7, 0);
     m2.editNoteStartTime(new PitchImpl(9), 8, 10, 0);
     assertEquals(m2.toString(),
-        "Time: 0\n" + " Measure: 3\n" + " Low Pitch: 3\n" + " High Pitch: 9\n" +
+        "Measure: 3\n" + " Low Pitch: 3\n" + " High Pitch: 9\n" +
             " finalStartBeat: 10\n" + "Pitch: 3, StartTime: 4, EndTime: 9\n"
             + "Pitch: 9, StartTime: 7, EndTime: 10\n" + "Pitch: 9, StartTime: 10, EndTime: 14\n");
   }
@@ -324,14 +332,14 @@ import static org.junit.Assert.assertNotEquals;
     m1.addNote(new PitchImpl(9), 8, 14, 1, 89);
     m1.editNoteEndTime(new PitchImpl(3), 4, 9, 1);
     assertEquals(m1.toString(),
-        "Time: 0\n" + " Measure: 4\n" + " Low Pitch: 3\n" + " High Pitch: 9\n" +
+        "Measure: 4\n" + " Low Pitch: 3\n" + " High Pitch: 9\n" +
             " finalStartBeat: 8\n" + "Pitch: 9, StartTime: 2, EndTime: 10\n" +
             "Pitch: 3, StartTime: 4, EndTime: 9\n" +
             "Pitch: 9, StartTime: 8, EndTime: 14\n");
     m1.editNoteStartTime(new PitchImpl(9), 2, 7, 1);
     m1.editNoteStartTime(new PitchImpl(9), 8, 10, 1);
     assertEquals(m1.toString(),
-        "Time: 0\n" + " Measure: 4\n" + " Low Pitch: 3\n" + " High Pitch: 9\n" +
+        "Measure: 4\n" + " Low Pitch: 3\n" + " High Pitch: 9\n" +
             " finalStartBeat: 10\n" + "Pitch: 3, StartTime: 4, EndTime: 9\n"
             + "Pitch: 9, StartTime: 7, EndTime: 10\n" + "Pitch: 9, StartTime: 10, EndTime: 14\n");
   }
@@ -396,15 +404,15 @@ import static org.junit.Assert.assertNotEquals;
     m1.addNote(new PitchImpl(4), 6, 10, 1, 80);
     m1.addNote(new PitchImpl(7), 9, 11, 1, 80);
     assertEquals(m1.toString(),
-        "Time: 0\n" + " Measure: 4\n" + " Low Pitch: 4\n" + " High Pitch: 7\n" +
+        "Measure: 4\n" + " Low Pitch: 4\n" + " High Pitch: 7\n" +
             " finalStartBeat: 9\n" + "Pitch: 4, StartTime: 6, EndTime: 10\n" +
             "Pitch: 7, StartTime: 9, EndTime: 11\n");
     m1.deleteNote(new PitchImpl(4), 6, 1);
     assertEquals(m1.toString(),
-        "Time: 0\n" + " Measure: 4\n" + " Low Pitch: 7\n" + " High Pitch: 7\n" +
+        "Measure: 4\n" + " Low Pitch: 7\n" + " High Pitch: 7\n" +
             " finalStartBeat: 9\n" + "Pitch: 7, StartTime: 9, EndTime: 11\n");
     m1.deleteNote(new PitchImpl(7), 9, 1);
-    assertEquals(m1.toString(), "Time: 0\n" + " Measure: 4\n" + " Low Pitch: -1\n" +
+    assertEquals(m1.toString(), "Measure: 4\n" + " Low Pitch: -1\n" +
         " High Pitch: -1\n" + " finalStartBeat: 0\n");
   }
 
@@ -412,15 +420,15 @@ import static org.junit.Assert.assertNotEquals;
     m2.addNote(new PitchImpl(4), 6, 10, 0, 70);
     m2.addNote(new PitchImpl(7), 9, 11, 0, 70);
     assertEquals(m2.toString(),
-        "Time: 0\n" + " Measure: 3\n" + " Low Pitch: 4\n" + " High Pitch: 7\n" +
+        "Measure: 3\n" + " Low Pitch: 4\n" + " High Pitch: 7\n" +
             " finalStartBeat: 9\n" + "Pitch: 4, StartTime: 6, EndTime: 10\n" +
             "Pitch: 7, StartTime: 9, EndTime: 11\n");
     m2.deleteNote(new PitchImpl(4), 6, 0);
     assertEquals(m2.toString(),
-        "Time: 0\n" + " Measure: 3\n" + " Low Pitch: 7\n" + " High Pitch: 7\n" +
+        "Measure: 3\n" + " Low Pitch: 7\n" + " High Pitch: 7\n" +
             " finalStartBeat: 9\n" + "Pitch: 7, StartTime: 9, EndTime: 11\n");
     m2.deleteNote(new PitchImpl(7), 9, 0);
-    assertEquals(m2.toString(), "Time: 0\n" + " Measure: 3\n" + " Low Pitch: -1\n" +
+    assertEquals(m2.toString(), "Measure: 3\n" + " Low Pitch: -1\n" +
         " High Pitch: -1\n" + " finalStartBeat: 0\n");
   }
 
@@ -428,22 +436,22 @@ import static org.junit.Assert.assertNotEquals;
     m2.addNote(new PitchImpl(4), 6, 10, 1, 8);
     m2.addNote(new PitchImpl(7), 9, 11, 1, 9);
     assertEquals(m2.toString(),
-        "Time: 0\n" + " Measure: 3\n" + " Low Pitch: 4\n" + " High Pitch: 7\n" +
+        "Measure: 3\n" + " Low Pitch: 4\n" + " High Pitch: 7\n" +
             " finalStartBeat: 9\n" + "Pitch: 4, StartTime: 6, EndTime: 10\n" +
             "Pitch: 7, StartTime: 9, EndTime: 11\n");
     m2.deleteNote(new PitchImpl(4), 6, 1);
     assertEquals(m2.toString(),
-        "Time: 0\n" + " Measure: 3\n" + " Low Pitch: 7\n" + " High Pitch: 7\n" +
+        "Measure: 3\n" + " Low Pitch: 7\n" + " High Pitch: 7\n" +
             " finalStartBeat: 9\n" + "Pitch: 7, StartTime: 9, EndTime: 11\n");
     m2.deleteNote(new PitchImpl(7), 9, 1);
-    assertEquals(m2.toString(), "Time: 0\n" + " Measure: 3\n" + " Low Pitch: -1\n" +
+    assertEquals(m2.toString(), "Measure: 3\n" + " Low Pitch: -1\n" +
         " High Pitch: -1\n" + " finalStartBeat: 0\n");
     m2.addNote(new PitchImpl(4), 6, 10, 1, 8);
-    assertEquals(m2.toString(), "Time: 0\n" + " Measure: 3\n" + " Low Pitch: 4\n" +
+    assertEquals(m2.toString(), "Measure: 3\n" + " Low Pitch: 4\n" +
         " High Pitch: 4\n" + " finalStartBeat: 6\n" + "Pitch: 4, StartTime: 6, EndTime: 10\n");
     m2.deleteNote(new PitchImpl(4), 6, 1);
     assertEquals(m2.toString(),
-        "Time: 0\n" + " Measure: 3\n" + " Low Pitch: -1\n" + " High Pitch: -1\n"
+        "Measure: 3\n" + " Low Pitch: -1\n" + " High Pitch: -1\n"
             + " finalStartBeat: 0\n");
   }
 
@@ -451,22 +459,22 @@ import static org.junit.Assert.assertNotEquals;
     m1.addNote(new PitchImpl(4), 6, 10, 1, 7);
     m1.addNote(new PitchImpl(7), 9, 11, 1, 7);
     assertEquals(m1.toString(),
-        "Time: 0\n" + " Measure: 4\n" + " Low Pitch: 4\n" + " High Pitch: 7\n" +
+        "Measure: 4\n" + " Low Pitch: 4\n" + " High Pitch: 7\n" +
             " finalStartBeat: 9\n" + "Pitch: 4, StartTime: 6, EndTime: 10\n" +
             "Pitch: 7, StartTime: 9, EndTime: 11\n");
     m1.deleteNote(new PitchImpl(4), 6, 1);
     assertEquals(m1.toString(),
-        "Time: 0\n" + " Measure: 4\n" + " Low Pitch: 7\n" + " High Pitch: 7\n" +
+        "Measure: 4\n" + " Low Pitch: 7\n" + " High Pitch: 7\n" +
             " finalStartBeat: 9\n" + "Pitch: 7, StartTime: 9, EndTime: 11\n");
     m1.deleteNote(new PitchImpl(7), 9, 1);
-    assertEquals(m1.toString(), "Time: 0\n" + " Measure: 4\n" + " Low Pitch: -1\n" +
+    assertEquals(m1.toString(), "Measure: 4\n" + " Low Pitch: -1\n" +
         " High Pitch: -1\n" + " finalStartBeat: 0\n");
     m1.addNote(new PitchImpl(4), 6, 10, 1, 7);
-    assertEquals(m1.toString(), "Time: 0\n" + " Measure: 4\n" + " Low Pitch: 4\n" +
+    assertEquals(m1.toString(), "Measure: 4\n" + " Low Pitch: 4\n" +
         " High Pitch: 4\n" + " finalStartBeat: 6\n" + "Pitch: 4, StartTime: 6, EndTime: 10\n");
     m1.deleteNote(new PitchImpl(4), 6, 1);
     assertEquals(m1.toString(),
-        "Time: 0\n" + " Measure: 4\n" + " Low Pitch: -1\n" + " High Pitch: -1\n"
+        "Measure: 4\n" + " Low Pitch: -1\n" + " High Pitch: -1\n"
             + " finalStartBeat: 0\n");
   }
 
@@ -545,7 +553,7 @@ import static org.junit.Assert.assertNotEquals;
     l.add(n2);
     m1.addAllNotes(l, true);
     assertEquals(m1.toString(),
-        "Time: 0\n" + " Measure: 4\n" + " Low Pitch: 2\n" + " High Pitch: 4\n" +
+        "Measure: 4\n" + " Low Pitch: 2\n" + " High Pitch: 4\n" +
             " finalStartBeat: 7\n" + "Pitch: 3, StartTime: 2, EndTime: 5\n"
             + "Pitch: 2, StartTime: 5, EndTime: 6\n" + "Pitch: 4, StartTime: 7, EndTime: 11\n");
   }
@@ -557,7 +565,7 @@ import static org.junit.Assert.assertNotEquals;
     l.add(n2);
     m2.addAllNotes(l, true);
     assertEquals(m2.toString(),
-        "Time: 0\n" + " Measure: 3\n" + " Low Pitch: 2\n" + " High Pitch: 4\n" +
+        "Measure: 3\n" + " Low Pitch: 2\n" + " High Pitch: 4\n" +
             " finalStartBeat: 7\n" + "Pitch: 3, StartTime: 2, EndTime: 5\n"
             + "Pitch: 2, StartTime: 5, EndTime: 6\n" + "Pitch: 4, StartTime: 7, EndTime: 11\n");
   }
@@ -569,7 +577,7 @@ import static org.junit.Assert.assertNotEquals;
     l.add(n2);
     m1.addAllNotes(l, false);
     assertEquals(m1.toString(),
-        "Time: 0\n" + " Measure: 4\n" + " Low Pitch: 2\n" + " High Pitch: 4\n" +
+        "Measure: 4\n" + " Low Pitch: 2\n" + " High Pitch: 4\n" +
             " finalStartBeat: 5\n" + "Pitch: 3, StartTime: 2, EndTime: 5\n"
             + "Pitch: 2, StartTime: 3, EndTime: 4\n" + "Pitch: 4, StartTime: 5, EndTime: 9\n");
   }
@@ -581,7 +589,7 @@ import static org.junit.Assert.assertNotEquals;
     l.add(n2);
     m2.addAllNotes(l, false);
     assertEquals(m2.toString(),
-        "Time: 0\n" + " Measure: 3\n" + " Low Pitch: 2\n" + " High Pitch: 4\n" +
+        "Measure: 3\n" + " Low Pitch: 2\n" + " High Pitch: 4\n" +
             " finalStartBeat: 5\n" + "Pitch: 3, StartTime: 2, EndTime: 5\n"
             + "Pitch: 2, StartTime: 3, EndTime: 4\n" + "Pitch: 4, StartTime: 5, EndTime: 9\n");
   }
@@ -593,7 +601,7 @@ import static org.junit.Assert.assertNotEquals;
     l.add(new MusicNote(new PitchImpl(4), 6, 9, 2, 9));
     m1.addAllNotes(l, false);
     assertEquals(m1.toString(),
-        "Time: 0\n" + " Measure: 4\n" + " Low Pitch: 3\n" + " High Pitch: 4\n" +
+        "Measure: 4\n" + " Low Pitch: 3\n" + " High Pitch: 4\n" +
             " finalStartBeat: 6\n" + "Pitch: 3, StartTime: 2, EndTime: 5\n"
             + "Pitch: 3, StartTime: 2, EndTime: 7\n" + "Pitch: 4, StartTime: 6, EndTime: 9\n");
   }
@@ -605,7 +613,7 @@ import static org.junit.Assert.assertNotEquals;
     l.add(new MusicNote(new PitchImpl(4), 6, 9, 0, 34));
     m2.addAllNotes(l, false);
     assertEquals(m2.toString(),
-        "Time: 0\n" + " Measure: 3\n" + " Low Pitch: 3\n" + " High Pitch: 4\n" +
+        "Measure: 3\n" + " Low Pitch: 3\n" + " High Pitch: 4\n" +
             " finalStartBeat: 6\n"
             + "Pitch: 3, StartTime: 2, EndTime: 5\n"
             + "Pitch: 4, StartTime: 6, EndTime: 9\n");
@@ -661,30 +669,30 @@ import static org.junit.Assert.assertNotEquals;
   }
 
   @Test public void testTimestamp() {
-    assertEquals(m1.getTimeStamp(), 0);
-    m1.advanceTimestamp();
-    assertEquals(m1.getTimeStamp(), 1);
-    m1.advanceTimestamp();
-    assertEquals(m1.getTimeStamp(), 2);
-    m1.resetTimestamp();
-    assertEquals(m1.getTimeStamp(), 0);
+    assertEquals(m3.getTimeStamp(), 0);
+    m3.advanceTimestamp();
+    assertEquals(m3.getTimeStamp(), 1);
+    m3.advanceTimestamp();
+    assertEquals(m3.getTimeStamp(), 2);
+    m3.resetTimestamp();
+    assertEquals(m3.getTimeStamp(), 0);
   }
 
   @Test public void testTimestamp2() {
-    assertEquals(m2.getTimeStamp(), 0);
-    m2.advanceTimestamp();
-    assertEquals(m2.getTimeStamp(), 1);
-    m2.advanceTimestamp();
-    assertEquals(m2.getTimeStamp(), 2);
-    m2.resetTimestamp();
-    assertEquals(m2.getTimeStamp(), 0);
+    assertEquals(m3.getTimeStamp(), 0);
+    m3.advanceTimestamp();
+    assertEquals(m3.getTimeStamp(), 1);
+    m3.advanceTimestamp();
+    assertEquals(m3.getTimeStamp(), 2);
+    m3.resetTimestamp();
+    assertEquals(m3.getTimeStamp(), 0);
   }
 
   @Test public void testAddNoteInstrument() {
     m1.addNote(new PitchImpl(9), 4, 11, 13, 9);
     m1.addNote(new PitchImpl(9), 4, 11, 70, 3);
     assertEquals(m1.toString(),
-        "Time: 0\n" + " Measure: 4\n" + " Low Pitch: 9\n" + " High Pitch: 9\n" +
+        "Measure: 4\n" + " Low Pitch: 9\n" + " High Pitch: 9\n" +
             " finalStartBeat: 4\n" + "Pitch: 9, StartTime: 4, EndTime: 11\n"
             + "Pitch: 9, StartTime: 4, EndTime: 11\n");
 
@@ -694,7 +702,7 @@ import static org.junit.Assert.assertNotEquals;
     m2.addNote(new PitchImpl(9), 4, 11, 13, 9);
     m2.addNote(new PitchImpl(9), 4, 11, 70, 3);
     assertEquals(m2.toString(),
-        "Time: 0\n" + " Measure: 3\n" + " Low Pitch: 9\n" + " High Pitch: 9\n" +
+        "Measure: 3\n" + " Low Pitch: 9\n" + " High Pitch: 9\n" +
             " finalStartBeat: 4\n" + "Pitch: 9, StartTime: 4, EndTime: 11\n"
             + "Pitch: 9, StartTime: 4, EndTime: 11\n");
 
@@ -705,7 +713,7 @@ import static org.junit.Assert.assertNotEquals;
     m1.addNote(new PitchImpl(9), 4, 13, 70, 3);
     m1.addNote(new PitchImpl(9), 4, 17, 89, 2);
     assertEquals(m1.toString(),
-        "Time: 0\n" + " Measure: 4\n" + " Low Pitch: 9\n" + " High Pitch: 9\n" +
+        "Measure: 4\n" + " Low Pitch: 9\n" + " High Pitch: 9\n" +
             " finalStartBeat: 4\n" + "Pitch: 9, StartTime: 4, EndTime: 11\n"
             + "Pitch: 9, StartTime: 4, EndTime: 13\n" + "Pitch: 9, StartTime: 4, EndTime: 17\n");
 
@@ -716,7 +724,7 @@ import static org.junit.Assert.assertNotEquals;
     m2.addNote(new PitchImpl(9), 4, 13, 70, 3);
     m2.addNote(new PitchImpl(9), 4, 17, 89, 2);
     assertEquals(m2.toString(),
-        "Time: 0\n" + " Measure: 3\n" + " Low Pitch: 9\n" + " High Pitch: 9\n" +
+        "Measure: 3\n" + " Low Pitch: 9\n" + " High Pitch: 9\n" +
             " finalStartBeat: 4\n" + "Pitch: 9, StartTime: 4, EndTime: 11\n"
             + "Pitch: 9, StartTime: 4, EndTime: 13\n" + "Pitch: 9, StartTime: 4, EndTime: 17\n");
 
@@ -984,4 +992,4 @@ import static org.junit.Assert.assertNotEquals;
   @Test(expected = IllegalArgumentException.class) public void makeNoteException4() {
     new MusicNote(new PitchImpl(8), 17, 18, 18, 180);
   }
-}*/
+}
