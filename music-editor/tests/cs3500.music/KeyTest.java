@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.awt.*;
 import static org.junit.Assert.assertEquals;
 /**
- * Represents the tests for Key Events
+ * Represents the tests for Key Eventsop
  */
 public class KeyTest extends AbstractViewTest {
 
