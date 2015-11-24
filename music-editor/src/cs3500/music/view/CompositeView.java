@@ -25,8 +25,8 @@ public class CompositeView implements CompositeViewable {
     gv.addListener(k);
   }
 
-  @Override public void paintAgain() {
-    gv.paintAgain();
+  @Override public void paintAgain(boolean playing) {
+    gv.paintAgain(playing);
   }
 
   @Override public void skipToFront() {

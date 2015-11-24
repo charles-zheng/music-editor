@@ -86,7 +86,7 @@ public class ControllerImpl implements Controller {
         model.setCurPitch(-1);
         model.setCurBeat(-1);
       }
-      view.paintAgain();
+      view.paintAgain(playing);
     }
   }
 
@@ -104,7 +104,7 @@ public class ControllerImpl implements Controller {
           //do nothing
         }
       }
-      view.paintAgain();
+      view.paintAgain(playing);
     }
   }
 
@@ -120,7 +120,7 @@ public class ControllerImpl implements Controller {
       } catch (Model.IllegalAccessNoteException ex) {
         //do nothing
       }
-      view.paintAgain();
+      view.paintAgain(playing);
     }
   }
 
@@ -142,7 +142,7 @@ public class ControllerImpl implements Controller {
       } catch (Model.IllegalAccessNoteException ex) {
         //do nothing
       }
-      view.paintAgain();
+      view.paintAgain(playing);
     }
   }
 
@@ -176,7 +176,7 @@ public class ControllerImpl implements Controller {
       } catch (Model.IllegalAccessNoteException ex) {
         //do nothing
       }
-      view.paintAgain();
+      view.paintAgain(playing);
     }
   }
 
@@ -209,7 +209,7 @@ public class ControllerImpl implements Controller {
       } catch (Model.IllegalAccessNoteException ex) {
         //do nothing
       }
-      view.paintAgain();
+      view.paintAgain(playing);
     }
   }
 
@@ -218,7 +218,7 @@ public class ControllerImpl implements Controller {
 
     public void run() {
       if (playing && model.getTimeStamp() < model.getFinalEndBeat()) {
-        view.paintAgain();
+        view.paintAgain(playing);
         try {
           view.recordNotes(model.getTimeStamp());
         } catch (InvalidMidiDataException e) {
@@ -243,7 +243,7 @@ public class ControllerImpl implements Controller {
       } catch (InvalidMidiDataException e) {
         e.printStackTrace();
       }
-      view.paintAgain();
+      view.paintAgain(playing);
     }
   }
 
@@ -260,7 +260,7 @@ public class ControllerImpl implements Controller {
       model.resetTimestamp();
       view.rewind();
       view.skipToFront();
-      view.paintAgain();
+      view.paintAgain(playing);
     }
   }
 
@@ -287,7 +287,7 @@ public class ControllerImpl implements Controller {
             model.deleteNote(new PitchImpl(pitch), n.getStartTime(), n.getInstrument());
             model.addNote(new PitchImpl(pitch), n.getStartTime() - 1, n.getEndTime() - 1, n.getInstrument(), n.getVelocity());
             model.setCurBeat(n.getEndTime() - 2);
-            view.paintAgain();
+            view.paintAgain(playing);
           }
         }
       }
@@ -324,7 +324,7 @@ public class ControllerImpl implements Controller {
           model.addNote(new PitchImpl(pitch), n.getStartTime() + 1, n.getEndTime() + 1,
               n.getInstrument(), n.getVelocity());
           model.setCurBeat(n.getEndTime());
-          view.paintAgain();
+          view.paintAgain(playing);
         }
       }
       catch (Model.IllegalAddException ex) {

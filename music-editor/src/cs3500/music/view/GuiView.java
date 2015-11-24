@@ -13,7 +13,7 @@ public interface GuiView extends View {
 
   void addListener(KeyListener k);
 
-  void paintAgain();
+  void paintAgain(boolean playing);
 
   void skipToFront();
 

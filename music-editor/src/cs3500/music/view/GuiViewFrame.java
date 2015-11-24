@@ -104,18 +104,21 @@ public final class GuiViewFrame extends javax.swing.JFrame implements GuiView {
     this.repaint();
   }
 
-  public void paintAgain() {
+  public void paintAgain(boolean playing) {
     this.displayPanel.setPreferredSize(this.getPreferredSize());
     JViewport jv = this.js.getViewport();
     int limit = (int)(jv.getViewPosition().getX() + jv.getExtentSize().getWidth());
     int curX = (model.getTimeStamp() + 2) * ConcreteGuiViewPanel.BOX_SIZE;
+    int curY = (int)jv.getViewPosition().getY();
 
-    if (curX > limit) {
-      jv.setViewPosition(new Point(limit, 0));
-    }
+    if (playing) {
+      if (curX > limit) {
+        jv.setViewPosition(new Point(limit, curY));
+      }
 
-    if (curX < (int)(jv.getViewPosition().getX())) {
-      jv.setViewPosition(new Point(curX, 0));
+      if (curX < (int)(jv.getViewPosition().getX())) {
+        jv.setViewPosition(new Point(curX, curY));
+      }
     }
 
     repaint();
