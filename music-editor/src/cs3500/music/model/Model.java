@@ -18,12 +18,6 @@ public interface Model {
    */
   int DEFAULT_TEMPO = 100000;
 
-  /**
-   * Gets the current timestamp of the piece
-   *
-   * @return the current timestamp
-   */
-  int getTimeStamp();
 
   /**
    * Gets the lowest pitch of the piece
@@ -165,22 +159,6 @@ public interface Model {
    */
   void addAllNotes(List<Note> allNotes, boolean atEnd);
 
-  /**
-   * Advance the timestamp of this piece by 1;
-   */
-  void advanceTimestamp();
-
-  /**
-   * Sets the timestamp of this piece of this piece to the given timestamp
-   *
-   * @param t the new timestamp
-   */
-  void setTimeStamp(int t);
-
-  /**
-   * Resets the timestamp of this piece to 0
-   */
-  void resetTimestamp();
 
   /**
    * Returns this music sheet as a String with the fields and Notes listed

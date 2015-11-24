@@ -37,7 +37,7 @@ public class ControllerImpl implements Controller {
    */
   public ControllerImpl(Model m) throws InvalidMidiDataException {
     this.model = new GuiViewModel(m);
-    this.view = new CompositeView(new MidiViewImpl(m), new GuiViewFrame(model));
+    this.view = new CompositeView(new MidiViewImpl(model), new GuiViewFrame(model));
     this.kh = new KeyboardHandler();
     this.timer = new Timer();
     this.playing = false;
@@ -75,6 +75,7 @@ public class ControllerImpl implements Controller {
   public void initialize() throws InvalidMidiDataException {
     this.view.initialize();
   }
+
   //TODO
   public class AddNewNote implements Runnable {
 
@@ -89,6 +90,7 @@ public class ControllerImpl implements Controller {
       view.paintAgain(playing);
     }
   }
+
 
   public class DeleteNote implements Runnable {
 
@@ -107,6 +109,7 @@ public class ControllerImpl implements Controller {
       view.paintAgain(playing);
     }
   }
+
 
   public class ExtendNote implements Runnable {
 
@@ -162,10 +165,9 @@ public class ControllerImpl implements Controller {
       }
       try {
         try {
-          model.getNoteAt(new PitchImpl(n.getPitch().getValue() - 1),
-              n.getStartTime(), instrument);
-        }
-        catch(Model.IllegalAccessNoteException ex) {
+          model
+              .getNoteAt(new PitchImpl(n.getPitch().getValue() - 1), n.getStartTime(), instrument);
+        } catch (Model.IllegalAccessNoteException ex) {
           if (pitch != 0) {
             model.addNote(new PitchImpl(n.getPitch().getValue() - 1), n.getStartTime(),
                 n.getEndTime(), n.getInstrument(), n.getVelocity());
@@ -179,6 +181,7 @@ public class ControllerImpl implements Controller {
       view.paintAgain(playing);
     }
   }
+
 
   public class RaiseNote implements Runnable {
 
@@ -195,10 +198,9 @@ public class ControllerImpl implements Controller {
       }
       try {
         try {
-          model.getNoteAt(new PitchImpl(n.getPitch().getValue() + 1),
-              n.getStartTime(), instrument);
-        }
-        catch(Model.IllegalAccessNoteException ex) {
+          model
+              .getNoteAt(new PitchImpl(n.getPitch().getValue() + 1), n.getStartTime(), instrument);
+        } catch (Model.IllegalAccessNoteException ex) {
           if (pitch != 127) {
             model.addNote(new PitchImpl(n.getPitch().getValue() + 1), n.getStartTime(),
                 n.getEndTime(), n.getInstrument(), n.getVelocity());
@@ -247,6 +249,7 @@ public class ControllerImpl implements Controller {
     }
   }
 
+
   public class Pause implements Runnable {
     public void run() {
       playing = false;
@@ -254,6 +257,7 @@ public class ControllerImpl implements Controller {
 
     }
   }
+
 
   public class Rewind implements Runnable {
     public void run() {
@@ -282,20 +286,18 @@ public class ControllerImpl implements Controller {
         if (n.getStartTime() != 0) {
           try {
             model.getNoteAt(new PitchImpl(pitch), n.getStartTime() - 1, instrument);
-          }
-          catch (Model.IllegalAccessNoteException ex) {
+          } catch (Model.IllegalAccessNoteException ex) {
             model.deleteNote(new PitchImpl(pitch), n.getStartTime(), n.getInstrument());
-            model.addNote(new PitchImpl(pitch), n.getStartTime() - 1, n.getEndTime() - 1, n.getInstrument(), n.getVelocity());
+            model.addNote(new PitchImpl(pitch), n.getStartTime() - 1, n.getEndTime() - 1,
+                n.getInstrument(), n.getVelocity());
             model.setCurBeat(n.getEndTime() - 2);
             view.paintAgain(playing);
           }
         }
-      }
-      catch (Model.IllegalAddException ex) {
+      } catch (Model.IllegalAddException ex) {
         //do nothing
         return;
-      }
-      catch (IllegalArgumentException ex) {
+      } catch (IllegalArgumentException ex) {
         //do nothing
         return;
       }
@@ -318,25 +320,23 @@ public class ControllerImpl implements Controller {
       try {
         try {
           model.getNoteAt(new PitchImpl(pitch), n.getStartTime() + 1, instrument);
-        }
-        catch(Model.IllegalAccessNoteException ex) {
+        } catch (Model.IllegalAccessNoteException ex) {
           model.deleteNote(new PitchImpl(pitch), n.getStartTime(), n.getInstrument());
           model.addNote(new PitchImpl(pitch), n.getStartTime() + 1, n.getEndTime() + 1,
               n.getInstrument(), n.getVelocity());
           model.setCurBeat(n.getEndTime());
           view.paintAgain(playing);
         }
-      }
-      catch (Model.IllegalAddException ex) {
+      } catch (Model.IllegalAddException ex) {
         //do nothing
         return;
-      }
-      catch (IllegalArgumentException ex) {
+      } catch (IllegalArgumentException ex) {
         //do nothing
         return;
       }
     }
   }
+
 
   public class ToHome implements Runnable {
     public void run() {
@@ -344,11 +344,13 @@ public class ControllerImpl implements Controller {
     }
   }
 
+
   public class ToEnd implements Runnable {
     public void run() {
       view.skipToEnd();
     }
   }
+
 
   public class MoveScreenLeft implements Runnable {
 
@@ -357,12 +359,14 @@ public class ControllerImpl implements Controller {
     }
   }
 
+
   public class MoveScreenRight implements Runnable {
 
     public void run() {
       view.shiftRight();
     }
   }
+
 
   public class MoveScreenUp implements Runnable {
 
@@ -371,6 +375,7 @@ public class ControllerImpl implements Controller {
     }
   }
 
+
   public class MoveScreenDown implements Runnable {
 
     public void run() {
@@ -378,5 +383,12 @@ public class ControllerImpl implements Controller {
     }
   }
 
+
+  public class TestKeyHandler implements Runnable {
+
+    public void run() {
+
+    }
+  }
 
 }

@@ -8,12 +8,6 @@ import java.util.*;
 final public class ModelImpl implements Model {
 
   /**
-   * Represents the timestamp that the piece is currently at
-   */
-  private int timeStamp;
-  //INVARIANT: Must not be negative
-
-  /**
    * maps all of the Notes that play at a specific time to that timestamp
    * The key is the timestamp of the first beat of the cs3500.music.model.Note
    * The value is every cs3500.music.model.Note that begins at that timestamp
@@ -78,7 +72,6 @@ final public class ModelImpl implements Model {
     }
     this.measure = measure;
     this.tempo = tempo;
-    this.timeStamp = 0;
     this.lowestPitch = new PitchImpl(-1);
     this.highestPitch = new PitchImpl(-1);
     this.finalStartBeat = 0;
@@ -93,15 +86,6 @@ final public class ModelImpl implements Model {
    */
   public ModelImpl() {
     this(DEFAULT_MEASURE, DEFAULT_TEMPO);
-  }
-
-  /**
-   * Gets the current timestamp of the piece
-   *
-   * @return the current timestamp
-   */
-  public int getTimeStamp() {
-    return this.timeStamp;
   }
 
   /**
@@ -464,28 +448,7 @@ final public class ModelImpl implements Model {
     }
   }
 
-  /**
-   * Advance the timestamp of this piece by 1;
-   */
-  public void advanceTimestamp() {
-    this.timeStamp++;
-  }
 
-  /**
-   * Sets the timestamp of this piece of this piece to the given timestamp
-   *
-   * @param t the new timestamp
-   */
-  public void setTimeStamp(int t) {
-    this.timeStamp = t;
-  }
-
-  /**
-   * Resets the timestamp of this piece to 0
-   */
-  public void resetTimestamp() {
-    this.timeStamp = 0;
-  }
 
   /**
    * Returns this music sheet as a String with the fields and Notes listed
@@ -495,8 +458,8 @@ final public class ModelImpl implements Model {
    */
   @Override public String toString() {
     String acc = String
-        .format("Time: %d\n Measure: %d\n Low Pitch: %d\n High Pitch: %d\n finalStartBeat: %d\n",
-            this.getTimeStamp(), this.getMeasure(), this.getLowestPitch().getValue(),
+        .format("Measure: %d\n Low Pitch: %d\n High Pitch: %d\n finalStartBeat: %d\n",
+            this.getMeasure(), this.getLowestPitch().getValue(),
             this.getHighestPitch().getValue(), this.getFinalStartBeat());
     for (int i = 0; i <= this.getFinalStartBeat(); i++) {
       if (this.musicSheet.containsKey(i)) {

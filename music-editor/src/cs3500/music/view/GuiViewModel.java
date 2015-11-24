@@ -18,15 +18,18 @@ public class GuiViewModel implements ViewModel {
   private int curBeat;
   private int curInstrument;
 
+  /**
+   * Represents the timestamp that the piece is currently at
+   */
+  private int timeStamp;
+  //INVARIANT: Must not be negative
+
   public GuiViewModel(Model m) {
     this.m = m;
     this.curPitch = -1;
     this.curBeat = -1;
     this.curInstrument = -1;
-  }
-
-  @Override public int getTimeStamp() {
-    return m.getTimeStamp();
+    this.timeStamp = 0;
   }
 
   @Override public Pitch getLowestPitch() {
@@ -98,14 +101,36 @@ public class GuiViewModel implements ViewModel {
     m.addAllNotes(allNotes, atEnd);
   }
 
-  @Override public void advanceTimestamp() {
-    m.advanceTimestamp();
+  /**
+   * Gets the current timestamp of the piece
+   *
+   * @return the current timestamp
+   */
+  public int getTimeStamp() {
+    return this.timeStamp;
   }
 
-  @Override public void setTimeStamp(int t) {m.setTimeStamp(t);}
+  /**
+   * Advance the timestamp of this piece by 1;
+   */
+  public void advanceTimestamp() {
+    this.timeStamp++;
+  }
 
-  @Override public void resetTimestamp() {
-    m.resetTimestamp();
+  /**
+   * Sets the timestamp of this piece of this piece to the given timestamp
+   *
+   * @param t the new timestamp
+   */
+  public void setTimeStamp(int t) {
+    this.timeStamp = t;
+  }
+
+  /**
+   * Resets the timestamp of this piece to 0
+   */
+  public void resetTimestamp() {
+    this.timeStamp = 0;
   }
 
   @Override public void initialize() throws InvalidMidiDataException {
