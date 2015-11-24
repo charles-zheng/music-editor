@@ -16,27 +16,27 @@ public class AbstractViewTest {
   /**
    * The "Mary Had a Little Lamb" model
    */
-  protected Model mary;
+  protected ViewModel mary;
 
   /**
    * The Super Mario Bros. model
    */
-  protected Model smb;
+  protected ViewModel smb;
 
   /**
    * The Tetris song model
    */
-  protected Model tetris;
+  protected ViewModel tetris;
 
   /**
    * A self-made test model
    */
-  protected Model test1;
+  protected ViewModel test1;
 
   /**
    * A C-major scale model
    */
-  protected Model scale;
+  protected ViewModel scale;
 
   /**
    * Initializes all the models to their appropriate format
@@ -44,15 +44,16 @@ public class AbstractViewTest {
    */
   protected void initialize() throws IOException {
     BufferedReader maryFile = new BufferedReader(new FileReader("mary-little-lamb.txt"));
-    this.mary = MusicReader.parseFile(maryFile, new MusicModelBuilder());
+    Model mary = MusicReader.parseFile(maryFile, new MusicModelBuilder());
+    this.mary = new GuiViewModel(mary);
     BufferedReader smbFile = new BufferedReader(new FileReader("mystery-1.txt"));
-    this.smb = MusicReader.parseFile(smbFile, new MusicModelBuilder());
+    this.smb = new GuiViewModel(MusicReader.parseFile(smbFile, new MusicModelBuilder()));
     BufferedReader tetrisFile = new BufferedReader(new FileReader("mystery-2.txt"));
-    this.tetris = MusicReader.parseFile(tetrisFile, new MusicModelBuilder());
+    this.tetris = new GuiViewModel(MusicReader.parseFile(tetrisFile, new MusicModelBuilder()));
     BufferedReader testFile = new BufferedReader(new FileReader("test-1.txt"));
-    this.test1 = MusicReader.parseFile(testFile, new MusicModelBuilder());
+    this.test1 = new GuiViewModel(MusicReader.parseFile(testFile, new MusicModelBuilder()));
 
-    this.scale = new ModelImpl();
+    this.scale = new GuiViewModel(new ModelImpl());
     scale.setTempo(100000);
     scale.addNote(new PitchImpl(60), 0, 2, 1, 50);
     scale.addNote(new PitchImpl(62), 2, 4, 1, 58);

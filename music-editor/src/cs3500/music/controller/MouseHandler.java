@@ -18,12 +18,18 @@ public class MouseHandler implements MouseListener {
   private GuiView view;
 
   /**
+   * Represents mock output, for testing purposes
+   */
+  private StringBuilder out;
+
+  /**
    * Constructs a new mouse handler with the given view.
    *
    * @param view
    */
   public MouseHandler(GuiView view) {
     this.view = view;
+    this.out = new StringBuilder(1000);
   }
 
   /**
@@ -33,6 +39,13 @@ public class MouseHandler implements MouseListener {
    */
   @Override public void mouseClicked(MouseEvent e) {
     view.setCurrent(e.getX(), e.getY());
+    String msg = "Clicked at x:" + e.getX() + " y:" + e.getY() + "\n";
+
+    // resize our StringBuilder to double capacity
+    if (out.capacity() - out.length() < msg.length()) {
+      out.ensureCapacity(out.capacity() * 2);
+    }
+    out.append(msg);
   }
 
   /**
@@ -41,7 +54,13 @@ public class MouseHandler implements MouseListener {
    * @param e the MouseEvent representing the user's pressed
    */
   @Override public void mousePressed(MouseEvent e) {
+    String msg = "Pressed at x:" + e.getX() + " y:" + e.getY() + "\n";
 
+    // resize our StringBuilder to double capacity
+    if (out.capacity() - out.length() < msg.length()) {
+      out.ensureCapacity(out.capacity() * 2);
+    }
+    out.append(msg);
   }
 
   /**
@@ -50,7 +69,13 @@ public class MouseHandler implements MouseListener {
    * @param e the MouseEvent representing the user's release
    */
   @Override public void mouseReleased(MouseEvent e) {
+    String msg = "Released at x:" + e.getX() + " y:" + e.getY() + "\n";
 
+    // resize our StringBuilder to double capacity
+    if (out.capacity() - out.length() < msg.length()) {
+      out.ensureCapacity(out.capacity() * 2);
+    }
+    out.append(msg);
   }
 
   /**
@@ -59,7 +84,13 @@ public class MouseHandler implements MouseListener {
    * @param e the MouseEvent representing the user's enter
    */
   @Override public void mouseEntered(MouseEvent e) {
+    String msg = "Entered at x:" + e.getX() + " y:" + e.getY() + "\n";
 
+    // resize our StringBuilder to double capacity
+    if (out.capacity() - out.length() < msg.length()) {
+      out.ensureCapacity(out.capacity() * 2);
+    }
+    out.append(msg);
   }
 
   /**
@@ -68,6 +99,16 @@ public class MouseHandler implements MouseListener {
    * @param e the MouseEvent representing the user's exit
    */
   @Override public void mouseExited(MouseEvent e) {
+    String msg = "Exited at x:" + e.getX() + " y:" + e.getY() + "\n";
 
+    // resize our StringBuilder to double capacity
+    if (out.capacity() - out.length() < msg.length()) {
+      out.ensureCapacity(out.capacity() * 2);
+    }
+    out.append(msg);
+  }
+
+  public String getOutput() {
+    return this.out.toString();
   }
 }

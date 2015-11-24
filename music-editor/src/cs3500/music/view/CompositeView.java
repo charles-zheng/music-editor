@@ -44,7 +44,6 @@ public class CompositeView implements CompositeViewable {
 
   @Override public void shiftRight() {
     gv.shiftRight();
-    System.out.println("ran");
   }
 
   @Override public void shiftUp() {
