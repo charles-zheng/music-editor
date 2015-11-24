@@ -2,8 +2,9 @@ package cs3500.music.view;
 
 import cs3500.music.model.*;
 import java.awt.Point;
+
 /**
- * Created by Charles on 11/18/15.
+ * An adapter that adds additional functionality to our model.
  */
 public interface ViewModel extends Model, View {
 

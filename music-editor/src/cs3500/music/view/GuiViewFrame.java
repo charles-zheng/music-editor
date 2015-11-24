@@ -50,7 +50,6 @@ public final class GuiViewFrame extends javax.swing.JFrame implements GuiView {
 
     this.setFocusable(true);
 
-    ////frame = new JFrame("Music Editor");
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
     this.displayPanel.setPreferredSize(this.getPreferredSize());
@@ -86,24 +85,38 @@ public final class GuiViewFrame extends javax.swing.JFrame implements GuiView {
             .getLowestPitch().getValue()) + 100);
   }
 
-  //TODO
-  public void addListener(KeyListener kl) {
-    this.addKeyListener(kl);
+  /**
+   * Adds a key listener to this gui view.
+   * @param k The Key Listener to be added.
+   */
+  public void addListener(KeyListener k) {
+    this.addKeyListener(k);
   }
 
+  /**
+   * Removes the given key listener from this gui view.
+   * @param kl The Key Listener to be removed.
+   */
   public void removeKeyListener(KeyListener kl) {
     super.removeKeyListener(kl);
   }
 
-  public void removeMouseListener(MouseListener ml) {
-    super.removeMouseListener(ml);
-  }
-
+  /**
+   * Sends in the location of the mouse click to set the current Note that is being
+   * selected.
+   * @param x The x coordinate of the mouse click.
+   * @param y The y coordinate of the mouse click.
+   */
   public void setCurrent(int x, int y) {
     this.model.setCurrent(x, y);
     this.repaint();
   }
 
+  /**
+   * Repaints the GUI view.
+   *
+   * @param playing Whether or not the model is currently playing.
+   */
   public void paintAgain(boolean playing) {
     this.displayPanel.setPreferredSize(this.getPreferredSize());
     JViewport jv = this.js.getViewport();
@@ -127,16 +140,25 @@ public final class GuiViewFrame extends javax.swing.JFrame implements GuiView {
     this.displayPanel.repaint();
   }
 
+  /**
+   * Visually shows the beginning of the gui view.
+   */
   public void skipToFront() {
     JViewport jv = this.js.getViewport();
     jv.setViewPosition(new Point(0, 0));
   }
 
+  /**
+   * Visually shows the end of the gui view.
+   */
   public void skipToEnd() {
     JViewport jv = this.js.getViewport();
     jv.setViewPosition(new Point(model.getFinalEndBeat() * ConcreteGuiViewPanel.BOX_SIZE, 0));
   }
 
+  /**
+   * Visually moves the gui view that is in the frame left.
+   */
   public void shiftLeft() {
     JViewport jv = this.js.getViewport();
     int curX = (int)jv.getViewPosition().getX();
@@ -146,6 +168,9 @@ public final class GuiViewFrame extends javax.swing.JFrame implements GuiView {
     }
   }
 
+  /**
+   * Visually moves the gui view that is in the frame right.
+   */
   public void shiftRight() {
     JViewport jv = this.js.getViewport();
     int curX = (int)jv.getViewPosition().getX();
@@ -155,6 +180,9 @@ public final class GuiViewFrame extends javax.swing.JFrame implements GuiView {
     }
   }
 
+  /**
+   * Visually moves the gui view that is in the frame up.
+   */
   public void shiftUp() {
     JViewport jv = this.js.getViewport();
     int curX = (int)jv.getViewPosition().getX();
@@ -164,6 +192,9 @@ public final class GuiViewFrame extends javax.swing.JFrame implements GuiView {
     }
   }
 
+  /**
+   * Visually moves the gui view that is in the frame down.
+   */
   public void shiftDown() {
     JViewport jv = this.js.getViewport();
     int curX = (int)jv.getViewPosition().getX();
@@ -174,6 +205,11 @@ public final class GuiViewFrame extends javax.swing.JFrame implements GuiView {
     }
   }
 
+  /**
+   * Gets the dimension of the view that is currently seen in the gui frame.
+   *
+   * @return The Dimension of the range that is currently in the gui frame.
+   */
   public Dimension getViewableRange() {
     return this.js.getViewport().getExtentSize();
   }

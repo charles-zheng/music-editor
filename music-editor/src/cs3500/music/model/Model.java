@@ -152,6 +152,7 @@ public interface Model {
    * @param pitch        the pitch of the note you want to edit.
    * @param currentStart the current start time of the note you want to edit.
    * @param newStart     the new start time for the note.
+   * @param instrument   the instrument of the note you want to edit.
    * @throws IllegalArgumentException   if the new start time is less than 0 or greater
    *                                    than or equal to the end time.
    * @throws IllegalAccessNoteException if there is no note at this position to edit.
@@ -164,6 +165,7 @@ public interface Model {
    * @param pitch        the pitch of the note you want to edit.
    * @param currentStart the current start time of the note you want to edit.
    * @param newEnd       the new end time for the note.
+   * @param instrument   the instrument of the note you want to edit.
    * @throws IllegalArgumentException   if the new end time is less than 0 or less
    *                                    than or equal to the start time.
    * @throws IllegalAccessNoteException if there is no note at this position to edit.

@@ -21,9 +21,9 @@ public class MusicEditor {
   /**
    * Runs the program automatically.
    *
-   * @param args
-   * @throws IOException
-   * @throws InvalidMidiDataException
+   * @param args the command line arguments.
+   * @throws IOException if the input data is invalid
+   * @throws InvalidMidiDataException if the midi data is invalid
    */
   public static void main(String[] args) throws IOException, InvalidMidiDataException {
 
