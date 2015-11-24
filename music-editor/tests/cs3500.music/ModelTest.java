@@ -730,266 +730,321 @@ public class ModelTest {
 
   }
 
-  @Test(expected = IllegalArgumentException.class) public void noteConstructorException() {
+  @Test(expected = IllegalArgumentException.class)
+  public void noteConstructorException() {
     new MusicNote(new PitchImpl(-2), 3, 4, 1, 100);
   }
 
-  @Test(expected = IllegalArgumentException.class) public void noteConstructorException2() {
+  @Test(expected = IllegalArgumentException.class)
+  public void noteConstructorException2() {
     new MusicNote(new PitchImpl(2), -3, 7, 1, 9);
   }
 
-  @Test(expected = IllegalArgumentException.class) public void noteConstructorException3() {
+  @Test(expected = IllegalArgumentException.class)
+  public void noteConstructorException3() {
     new MusicNote(new PitchImpl(5), 4, -10, 1, 7);
   }
 
-  @Test(expected = IllegalArgumentException.class) public void noteConstructorException4() {
+  @Test(expected = IllegalArgumentException.class)
+  public void noteConstructorException4() {
     new MusicNote(new PitchImpl(-1), -1, -1, 1, -1);
   }
 
-  @Test(expected = IllegalArgumentException.class) public void noteConstructorException5() {
+  @Test(expected = IllegalArgumentException.class)
+  public void noteConstructorException5() {
     new MusicNote(new PitchImpl(2), 7, 3, 1, 10);
   }
 
-  @Test(expected = IllegalArgumentException.class) public void noteConstructorException6() {
+  @Test(expected = IllegalArgumentException.class)
+  public void noteConstructorException6() {
     new MusicNote(new PitchImpl(2), 7, 7, 1, 5);
   }
 
-  @Test(expected = IllegalArgumentException.class) public void modelConstructorException() {
+  @Test(expected = IllegalArgumentException.class)
+  public void modelConstructorException() {
     new ModelImpl(-1, 100);
   }
 
-  @Test(expected = IllegalArgumentException.class) public void modelConstructorException2() {
+  @Test(expected = IllegalArgumentException.class)
+  public void modelConstructorException2() {
     new ModelImpl(-4, 100);
   }
 
-  @Test(expected = IllegalArgumentException.class) public void modelConstructorException3() {
+  @Test(expected = IllegalArgumentException.class)
+  public void modelConstructorException3() {
     new ModelImpl(0, 200);
   }
 
-  @Test(expected = IllegalArgumentException.class) public void addNoteException() {
+  @Test(expected = IllegalArgumentException.class)
+  public void addNoteException() {
     m1.addNote(new PitchImpl(-1), 2, 3, 0, 32);
   }
 
-  @Test(expected = IllegalArgumentException.class) public void addNoteException2() {
+  @Test(expected = IllegalArgumentException.class)
+  public void addNoteException2() {
     m2.addNote(new PitchImpl(-10), 2, 3, 0, 101);
   }
 
-  @Test(expected = IllegalArgumentException.class) public void addNoteException3() {
+  @Test(expected = IllegalArgumentException.class)
+  public void addNoteException3() {
     m2.addNote(new PitchImpl(10), 3, -6, 1, 0);
   }
 
-  @Test(expected = IllegalArgumentException.class) public void addNoteException4() {
+  @Test(expected = IllegalArgumentException.class)
+  public void addNoteException4() {
     m1.addNote(new PitchImpl(10), -3, 6, 1, 1);
   }
 
-  @Test(expected = IllegalArgumentException.class) public void addNoteException5() {
+  @Test(expected = IllegalArgumentException.class)
+  public void addNoteException5() {
     m1.addNote(new PitchImpl(-1), -3, -6, 1, 2);
   }
 
-  @Test(expected = IllegalArgumentException.class) public void addNoteException6() {
+  @Test(expected = IllegalArgumentException.class)
+  public void addNoteException6() {
     m2.addNote(new PitchImpl(4), 3, 3, 0, 20);
   }
 
-  @Test(expected = IllegalArgumentException.class) public void addNoteException7() {
+  @Test(expected = IllegalArgumentException.class)
+  public void addNoteException7() {
     m2.addNote(new PitchImpl(9), 2, 2, 1, 90);
   }
 
-  @Test(expected = IllegalArgumentException.class) public void addNoteException8() {
+  @Test(expected = IllegalArgumentException.class)
+  public void addNoteException8() {
     m1.addNote(new PitchImpl(5), 9, 2, 1, 43);
   }
 
-  @Test(expected = IllegalArgumentException.class) public void addNoteException9() {
+  @Test(expected = IllegalArgumentException.class)
+  public void addNoteException9() {
     m2.addNote(new PitchImpl(3), 11, 7, 1, 53);
   }
 
-  @Test(expected = Model.IllegalAddException.class) public void addNoteException10() {
+  @Test(expected = Model.IllegalAddException.class)
+  public void addNoteException10() {
     m2.addNote(new PitchImpl(3), 4, 7, 1, 46);
     m2.addNote(new PitchImpl(3), 4, 19, 1, 78);
   }
 
-  @Test(expected = Model.IllegalAddException.class) public void addNoteException11() {
+  @Test(expected = Model.IllegalAddException.class)
+  public void addNoteException11() {
     m1.addNote(new PitchImpl(5), 6, 9, 0, 125);
     m1.addNote(new PitchImpl(5), 6, 13, 0, 125);
   }
 
-  @Test(expected = Model.IllegalAddException.class) public void addNoteException12() {
+  @Test(expected = Model.IllegalAddException.class)
+  public void addNoteException12() {
     m1.addNote(new PitchImpl(4), 10, 12, 0, 126);
     m1.addNote(new PitchImpl(7), 11, 20, 0, 127);
     m1.addNote(new PitchImpl(4), 10, 16, 0, 89);
   }
 
-  @Test(expected = IllegalArgumentException.class) public void editStartTimeException() {
+  @Test(expected = IllegalArgumentException.class)
+  public void editStartTimeException() {
     m1.addNote(new PitchImpl(2), 3, 5, 0, 34);
     m1.editNoteStartTime(new PitchImpl(2), 3, 5, 0);
   }
 
-  @Test(expected = IllegalArgumentException.class) public void editStartTimeException2() {
+  @Test(expected = IllegalArgumentException.class)
+  public void editStartTimeException2() {
     Pitch p = new PitchImpl(2);
     m1.addNote(p, 3, 5, 0, 19);
     m1.editNoteStartTime(p, 3, -1, 0);
   }
 
-  @Test(expected = IllegalArgumentException.class) public void editStartTimeException3() {
+  @Test(expected = IllegalArgumentException.class)
+  public void editStartTimeException3() {
     m1.addNote(new PitchImpl(2), 3, 5, 0, 15);
     m1.editNoteStartTime(new PitchImpl(2), 3, -4, 0);
   }
 
-  @Test(expected = IllegalArgumentException.class) public void editStartTimeException4() {
+  @Test(expected = IllegalArgumentException.class)
+  public void editStartTimeException4() {
     m1.addNote(new PitchImpl(2), 3, 5, 0, 3);
     m1.addNote(new PitchImpl(2), 1, 2, 0, 3);
     m1.editNoteStartTime(new PitchImpl(2), 3, 1, 0);
   }
 
-  @Test(expected = IllegalArgumentException.class) public void editStartTimeException5() {
+  @Test(expected = IllegalArgumentException.class)
+  public void editStartTimeException5() {
     m2.addNote(new PitchImpl(2), 3, 5, 0, 2);
     m2.addNote(new PitchImpl(2), 1, 2, 0, 0);
     m2.editNoteStartTime(new PitchImpl(2), 3, 1, 0);
   }
 
-  @Test(expected = Model.IllegalAccessNoteException.class) public void editStartTimeException6() {
+  @Test(expected = Model.IllegalAccessNoteException.class)
+  public void editStartTimeException6() {
     m2.addNote(new PitchImpl(2), 3, 5, 0, 6);
     m2.addNote(new PitchImpl(2), 1, 2, 0, 3);
     m2.editNoteStartTime(new PitchImpl(3), 3, 9, 0);
   }
 
-  @Test(expected = Model.IllegalAccessNoteException.class) public void editStartTimeException7() {
+  @Test(expected = Model.IllegalAccessNoteException.class)
+  public void editStartTimeException7() {
     m2.addNote(new PitchImpl(2), 3, 5, 0, 9);
     m2.addNote(new PitchImpl(2), 1, 2, 0, 8);
     m2.editNoteStartTime(new PitchImpl(2), 6, 10, 0);
   }
 
-  @Test(expected = Model.IllegalAccessNoteException.class) public void editStartTimeException8() {
+  @Test(expected = Model.IllegalAccessNoteException.class)
+  public void editStartTimeException8() {
     m1.addNote(new PitchImpl(2), 3, 5, 0, 6);
     m1.addNote(new PitchImpl(2), 1, 2, 0, 4);
     m1.editNoteStartTime(new PitchImpl(2), 6, 10, 0);
   }
 
-  @Test(expected = IllegalArgumentException.class) public void editEndTimeException() {
+  @Test(expected = IllegalArgumentException.class)
+  public void editEndTimeException() {
     m1.addNote(new PitchImpl(2), 3, 6, 0, 6);
     m1.addNote(new PitchImpl(5), 6, 7, 0, 4);
     m1.editNoteEndTime(new PitchImpl(2), 3, -1, 0);
   }
 
-  @Test(expected = IllegalArgumentException.class) public void editEndTimeException2() {
+  @Test(expected = IllegalArgumentException.class)
+  public void editEndTimeException2() {
     m1.addNote(new PitchImpl(2), 3, 6, 0, 8);
     m1.addNote(new PitchImpl(5), 6, 7, 0, 9);
     m1.editNoteEndTime(new PitchImpl(2), 3, 3, 0);
   }
 
-  @Test(expected = IllegalArgumentException.class) public void editEndTimeException3() {
+  @Test(expected = IllegalArgumentException.class)
+  public void editEndTimeException3() {
     m1.addNote(new PitchImpl(2), 3, 6, 0, 3);
     m1.addNote(new PitchImpl(5), 6, 7, 0, 6);
     m1.editNoteEndTime(new PitchImpl(2), 3, 2, 0);
   }
 
-  @Test(expected = IllegalArgumentException.class) public void editEndTimeException4() {
+  @Test(expected = IllegalArgumentException.class)
+  public void editEndTimeException4() {
     m2.addNote(new PitchImpl(2), 3, 6, 0, 4);
     m2.addNote(new PitchImpl(5), 6, 7, 0, 6);
     m2.editNoteEndTime(new PitchImpl(2), 3, -1, 0);
   }
 
-  @Test(expected = IllegalArgumentException.class) public void editEndTimeException5() {
+  @Test(expected = IllegalArgumentException.class)
+  public void editEndTimeException5() {
     m2.addNote(new PitchImpl(2), 3, 6, 0, 23);
     m2.addNote(new PitchImpl(5), 6, 7, 0, 90);
     m2.editNoteEndTime(new PitchImpl(2), 3, 3, 0);
   }
 
-  @Test(expected = IllegalArgumentException.class) public void editEndTimeException6() {
+  @Test(expected = IllegalArgumentException.class)
+  public void editEndTimeException6() {
     m2.addNote(new PitchImpl(2), 3, 6, 0, 45);
     m2.addNote(new PitchImpl(5), 6, 7, 0, 87);
     m2.editNoteEndTime(new PitchImpl(2), 3, 2, 0);
   }
 
-  @Test(expected = Model.IllegalAccessNoteException.class) public void editEndTimeException7() {
+  @Test(expected = Model.IllegalAccessNoteException.class)
+  public void editEndTimeException7() {
     m2.addNote(new PitchImpl(2), 3, 6, 0, 75);
     m2.addNote(new PitchImpl(5), 6, 7, 0, 76);
     m2.editNoteEndTime(new PitchImpl(3), 3, 7, 0);
   }
 
-  @Test(expected = Model.IllegalAccessNoteException.class) public void editEndTimeException8() {
+  @Test(expected = Model.IllegalAccessNoteException.class)
+  public void editEndTimeException8() {
     m1.addNote(new PitchImpl(2), 3, 6, 0, 100);
     m1.addNote(new PitchImpl(5), 6, 7, 0, 100);
     m1.editNoteEndTime(new PitchImpl(3), 3, 7, 0);
   }
 
-  @Test(expected = Model.IllegalAccessNoteException.class) public void editEndTimeException9() {
+  @Test(expected = Model.IllegalAccessNoteException.class)
+  public void editEndTimeException9() {
     m2.addNote(new PitchImpl(2), 3, 6, 0, 9);
     m2.addNote(new PitchImpl(5), 6, 7, 0, 100);
     m2.editNoteEndTime(new PitchImpl(5), 8, 10, 0);
   }
 
-  @Test(expected = Model.IllegalAccessNoteException.class) public void deleteNodeException() {
+  @Test(expected = Model.IllegalAccessNoteException.class)
+  public void deleteNodeException() {
     m1.deleteNote(new PitchImpl(2), 3, 0);
   }
 
-  @Test(expected = Model.IllegalAccessNoteException.class) public void deleteNodeException2() {
+  @Test(expected = Model.IllegalAccessNoteException.class)
+  public void deleteNodeException2() {
     m2.deleteNote(new PitchImpl(4), 6, 0);
   }
 
-  @Test(expected = Model.IllegalAccessNoteException.class) public void deleteNodeException3() {
+  @Test(expected = Model.IllegalAccessNoteException.class)
+  public void deleteNodeException3() {
     m1.addNote(new PitchImpl(5), 9, 13, 0, 5);
     m1.deleteNote(new PitchImpl(5), 9, 0);
     m1.deleteNote(new PitchImpl(5), 9, 0);
   }
 
-  @Test(expected = Model.IllegalAccessNoteException.class) public void deleteNodeException4() {
+  @Test(expected = Model.IllegalAccessNoteException.class)
+  public void deleteNodeException4() {
     m2.addNote(new PitchImpl(5), 9, 13, 0, 8);
     m2.deleteNote(new PitchImpl(5), 9, 0);
     m2.deleteNote(new PitchImpl(5), 9, 0);
   }
 
-  @Test(expected = Model.IllegalAccessNoteException.class) public void deleteNodeException5() {
+  @Test(expected = Model.IllegalAccessNoteException.class)
+  public void deleteNodeException5() {
     m2.addNote(new PitchImpl(5), 9, 13, 0, 8);
     m2.deleteNote(new PitchImpl(6), 9, 0);
   }
 
-  @Test(expected = Model.IllegalAccessNoteException.class) public void deleteNodeException6() {
+  @Test(expected = Model.IllegalAccessNoteException.class)
+  public void deleteNodeException6() {
     m1.addNote(new PitchImpl(5), 9, 13, 0, 7);
     m1.deleteNote(new PitchImpl(6), 9, 0);
   }
 
-  @Test(expected = Model.IllegalAccessNoteException.class) public void deleteNodeException7() {
+  @Test(expected = Model.IllegalAccessNoteException.class)
+  public void deleteNodeException7() {
     m2.addNote(new PitchImpl(7), 2, 8, 0, 7);
     m2.deleteNote(new PitchImpl(7), 6, 0);
   }
 
-  @Test(expected = IllegalArgumentException.class) public void addNodeException7() {
+  @Test(expected = IllegalArgumentException.class)
+  public void addNodeException7() {
     m2.addNote(new PitchImpl(7), 2, 8, -1, 7);
   }
 
-  @Test(expected = IllegalArgumentException.class) public void addNodeException8() {
+  @Test(expected = IllegalArgumentException.class)
+  public void addNodeException8() {
     m2.addNote(new PitchImpl(7), 2, 8, 9, -89);
   }
 
-  @Test(expected = IllegalArgumentException.class) public void addNodeException10() {
+  @Test(expected = IllegalArgumentException.class)
+  public void addNodeException10() {
     m2.addNote(new PitchImpl(7), 2, 8, 145, 89);
   }
 
-  @Test(expected = IllegalArgumentException.class) public void addNodeException11() {
+  @Test(expected = IllegalArgumentException.class)
+  public void addNodeException11() {
     m2.addNote(new PitchImpl(7), 2, 8, 50, 870);
   }
 
-  @Test(expected = IllegalArgumentException.class) public void addNodeException12() {
+  @Test(expected = IllegalArgumentException.class)
+  public void addNodeException12() {
     m2.addNote(new PitchImpl(7), 2, 8, 50, 128);
   }
 
-  @Test(expected = IllegalArgumentException.class) public void addNodeException13() {
+  @Test(expected = IllegalArgumentException.class)
+  public void addNodeException13() {
     m2.addNote(new PitchImpl(7), 2, 8, 128, 23);
   }
 
-  @Test(expected = IllegalArgumentException.class) public void makeNoteException1() {
+  @Test(expected = IllegalArgumentException.class)
+  public void makeNoteException1() {
     new MusicNote(new PitchImpl(8), 17, 18, -1, 0);
   }
 
-  @Test(expected = IllegalArgumentException.class) public void makeNoteException2() {
+  @Test(expected = IllegalArgumentException.class)
+  public void makeNoteException2() {
     new MusicNote(new PitchImpl(8), 17, 18, 90, -1);
   }
 
-  @Test(expected = IllegalArgumentException.class) public void makeNoteException3() {
+  @Test(expected = IllegalArgumentException.class)
+  public void makeNoteException3() {
     new MusicNote(new PitchImpl(8), 17, 18, 128, 80);
   }
 
-  @Test(expected = IllegalArgumentException.class) public void makeNoteException4() {
+  @Test(expected = IllegalArgumentException.class)
+  public void makeNoteException4() {
     new MusicNote(new PitchImpl(8), 17, 18, 18, 180);
   }
 }

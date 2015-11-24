@@ -8,52 +8,52 @@ import java.util.*;
 final public class ModelImpl implements Model {
 
   /**
-   * maps all of the Notes that play at a specific time to that timestamp
-   * The key is the timestamp of the first beat of the cs3500.music.model.Note
-   * The value is every cs3500.music.model.Note that begins at that timestamp
+   * Maps all of the Notes that play at a specific time to that timestamp.
+   * The key is the timestamp of the first beat of the cs3500.music.model.Note.
+   * The value is every cs3500.music.model.Note that begins at that timestamp.
    */
   private Map<Integer, ArrayList<Note>> musicSheet;
   //INVARIANT: Each Key must be less than or equal to this.finalStartBeat
 
   /**
-   * Represents how many beats are in a measure
+   * Represents how many beats are in a measure.
    */
   private final int measure;
   //INVARIANT: Must be greater than 0
 
   /**
-   * Represents how many beats are in a minute for the piece
+   * Represents how many beats are in a minute for the piece.
    */
   private int tempo;
   //INVARIANT: Must be greater than 0
 
   /**
-   * The lowest pitch that a note in the piece occurs at
-   * The smallest pitch value
-   * Negative 1 represents no pitch values
+   * The lowest pitch that a note in the piece occurs at.
+   * the smallest pitch value.
+   * Negative 1 represents no pitch values.
    */
   private Pitch lowestPitch;
   //INVARIANT: Must not be smaller than negative one
   //Must be smaller than or equal to this.highestPitch
 
   /**
-   * The highest pitch that a note in the piece occurs at
-   * The largest pitch value
+   * The highest pitch that a note in the piece occurs at.
+   * the largest pitch value.
    */
   private Pitch highestPitch;
   //INVARIANT: Must not be smaller than negative
   //Must be larger than or equal to this.lowestPitch, or -1 if this.lowestPitch is -1
-  // which represents that there are no notes in the piece
+  // which represents that there are no notes in the piece.
 
   /**
-   * the timestamp that the final start beat of the piece occurs at
+   * The timestamp that the final start beat of the piece occurs at.
    */
   private int finalStartBeat;
   // INVARIANT: Must not be negative.
 
   /**
-   * The timestamp that the final end beat or continuation of the piece occurs on
-   * One beat longer than the entire piece
+   * The timestamp that the final end beat or continuation of the piece occurs on.
+   * One beat longer than the entire piece.
    */
   private int finalEndBeat;
   // INVARIANT: Must not be negative, must be larger than this.finalStartBeat
@@ -262,7 +262,16 @@ final public class ModelImpl implements Model {
     throw new IllegalAccessNoteException("No notes at this pitch");
   }
 
-  //TODO
+  /**
+   * Get the note that starts or continues through the given pitch and time with the
+   * given instrument.
+   *
+   * @param pitch The pitch of the note that we want to retrieve.
+   * @param time The start time or the time the note is continuing.
+   * @param instrument The instrument of the note we want to retrieve.
+   * @return The Note that starts or continues at the given time played at the given pitch
+   * with the given instrument
+   */
   public Note getNoteIn(Pitch pitch, int time, int instrument) {
     for (int i = 0; i <= time; i++) {
       if (this.musicSheet.containsKey(i)) {
@@ -280,6 +289,13 @@ final public class ModelImpl implements Model {
     throw new IllegalAccessNoteException("No notes at this pitch and time");
   }
 
+  /**
+   * Get the note that starts or continues through the given pitch and time.
+   *
+   * @param pitch The pitch of the note that we want to retrieve.
+   * @param time The start time or the time the note is continuing.
+   * @return The Note that starts or continues at the given time played at the given pitch.
+   */
   public Note getNoteIn(Pitch pitch, int time) {
     for (int i = 0; i <= time; i++) {
       if (this.musicSheet.containsKey(i)) {
