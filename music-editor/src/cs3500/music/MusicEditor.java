@@ -21,15 +21,18 @@ public class MusicEditor {
   /**
    * Runs the program automatically.
    *
-   * @param args
-   * @throws IOException
-   * @throws InvalidMidiDataException
+   * @param args the command line arguments.
+   * @throws IOException if the input data is invalid
+   * @throws InvalidMidiDataException if the midi data is invalid
    */
   public static void main(String[] args) throws IOException, InvalidMidiDataException {
 
+    // The file that will be played.
     String file;
 
+    // The type of view to be displayed.
     String viewType;
+
     //Saves the first string to be typed as the file to be played
     try {
       file = args[0];

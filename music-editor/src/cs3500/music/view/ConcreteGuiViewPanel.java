@@ -119,7 +119,7 @@ public final class ConcreteGuiViewPanel extends JPanel {
   /**
    * Adds the red line on top of the given graphic at the
    *
-   * @param g The graphics to draw on.
+   * @param g The graphics to draw onto.
    */
   public void addLine(Graphics g) {
     Pitch highest = Objects.requireNonNull(m.getHighestPitch());
@@ -134,6 +134,11 @@ public final class ConcreteGuiViewPanel extends JPanel {
     }
   }
 
+  /**
+   * Draws the pitches to the left of the frame, so they are always displayed when scrolling.
+   *
+   * @param g The graphics to draw onto.
+   */
   public void drawPitches(Graphics g) {
     Pitch highest = Objects.requireNonNull(m.getHighestPitch());
     Pitch lowest = Objects.requireNonNull(m.getLowestPitch());
@@ -150,5 +155,4 @@ public final class ConcreteGuiViewPanel extends JPanel {
           BOX_SIZE * (highest.getValue() - p.getValue() + 2));
     }
   }
-
 }

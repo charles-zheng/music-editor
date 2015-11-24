@@ -146,6 +146,23 @@ public class GuiViewModel implements ViewModel {
    */
   @Override public List<Note> getEndNotesAtTime(int time) { return m.getEndNotesAtTime(time); }
 
+  /**
+   * Adds a note to the music sheet at the given pitch and startTime
+   * Updates this.lowestPitch, this.highestPitch, and this.finalBeat
+   *
+   * @param pitch      the pitch of the new note
+   * @param startTime  the start time of the new note
+   * @param endTime    The end time of the new note
+   * @param instrument The instrument that plays the new note
+   * @param velocity   the velocity (volume of the new note
+   * @throws IllegalAddException      if a note already exists at the given start time and
+   *                                  pitch. Notes are allowed to be inserted over continuations
+   *                                  of notes, because this can
+   *                                  happen in choirs or with different instruments.
+   * @throws IllegalArgumentException if any inputs are less than 0, or if endTime is less
+   *                                  than or equal to startTime, or if velocity or instrument
+   *                                  is not within [0, 127]
+   */
   @Override
   public void addNote(Pitch pitch, int startTime, int endTime, int instrument, int velocity) {
     try {
@@ -156,32 +173,98 @@ public class GuiViewModel implements ViewModel {
     }
   }
 
+  /**
+   * Gets the note at the specified starttime and pitch
+   *
+   * @param pitch      The pitch for the note you want to retrieve.
+   * @param time       The startTime of the note you want to retrieve.
+   * @param instrument the instrument of the note you want to retrieve.
+   * @return The Note at the given start time and pitch and instrument.
+   * @throws IllegalAccessNoteException if
+   *                                    there is no note at the given pitch and time.
+   */
   @Override public Note getNoteAt(Pitch pitch, int time, int instrument) {
     return m.getNoteAt(pitch, time, instrument);
   }
 
+  /**
+   * Get the note that starts or continues through the given pitch and time with the
+   * given instrument.
+   *
+   * @param pitch The pitch of the note that we want to retrieve.
+   * @param time The start time or the time the note is continuing.
+   * @param instrument The instrument of the note we want to retrieve.
+   * @return The Note that starts or continues at the given time played at the given pitch
+   * with the given instrument
+   */
   @Override public Note getNoteIn(Pitch pitch, int time, int instrument) {
     return m.getNoteIn(pitch, time, instrument);
   }
 
+  /**
+   * Get the note that starts or continues through the given pitch and time.
+   *
+   * @param pitch The pitch of the note that we want to retrieve.
+   * @param time The start time or the time the note is continuing.
+   * @return The Note that starts or continues at the given time played at the given pitch.
+   */
   @Override public Note getNoteIn(Pitch pitch, int time) {
     return m.getNoteIn(pitch, time);
   }
 
+  /**
+   * Deletes the note at the specified time and pitch.
+   *
+   * @param pitch      the pitch location of the note to be deleted.
+   * @param time       the timestamp of the first beat of the note to be deleted.
+   * @param instrument the instrument of the note to be deleted.
+   * @throws cs3500.music.model.Model.IllegalAccessNoteException if there is no note at the
+   *                                                             given position.
+   */
   @Override public void deleteNote(Pitch pitch, int time, int instrument) {
     m.deleteNote(pitch, time, instrument);
   }
 
+  /**
+   * Edits the start time of the note at the given position.
+   *
+   * @param pitch        the pitch of the note you want to edit.
+   * @param currentStart the current start time of the note you want to edit.
+   * @param newStart     the new start time for the note.
+   * @param instrument   the instrument of the note you want to edit.
+   * @throws IllegalArgumentException   if the new start time is less than 0 or greater
+   *                                    than or equal to the end time.
+   * @throws IllegalAccessNoteException if there is no note at this position to edit.
+   */
   @Override
   public void editNoteStartTime(Pitch pitch, int currentStart, int newStart, int instrument) {
     m.editNoteStartTime(pitch, currentStart, newStart, instrument);
   }
 
+  /**
+   * Edits the start time of the note at the given position.
+   *
+   * @param pitch        the pitch of the note you want to edit.
+   * @param currentStart the current start time of the note you want to edit.
+   * @param newEnd       the new end time for the note.
+   * @param instrument   the instrument of the note you want to edit.
+   * @throws IllegalArgumentException   if the new end time is less than 0 or less
+   *                                    than or equal to the start time.
+   * @throws IllegalAccessNoteException if there is no note at this position to edit.
+   */
   @Override
   public void editNoteEndTime(Pitch pitch, int currentStart, int newEnd, int instrument) {
     m.editNoteEndTime(pitch, currentStart, newEnd, instrument);
   }
 
+  /**
+   * Adds all the notes from another piece of music to the end of this pieces
+   * if atEnd is true, or consecutively if atEnd is false.
+   *
+   * @param allNotes all of the notes in a piece.
+   * @param atEnd    if true, add all the notes to the end.
+   *                 if false, add all the notes over the current notes.
+   */
   @Override public void addAllNotes(List<Note> allNotes, boolean atEnd) {
     m.addAllNotes(allNotes, atEnd);
   }
@@ -218,12 +301,23 @@ public class GuiViewModel implements ViewModel {
     this.timeStamp = 0;
   }
 
+  /**
+   * Initializes this view model
+   * @throws InvalidMidiDataException if the midi data is invalid
+   */
   @Override public void initialize() throws InvalidMidiDataException {
-
+    //do nothing, no initializing needed
   }
 
+  /**
+   * Sends in the location of the mouse click to set the current Note that is being
+   * selected.
+   * @param x The x coordinate of the mouse click.
+   * @param y The y coordinate of the mouse click.
+   */
   public void setCurrent(int x, int y) {
-    this.curBeat = (x >= 50 && x <= (m.getFinalEndBeat() + 2) * ConcreteGuiViewPanel.BOX_SIZE)
+    this.curBeat = (x >= 50 && x <= (m.getFinalEndBeat() + 2) *
+        ConcreteGuiViewPanel.BOX_SIZE)
         ? (x - 50) / ConcreteGuiViewPanel.BOX_SIZE : -1;
     this.curPitch = (y >= 25 && y <= ((m.getHighestPitch().getValue() -
         m.getLowestPitch().getValue() + 2) * ConcreteGuiViewPanel.BOX_SIZE)) ?
@@ -237,34 +331,74 @@ public class GuiViewModel implements ViewModel {
     }
   }
 
+  /**
+   * Gets the pitch of the note that is currently selected.
+   *
+   * @return The value of the pitch of the note that is currently selected.
+   */
   public int getCurPitch() {
     return this.curPitch;
 }
 
+  /**
+   * Gets the beat of the note that is currently selected.
+   *
+   * @return The beat of the note that is currently selected.
+   */
   public int getCurBeat() {
     return this.curBeat;
   }
 
+  /**
+   *  Gets the instrument of the note that is currently selected.
+   *
+   * @return The instrument of the note that is currently selected.
+   */
   public int getCurInstrument() {
     return this.curInstrument;
   }
 
+  /**
+   * Saves the pitch of the current note.
+   *
+   * @param pitch The pitch of the note that is currently selected.
+   */
   public void setCurPitch(int pitch) {
     this.curPitch = pitch;
   }
 
+  /**
+   * Saves the beat of the current note.
+   *
+   * @param beat The beat of the note that is currently selected.
+   */
   public void setCurBeat(int beat) {
     this.curBeat = beat;
   }
 
+  /**
+   * Saves the instrument of the current note.
+   *
+   * @param instrument The instrument of the note that is currently selected.
+   */
   public void setCurInstrument(int instrument) {
     this.curInstrument = instrument;
   }
 
+  /**
+   * Sets the dimension of the view that is currently seen in the gui frame.
+   *
+   * @param corner The point on the view that is in the top left corner of the frame.
+   */
   public void setViewableRange(Point corner) {
     this.topleft = corner;
   }
 
+  /**
+   * Get the point at the top left corner of the frame.
+   *
+   * @return The point of the display that is in the top left corner of the frame.
+   */
   public Point getTopleft() {
     return this.topleft;
   }
