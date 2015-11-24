@@ -184,7 +184,8 @@ public class ConsoleViewTest extends AbstractViewTest {
         "  |                               |                  " + "           ");
   }
 
-  @Test(expected = IllegalArgumentException.class) public void testMtv3() {
+  @Test(expected = IllegalArgumentException.class)
+  public void testMtv3() {
     try {
       initialize();
     } catch (IOException e) {
@@ -207,7 +208,8 @@ public class ConsoleViewTest extends AbstractViewTest {
         "      E3  F3 F#3  G3 G#3  A3 A#3  B3  C4 " + "C#4  D4 D#4  E4  F4 F#4  G4");
   }
 
-  @Test(expected = IllegalArgumentException.class) public void testMtv5() {
+  @Test(expected = IllegalArgumentException.class)
+  public void testMtv5() {
     try {
       initialize();
     } catch (IOException e) {
@@ -285,7 +287,8 @@ public class ConsoleViewTest extends AbstractViewTest {
     assertEquals(mtv.printRow(15), "                                                  | ");
   }
 
-  @Test(expected = IllegalArgumentException.class) public void testMtv8() {
+  @Test(expected = IllegalArgumentException.class)
+  public void testMtv8() {
     try {
       initialize();
     } catch (IOException e) {
