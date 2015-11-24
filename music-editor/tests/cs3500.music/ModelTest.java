@@ -21,8 +21,9 @@ public class ModelTest {
   Note n2 = new MusicNote(new PitchImpl(4), 5, 9, 89, 127);
   Note n3 = new MusicNote(new PitchImpl(4), 11, 13, 127, 50);
 
-  Model m1 = new ModelImpl();
+  Model m1 = new ModelImpl(4, 120);
   Model m2 = new ModelImpl(3, 100);
+  ViewModel m3 = new GuiViewModel(this.m1);
 
   @Test public void testNoteEndTime() {
     assertEquals(n1.getEndTime(), 4);
@@ -605,7 +606,8 @@ public class ModelTest {
     m2.addAllNotes(l, false);
     assertEquals(m2.toString(),
         "Time: 0\n" + " Measure: 3\n" + " Low Pitch: 3\n" + " High Pitch: 4\n" +
-            " finalStartBeat: 6\n" + "Pitch: 3, StartTime: 2, EndTime: 5\n"
+            " finalStartBeat: 6\n"
+            + "Pitch: 3, StartTime: 2, EndTime: 5\n"
             + "Pitch: 4, StartTime: 6, EndTime: 9\n");
   }
 

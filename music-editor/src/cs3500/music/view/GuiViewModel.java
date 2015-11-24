@@ -65,7 +65,12 @@ public class GuiViewModel implements ViewModel {
 
   @Override
   public void addNote(Pitch pitch, int startTime, int endTime, int instrument, int velocity) {
-    m.addNote(pitch, startTime, endTime, instrument, velocity);
+    try {
+      m.addNote(pitch, startTime, endTime, instrument, velocity);
+    }
+    catch (IllegalAddException ex) {
+      //do nothing
+    }
   }
 
   @Override public Note getNoteAt(Pitch pitch, int time, int instrument) {
