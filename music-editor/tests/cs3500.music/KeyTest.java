@@ -6,7 +6,7 @@ import java.io.IOException;
 
 import static org.junit.Assert.assertEquals;
 /**
- * Created by Charles on 11/24/15.
+ * Represents the tests for Key Events
  */
 public class KeyTest extends AbstractViewTest {
 

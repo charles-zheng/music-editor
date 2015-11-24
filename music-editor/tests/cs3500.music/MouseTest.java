@@ -10,7 +10,7 @@ import java.io.IOException;
 import static org.junit.Assert.assertEquals;
 
 /**
- * Created by Charles on 11/24/15.
+ * Represents tests for mouse events
  */
 public class MouseTest extends AbstractViewTest {
 
