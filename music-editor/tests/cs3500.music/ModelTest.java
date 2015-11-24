@@ -14,7 +14,7 @@ import static org.junit.Assert.assertNotEquals;
 /**
  * Represents tests for {@link cs3500.music.model}
  */
-public class ModelTest {
+/*public class ModelTest {
 
 
   Note n1 = new MusicNote(new PitchImpl(2), 3, 4, 0, 0); //one beat long
@@ -984,4 +984,4 @@ public class ModelTest {
   @Test(expected = IllegalArgumentException.class) public void makeNoteException4() {
     new MusicNote(new PitchImpl(8), 17, 18, 18, 180);
   }
-}
+}*/

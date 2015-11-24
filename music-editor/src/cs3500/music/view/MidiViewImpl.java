@@ -153,37 +153,6 @@ public final class MidiViewImpl implements MidiView {
       }
     }
 
-
-   // seq.startRecording();
-    /*for (int i = 20; i < 100; i++) {
-      try {
-        recordNotes(i);
-      } catch (MidiUnavailableException e) {
-        e.printStackTrace();
-      }
-    }*/
-
-    /*
-    int t = m.getTempo();
-    for (int i = 0; i <= m.getFinalStartBeat(); i++) {
-      List<Note> ns = m.getNotesAtTime(i);
-      for (Note n : ns) {
-        MidiMessage start =
-            new ShortMessage(ShortMessage.NOTE_ON, n.getInstrument() - 1, n.getPitch().getValue(),
-                n.getVelocity());
-        MidiMessage stop =
-            new ShortMessage(ShortMessage.NOTE_OFF, n.getInstrument() - 1, n.getPitch().getValue(),
-                n.getVelocity());
-        receiver.send(start, t * n.getStartTime());
-        receiver.send(stop, t * (n.getStartTime() + (n.getEndTime() - n.getStartTime())));
-      }
-    }
-    receiver.close();
-    seq.stopRecording();*/
-
-    //seq.setTickPosition(0);
-    //seq.start();
-
     // for testing purposes, store the output stream in a string field
     if (this.mock) {
       System.out.print(((MockReceiver) receiver).output());
@@ -207,7 +176,7 @@ public final class MidiViewImpl implements MidiView {
     return this.output;
   }
 
-  public void recordNotes(int time) throws InvalidMidiDataException, MidiUnavailableException{
+  public void recordNotes(int time) throws InvalidMidiDataException, MidiUnavailableException {
     receiver = synth.getReceiver();
     MidiChannel[] chan = synth.getChannels();
     int t = m.getTempo();
@@ -221,16 +190,6 @@ public final class MidiViewImpl implements MidiView {
       chan[n.getInstrument() - 1].noteOn(n.getPitch().getValue(), n.getVelocity());
     }
 
-/*
-      MidiMessage start =
-          new ShortMessage(ShortMessage.NOTE_ON, n.getInstrument() - 1, n.getPitch().getValue(),
-              n.getVelocity());
-      MidiMessage stop =
-          new ShortMessage(ShortMessage.NOTE_OFF, n.getInstrument() - 1, n.getPitch().getValue(),
-              n.getVelocity());
-      receiver.send(start, t * n.getStartTime());
-      receiver.send(stop, t * (n.getStartTime() + (n.getEndTime() - n.getStartTime())));*/
-
     receiver.close();
   }
 
@@ -240,23 +199,6 @@ public final class MidiViewImpl implements MidiView {
       mc.allNotesOff();
     }
     paused = true;
-    //seq.stop();
-  }
-
-  @Override public void play() throws InvalidMidiDataException {
-    /*if (paused) {
-      long time = seq.getTickPosition();
-     // initialize();
-      seq.setTickPosition(time);
-      seq.start();
-    }
-    paused = false;*/
-  }
-
-  @Override public void rewind() {
-    paused = true;
-    //seq.stop();
-    //seq.setTickPosition(0);
   }
 
   public boolean isPaused() {

@@ -20,4 +20,28 @@ public interface ViewModel extends Model, View {
 
   void setCurInstrument(int instrument);
 
+  /**
+   * Gets the current timestamp of the piece
+   *
+   * @return the current timestamp
+   */
+  int getTimeStamp();
+
+  /**
+   * Advance the timestamp of this piece by 1;
+   */
+  void advanceTimestamp();
+
+  /**
+   * Sets the timestamp of this piece of this piece to the given timestamp
+   *
+   * @param t the new timestamp
+   */
+  void setTimeStamp(int t);
+
+  /**
+   * Resets the timestamp of this piece to 0
+   */
+  void resetTimestamp();
+
 }
