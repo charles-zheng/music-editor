@@ -229,7 +229,7 @@ final public class ModelImpl implements Model {
 
     for (int i = 0; i < notes.size(); i++) {
       if (notes.get(i).getPitch().equals(pitch) && notes.get(i).getInstrument() == instrument) {
-        //throw new IllegalAddException();
+        throw new IllegalAddException();
       }
     }
     notes.add(new MusicNote(pitch, startTime, endTime, instrument, velocity));

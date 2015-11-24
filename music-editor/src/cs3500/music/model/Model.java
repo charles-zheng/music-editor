@@ -9,32 +9,38 @@ import java.util.List;
 public interface Model {
 
   /**
-   * Represents the default measure if the user chooses not to input one
+   * Represents the default measure if the user chooses not to input one.
    */
   int DEFAULT_MEASURE = 4;
 
   /**
-   * Represents the default tempo if the user chooses not to input one
+   * Represents the default tempo if the user chooses not to input one.
    */
   int DEFAULT_TEMPO = 100000;
 
+  /**
+   * Gets the current timestamp of the piece.
+   *
+   * @return the current timestamp
+   */
+  int getTimeStamp();
 
   /**
-   * Gets the lowest pitch of the piece
+   * Gets the lowest pitch of the piece.
    *
    * @return the lowest pitch
    */
   Pitch getLowestPitch();
 
   /**
-   * Gets the highest pitch of the piece
+   * Gets the highest pitch of the piece.
    *
    * @return the highest pitch
    */
   Pitch getHighestPitch();
 
   /**
-   * Gets the final beat of the piece
+   * Gets the final beat of the piece.
    *
    * @return the final beat
    */
@@ -162,14 +168,14 @@ public interface Model {
 
   /**
    * Returns this music sheet as a String with the fields and Notes listed
-   * for testing purposes exclusively
+   * for testing purposes exclusively.
    *
    * @return the music sheet represented as a String
    */
   @Override String toString();
 
   /**
-   * Indicates that the user attempted to add a note illegally
+   * Indicates that the user attempted to add a note illegally.
    */
   class IllegalAddException extends IllegalStateException {
 
@@ -184,7 +190,7 @@ public interface Model {
 
 
   /**
-   * Indicates that the user attempted to access notes that were not there
+   * Indicates that the user attempted to access notes that were not there.
    */
   class IllegalAccessNoteException extends IllegalStateException {
 
