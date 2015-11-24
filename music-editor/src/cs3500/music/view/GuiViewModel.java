@@ -13,9 +13,26 @@ import java.util.List;
  */
 public class GuiViewModel implements ViewModel {
 
+  /**
+   * The model to add functionality to
+   */
   private Model m;
+
+  /**
+   * The current pitch that is selected
+   *
+   * INVARIANT: always within m.getHighestPitch() and m.getLowestPitch(), or -1
+   */
   private int curPitch;
+
+  /**
+   * The current
+   */
   private int curBeat;
+
+  /**
+   *
+   */
   private int curInstrument;
 
   /**
