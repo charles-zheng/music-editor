@@ -1,6 +1,7 @@
 package cs3500.music.view;
 
 import cs3500.music.model.*;
+import java.awt.Dimension;
 /**
  * Created by Charles on 11/18/15.
  */
@@ -43,5 +44,9 @@ public interface ViewModel extends Model, View {
    * Resets the timestamp of this piece to 0
    */
   void resetTimestamp();
+
+  void setViewableRange(Dimension corner);
+
+  Dimension getTopleft();
 
 }

@@ -42,9 +42,6 @@ public final class ConcreteGuiViewPanel extends JPanel {
    * @param g the graphics object that draws everything
    */
   @Override public void paint(Graphics g) {
-    // Look for more documentation about the Graphics class,
-    // and methods on it that may be useful
-
 
     Pitch highest = Objects.requireNonNull(m.getHighestPitch());
     Pitch lowest = Objects.requireNonNull(m.getLowestPitch());
@@ -59,9 +56,6 @@ public final class ConcreteGuiViewPanel extends JPanel {
 
     for (int i = highest.getValue(); i >= lowest.getValue(); i--) {
       Pitch p = new PitchImpl(i);
-      // draw pitch names
-      g.drawString(p.toString(), BOX_SIZE - 10,
-          BOX_SIZE * (highest.getValue() - p.getValue() + 2));
 
       // draws the horizontal grid
       g.drawRect(50, BOX_SIZE * (highest.getValue() - p.getValue()),
@@ -109,6 +103,8 @@ public final class ConcreteGuiViewPanel extends JPanel {
       }
     }
 
+    // draws the pitch names
+    drawPitches(g, (m.getTimeStamp() + 1) * BOX_SIZE);
     addLine(g);
   }
 
@@ -122,6 +118,22 @@ public final class ConcreteGuiViewPanel extends JPanel {
       g.drawLine((time * BOX_SIZE) + 50 - BOX_SIZE / 2,
           lowest.getValue() - BOX_SIZE, (time * BOX_SIZE) + 50 - BOX_SIZE /2,
           (highest.getValue() - lowest.getValue() + 2) * BOX_SIZE);
+    }
+  }
+
+  public void drawPitches(Graphics g, int x) {
+    Pitch highest = Objects.requireNonNull(m.getHighestPitch());
+    Pitch lowest = Objects.requireNonNull(m.getLowestPitch());
+    int range = highest.getValue() - lowest.getValue();
+
+    g.setColor(Color.white);
+    g.fillRect(x - BOX_SIZE, 0, BOX_SIZE * 2, range * BOX_SIZE);
+    for (int i = highest.getValue(); i >= lowest.getValue(); i--) {
+      Pitch p = new PitchImpl(i);
+      // draw pitch names
+      g.setColor(Color.black);
+      g.drawString(p.toString(), x - 10,
+          BOX_SIZE * (highest.getValue() - p.getValue() + 2));
     }
   }
 

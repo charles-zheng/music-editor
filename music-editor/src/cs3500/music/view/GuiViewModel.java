@@ -2,7 +2,7 @@ package cs3500.music.view;
 
 
 import cs3500.music.model.*;
-
+import java.awt.Dimension;
 import javax.sound.midi.InvalidMidiDataException;
 import java.util.List;
 
@@ -47,6 +47,10 @@ public class GuiViewModel implements ViewModel {
    */
   private int timeStamp;
 
+  /**
+   * Represents the top-left corner of the viewable screen
+   */
+  private Dimension topleft;
 
   /**
    * Constructs a new GuiViewModel that wraps around the given model
@@ -59,6 +63,7 @@ public class GuiViewModel implements ViewModel {
     this.curBeat = -1;
     this.curInstrument = -1;
     this.timeStamp = 0;
+    this.topleft = new Dimension(0, 0);
   }
 
   /**
@@ -254,6 +259,14 @@ public class GuiViewModel implements ViewModel {
 
   public void setCurInstrument(int instrument) {
     this.curInstrument = instrument;
+  }
+
+  public void setViewableRange(Dimension corner) {
+    this.topleft = corner;
+  }
+
+  public Dimension getTopleft() {
+    return this.topleft;
   }
 
 }

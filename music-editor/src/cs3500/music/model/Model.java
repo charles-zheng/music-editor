@@ -115,7 +115,7 @@ public interface Model {
   Note getNoteAt(Pitch pitch, int time, int instrument);
 
   /**
-   * Get the notes at 
+   * Get the notes at
    *
    * @param pitch
    * @param time
