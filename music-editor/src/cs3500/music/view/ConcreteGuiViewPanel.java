@@ -43,6 +43,8 @@ public final class ConcreteGuiViewPanel extends JPanel {
    */
   @Override public void paint(Graphics g) {
 
+    super.paintComponent(g);
+
     Pitch highest = Objects.requireNonNull(m.getHighestPitch());
     Pitch lowest = Objects.requireNonNull(m.getLowestPitch());
     int height = (highest.getValue() - lowest.getValue() + 1) * BOX_SIZE;
@@ -56,6 +58,9 @@ public final class ConcreteGuiViewPanel extends JPanel {
 
     for (int i = highest.getValue(); i >= lowest.getValue(); i--) {
       Pitch p = new PitchImpl(i);
+      // draw pitch names
+      g.drawString(p.toString(), BOX_SIZE - 10,
+          BOX_SIZE * (highest.getValue() - p.getValue() + 2));
 
       // draws the horizontal grid
       g.drawRect(50, BOX_SIZE * (highest.getValue() - p.getValue()),
@@ -106,8 +111,16 @@ public final class ConcreteGuiViewPanel extends JPanel {
     // draws the pitch names
     drawPitches(g, (m.getTimeStamp() + 1) * BOX_SIZE);
     addLine(g);
+
+    this.revalidate();
+    this.repaint();
   }
 
+  /**
+   * Adds the red line on top of the given graphic at the
+   *
+   * @param g The graphics to draw on.
+   */
   public void addLine(Graphics g) {
     Pitch highest = Objects.requireNonNull(m.getHighestPitch());
     Pitch lowest = Objects.requireNonNull(m.getLowestPitch());
