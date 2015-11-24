@@ -170,7 +170,12 @@ final public class ModelImpl implements Model {
     return copy;
   }
 
-  //TODO
+  /**
+   * Gets a list of notes that should be turned off at the given time.
+   *
+   * @param time the time at which to get the notes that end.
+   * @return the list of notes that should be turned off at the given time.
+   */
   public List<Note> getEndNotesAtTime(int time) {
     ArrayList<Note> result = new ArrayList<Note>();
     for (int i = 0; i <= time; i++) {

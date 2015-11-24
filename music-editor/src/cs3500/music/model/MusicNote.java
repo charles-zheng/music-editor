@@ -12,20 +12,20 @@ final public class MusicNote implements Note {
    * step (which can be from C to C#, C# to D, D to D#, D# to E, E to F, F to F#, F# to G
    * G to G#, G# to A, A to A#, A# to B, B to C, with A being in the next highest octave
    */
-  private Pitch pitch;
+  private final Pitch pitch;
   //INVARIANT: must be positive
 
   /**
    * The timestamp for the first beat of this note
    */
-  private int startTime;
+  private final int startTime;
   //INVARIANT: Must be greater than zero
   //must be smaller than this.endTime
 
   /**
    * The timestamp for the beat immediately after this note ends
    */
-  private int endTime;
+  private final int endTime;
   //INVARIANT: must be a positive number
   //must be at least one larger than this.startTime
 
@@ -34,59 +34,11 @@ final public class MusicNote implements Note {
    * The instrument that plays this note
    * Represented as an int from Midi
    */
-  private int instrument;
+  private final int instrument;
   // INVARIANT: Must be between 0 to 127 (inclusive)
 
-  private int velocity;
+  private final int velocity;
   // INVARIANT: must be between 0 and 127 (inclusive)
-
-  /**
-   * Creates a new cs3500.music.model.MusicNote
-   *
-   * @param pitch the letter note and octave this note is played at
-   * @param startTime the timestamp of the first beat of this note
-   * @param endTime the timestamp immediately after this note ends
-   * @param instrument the instrument of this note
-   *
-   * @throws IllegalArgumentException if the pitch, startTime, or endTime is less than zero
-   * or if the startTime is not smaller than the endTime, or if instrument is not within [0,127]
-   */
-/*  public MusicNote(Pitch pitch, int startTime, int endTime, int instrument) {
-    if (pitch == null || pitch.getValue() < 0 || pitch.getValue() > 128 ||
-        startTime < 0 || endTime < 0 || endTime <= startTime
-        || instrument < 0 || instrument > 127) {
-      throw new IllegalArgumentException("These are invalid inputs");
-    }
-    this.pitch = pitch;
-    this.startTime = startTime;
-    this.endTime = endTime;
-    this.instrument = instrument;
-    this.velocity = 64;
-  }
-
-  /**
-   * Creates a new cs3500.music.model.MusicNote
-   *
-   * @param pitch the pitch of this note, represented as an int value
-   * @param startTime the timestamp of the first beat of this note
-   * @param endTime the timestamp immediately after this note ends
-   * @param instrument the instrument of this note
-   *
-   * @throws IllegalArgumentException if the pitch, startTime, or endTime is less than zero
-   * or if the startTime is not smaller than the endTime, or if instrument is not within [0, 127]
-   *//*
-  public MusicNote(int pitch, int startTime, int endTime, int instrument) {
-    if (pitch < 0 || pitch > 128 ||
-        startTime < 0 || endTime < 0 || endTime <= startTime
-        || instrument < 0 || instrument > 127) {
-      throw new IllegalArgumentException("These are invalid inputs");
-    }
-    this.pitch = new PitchImpl(pitch);
-    this.startTime = startTime;
-    this.endTime = endTime;
-    this.instrument = instrument;
-    this.velocity = 64;
-  }*/
 
   /**
    * Creates a new cs3500.music.model.MusicNote
