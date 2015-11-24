@@ -113,11 +113,13 @@ public final class GuiViewFrame extends javax.swing.JFrame implements GuiView {
 
     if (playing) {
       if (curX > limit) {
-        jv.setViewPosition(new Point(limit, curY));
+        jv.setViewPosition(new Point(limit - (ConcreteGuiViewPanel.BOX_SIZE * 2), curY));
+        model.setViewableRange(new Point(limit - (ConcreteGuiViewPanel.BOX_SIZE * 2), curY));
       }
 
       if (curX < (int)(jv.getViewPosition().getX())) {
         jv.setViewPosition(new Point(curX, curY));
+        model.setViewableRange(new Point(curX, curY));
       }
     }
 
@@ -170,6 +172,10 @@ public final class GuiViewFrame extends javax.swing.JFrame implements GuiView {
         * ConcreteGuiViewPanel.BOX_SIZE) {
       jv.setViewPosition(new Point(curX, curY + 50));
     }
+  }
+
+  public Dimension getViewableRange() {
+    return this.js.getViewport().getExtentSize();
   }
 }
 

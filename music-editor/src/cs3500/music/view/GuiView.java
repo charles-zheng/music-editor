@@ -3,6 +3,7 @@ package cs3500.music.view;
 import javax.sound.midi.InvalidMidiDataException;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
+import java.awt.Dimension;
 
 /**
  * Created by Charles on 11/18/15.
@@ -27,4 +28,5 @@ public interface GuiView extends View {
 
   void shiftDown();
 
+  Dimension getViewableRange();
 }

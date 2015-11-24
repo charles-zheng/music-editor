@@ -104,7 +104,7 @@ public final class ConcreteGuiViewPanel extends JPanel {
     }
 
     // draws the pitch names
-    drawPitches(g, (m.getTimeStamp() + 1) * BOX_SIZE);
+    drawPitches(g);
     addLine(g);
   }
 
@@ -121,18 +121,19 @@ public final class ConcreteGuiViewPanel extends JPanel {
     }
   }
 
-  public void drawPitches(Graphics g, int x) {
+  public void drawPitches(Graphics g) {
     Pitch highest = Objects.requireNonNull(m.getHighestPitch());
     Pitch lowest = Objects.requireNonNull(m.getLowestPitch());
     int range = highest.getValue() - lowest.getValue();
+    int curX = (int)m.getTopleft().getX();
 
     g.setColor(Color.white);
-    g.fillRect(x - BOX_SIZE, 0, BOX_SIZE * 2, range * BOX_SIZE);
+    g.fillRect(curX, 0, BOX_SIZE * 2, range * BOX_SIZE);
     for (int i = highest.getValue(); i >= lowest.getValue(); i--) {
       Pitch p = new PitchImpl(i);
       // draw pitch names
       g.setColor(Color.black);
-      g.drawString(p.toString(), x - 10,
+      g.drawString(p.toString(), (curX + BOX_SIZE) - 10,
           BOX_SIZE * (highest.getValue() - p.getValue() + 2));
     }
   }

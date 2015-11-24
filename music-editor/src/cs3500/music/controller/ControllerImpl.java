@@ -5,7 +5,7 @@ import cs3500.music.model.*;
 
 import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.MidiUnavailableException;
-import java.awt.event.MouseListener;
+import java.awt.Point;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -371,6 +371,7 @@ public class ControllerImpl implements Controller {
       playing = false;
       view.skipToFront();
       model.setTimeStamp(0);
+      model.setViewableRange(new Point(0, 0));
       view.paintAgain(playing);
     }
   }
@@ -383,6 +384,8 @@ public class ControllerImpl implements Controller {
     public void run() {
       view.skipToEnd();
       model.setTimeStamp(model.getFinalEndBeat());
+      model.setViewableRange(new Point((int)((model.getFinalEndBeat() * ConcreteGuiViewPanel.BOX_SIZE)
+          - view.getViewableRange().getWidth()), 0));
       view.paintAgain(playing);
     }
   }

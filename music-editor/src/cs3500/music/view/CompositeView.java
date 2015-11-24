@@ -3,6 +3,7 @@ package cs3500.music.view;
 import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.MidiUnavailableException;
 import java.awt.event.KeyListener;
+import java.awt.Dimension;
 
 /**
  * Created by catherinemclean1 on 11/19/15.
@@ -53,6 +54,8 @@ public class CompositeView implements CompositeViewable {
   @Override public void shiftDown() {
     gv.shiftDown();
   }
+
+  @Override public Dimension getViewableRange() {return gv.getViewableRange(); }
 
   @Override public void recordNotes(int time) throws InvalidMidiDataException,
       MidiUnavailableException {
