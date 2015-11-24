@@ -52,6 +52,15 @@ public class CompositeView implements CompositeViewable {
   }
 
   /**
+   * Removes the given key listener from this gui view.
+   *
+   * @param kl The Key Listener to be removed.
+   */
+  @Override public void removeKeyListener(KeyListener kl) {
+    gv.removeKeyListener(kl);
+  }
+
+  /**
    * Repaints the GUI view.
    *
    * @param playing Whether or not the model is currently playing.

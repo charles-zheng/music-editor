@@ -8,18 +8,54 @@ import java.awt.Point;
  */
 public interface ViewModel extends Model, View {
 
+  /**
+   * Sends in the location of the mouse click to set the current Note that is being
+   * selected.
+   * @param x The x coordinate of the mouse click.
+   * @param y The y coordinate of the mouse click.
+   */
   void setCurrent(int x, int y);
 
+  /**
+   * Gets the pitch of the note that is currently selected.
+   *
+   * @return The value of the pitch of the note that is currently selected.
+   */
   int getCurPitch();
 
+  /**
+   * Gets the beat of the note that is currently selected.
+   *
+   * @return The beat of the note that is currently selected.
+   */
   int getCurBeat();
 
+  /**
+   *  Gets the instrument of the note that is currently selected.
+   *
+   * @return The instrument of the note that is currently selected.
+   */
   int getCurInstrument();
 
+  /**
+   * Saves the pitch of the current note.
+   *
+   * @param pitch The pitch of the note that is currently selected.
+   */
   void setCurPitch(int pitch);
 
+  /**
+   * Saves the beat of the current note.
+   *
+   * @param beat The beat of the note that is currently selected.
+   */
   void setCurBeat(int beat);
 
+  /**
+   * Saves the instrument of the current note.
+   *
+   * @param instrument The instrument of the note that is currently selected.
+   */
   void setCurInstrument(int instrument);
 
   /**
@@ -46,8 +82,18 @@ public interface ViewModel extends Model, View {
    */
   void resetTimestamp();
 
+  /**
+   * Sets the dimension of the view that is currently seen in the gui frame.
+   *
+   * @param corner The point on the view that is in the top left corner of the frame.
+   */
   void setViewableRange(Point corner);
 
+  /**
+   * Get the point at the top left corner of the frame.
+   *
+   * @return The point of the display that is in the top left corner of the frame.
+   */
   Point getTopleft();
 
 }

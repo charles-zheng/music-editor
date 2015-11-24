@@ -172,10 +172,20 @@ public final class MidiViewImpl implements MidiView {
     }
   }
 
+  /**
+   * Returns the midi view as output to the console for testing purposes.
+   * @return The midi view represented as a string.
+   */
   public String getOutput() {
     return this.output;
   }
 
+  /**
+   * Audibly plays all of the notes at the given time.
+   * @param time The time that this view is currently at.
+   * @throws InvalidMidiDataException if the Midi data is invalid.
+   * @throws MidiUnavailableException if Midi is unavailable.
+   */
   public void recordNotes(int time) throws InvalidMidiDataException, MidiUnavailableException {
     receiver = synth.getReceiver();
     MidiChannel[] chan = synth.getChannels();
@@ -193,6 +203,9 @@ public final class MidiViewImpl implements MidiView {
     receiver.close();
   }
 
+  /**
+   * Pauses this view.
+   */
   @Override public void pause() {
     MidiChannel[] chan = synth.getChannels();
     for (MidiChannel mc : chan) {
@@ -201,6 +214,10 @@ public final class MidiViewImpl implements MidiView {
     paused = true;
   }
 
+  /**
+   * Returns whether or not this view is currently paused.
+   * @return true if this view is paused or false if it is playing.
+   */
   public boolean isPaused() {
     return this.paused;
   }

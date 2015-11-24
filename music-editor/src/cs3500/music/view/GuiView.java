@@ -6,7 +6,7 @@ import java.awt.event.MouseListener;
 import java.awt.Dimension;
 
 /**
- * Created by Charles on 11/18/15.
+ * Represents a visual gui view.
  */
 public interface GuiView extends View {
 

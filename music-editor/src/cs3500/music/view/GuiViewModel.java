@@ -331,34 +331,74 @@ public class GuiViewModel implements ViewModel {
     }
   }
 
+  /**
+   * Gets the pitch of the note that is currently selected.
+   *
+   * @return The value of the pitch of the note that is currently selected.
+   */
   public int getCurPitch() {
     return this.curPitch;
 }
 
+  /**
+   * Gets the beat of the note that is currently selected.
+   *
+   * @return The beat of the note that is currently selected.
+   */
   public int getCurBeat() {
     return this.curBeat;
   }
 
+  /**
+   *  Gets the instrument of the note that is currently selected.
+   *
+   * @return The instrument of the note that is currently selected.
+   */
   public int getCurInstrument() {
     return this.curInstrument;
   }
 
+  /**
+   * Saves the pitch of the current note.
+   *
+   * @param pitch The pitch of the note that is currently selected.
+   */
   public void setCurPitch(int pitch) {
     this.curPitch = pitch;
   }
 
+  /**
+   * Saves the beat of the current note.
+   *
+   * @param beat The beat of the note that is currently selected.
+   */
   public void setCurBeat(int beat) {
     this.curBeat = beat;
   }
 
+  /**
+   * Saves the instrument of the current note.
+   *
+   * @param instrument The instrument of the note that is currently selected.
+   */
   public void setCurInstrument(int instrument) {
     this.curInstrument = instrument;
   }
 
+  /**
+   * Sets the dimension of the view that is currently seen in the gui frame.
+   *
+   * @param corner The point on the view that is in the top left corner of the frame.
+   */
   public void setViewableRange(Point corner) {
     this.topleft = corner;
   }
 
+  /**
+   * Get the point at the top left corner of the frame.
+   *
+   * @return The point of the display that is in the top left corner of the frame.
+   */
   public Point getTopleft() {
     return this.topleft;
   }
