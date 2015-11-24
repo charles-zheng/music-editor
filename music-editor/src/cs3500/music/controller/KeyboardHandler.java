@@ -1,5 +1,7 @@
 package cs3500.music.controller;
 
+import sun.awt.ExtendedKeyCodes;
+
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.*;
@@ -48,8 +50,9 @@ public class KeyboardHandler implements KeyListener {
    * @param e the KeyEvent that was typed
    */
   @Override public void keyTyped(KeyEvent e) {
-    if (this.typed.containsKey(e.getExtendedKeyCode())) {
-      this.typed.get(e.getExtendedKeyCode()).run();
+    e.setKeyCode(ExtendedKeyCodes.getExtendedKeyCodeForChar(e.getKeyChar()));
+    if (this.typed.containsKey(e.getKeyCode())) {
+      this.typed.get(e.getKeyCode()).run();
     }
 
     String msg = "Key typed: " + displayInfo(e);
@@ -66,8 +69,9 @@ public class KeyboardHandler implements KeyListener {
    * @param e the KeyEvent that was pressed
    */
   @Override public void keyPressed(KeyEvent e) {
-    if (this.pressed.containsKey(e.getExtendedKeyCode())) {
-      this.pressed.get(e.getExtendedKeyCode()).run();
+    e.setKeyCode(ExtendedKeyCodes.getExtendedKeyCodeForChar(e.getKeyChar()));
+    if (this.pressed.containsKey(e.getKeyCode())) {
+      this.pressed.get(e.getKeyCode()).run();
     }
 
     String msg = "Key pressed: " + displayInfo(e);
@@ -84,11 +88,12 @@ public class KeyboardHandler implements KeyListener {
    * @param e the KeyEvent that was released
    */
   @Override public void keyReleased(KeyEvent e) {
-    if (this.released.containsKey(e.getExtendedKeyCode())) {
-      this.released.get(e.getExtendedKeyCode()).run();
+    e.setKeyCode(ExtendedKeyCodes.getExtendedKeyCodeForChar(e.getKeyChar()));
+    if (this.released.containsKey(e.getKeyCode())) {
+      this.released.get(e.getKeyCode()).run();
     }
 
-    String msg = "Key released: " + displayInfo(e) + "\n";
+    String msg = "Key released: " + displayInfo(e);
     // resize our StringBuilder to double capacity
     if (out.capacity() - out.length() < msg.length()) {
       out.ensureCapacity(out.capacity() * 2);
@@ -127,23 +132,7 @@ public class KeyboardHandler implements KeyListener {
   }
 
   private String displayInfo(KeyEvent e){
-
-    //You should only rely on the key char if the event
-    //is a key typed event.
-    int id = e.getID();
-    String keyString;
-    if (id == KeyEvent.KEY_TYPED) {
-      char c = e.getKeyChar();
-      keyString = "key character = '" + c + "'";
-    } else {
-      int keyCode = e.getExtendedKeyCode();
-      keyString = "key code = " + keyCode
-          + " ("
-          + KeyEvent.getKeyText(keyCode)
-          + ")";
-    }
-
-    return keyString + " " + e.getExtendedKeyCode();
+    return e.getKeyChar() + " key code = " + e.getKeyCode();
   }
 
   public class TestKeyHandler implements Runnable {

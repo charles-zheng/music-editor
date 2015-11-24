@@ -282,7 +282,9 @@ public class GuiViewModel implements ViewModel {
    * Advance the timestamp of this piece by 1;
    */
   public void advanceTimestamp() {
-    this.timeStamp++;
+    if (this.timeStamp < getFinalEndBeat()) {
+      this.timeStamp++;
+    }
   }
 
   /**
@@ -291,6 +293,9 @@ public class GuiViewModel implements ViewModel {
    * @param t the new timestamp
    */
   public void setTimeStamp(int t) {
+    if (t > getFinalEndBeat() || t < 0) {
+      throw new IllegalArgumentException("Invalid timestamp");
+    }
     this.timeStamp = t;
   }
 
