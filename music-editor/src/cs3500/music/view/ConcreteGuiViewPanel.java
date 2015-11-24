@@ -146,7 +146,7 @@ public final class ConcreteGuiViewPanel extends JPanel {
     int curX = (int)m.getTopleft().getX();
 
     g.setColor(Color.white);
-    g.fillRect(curX, 0, BOX_SIZE * 2, range * BOX_SIZE);
+    g.fillRect(curX, 0, BOX_SIZE * 2, (range + 2) * BOX_SIZE);
     for (int i = highest.getValue(); i >= lowest.getValue(); i--) {
       Pitch p = new PitchImpl(i);
       // draw pitch names

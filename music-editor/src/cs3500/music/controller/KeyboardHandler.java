@@ -28,12 +28,18 @@ public class KeyboardHandler implements KeyListener {
   private Map<Integer, Runnable> released;
 
   /**
+   * Represents testing output
+   */
+  private StringBuilder out;
+
+  /**
    * Makes a new KeyBoard handler. Initializes all the fields to empty
    */
   public KeyboardHandler() {
     this.typed = new HashMap<Integer, Runnable>();
     this.pressed = new HashMap<Integer, Runnable>();
     this.released = new HashMap<Integer, Runnable>();
+    this.out = new StringBuilder(1000);
   }
 
   /**
@@ -45,7 +51,13 @@ public class KeyboardHandler implements KeyListener {
     if (this.typed.containsKey(e.getExtendedKeyCode())) {
       this.typed.get(e.getExtendedKeyCode()).run();
     }
-    displayInfo(e, "KEY TYPED: ");
+
+    String msg = "Key typed: " + displayInfo(e);
+    // resize our StringBuilder to double capacity
+    if (out.capacity() - out.length() < msg.length()) {
+      out.ensureCapacity(out.capacity() * 2);
+    }
+    out.append(msg);
   }
 
   /**
@@ -57,6 +69,13 @@ public class KeyboardHandler implements KeyListener {
     if (this.pressed.containsKey(e.getExtendedKeyCode())) {
       this.pressed.get(e.getExtendedKeyCode()).run();
     }
+
+    String msg = "Key pressed: " + displayInfo(e);
+    // resize our StringBuilder to double capacity
+    if (out.capacity() - out.length() < msg.length()) {
+      out.ensureCapacity(out.capacity() * 2);
+    }
+    out.append(msg);
   }
 
   /**
@@ -68,6 +87,13 @@ public class KeyboardHandler implements KeyListener {
     if (this.released.containsKey(e.getExtendedKeyCode())) {
       this.released.get(e.getExtendedKeyCode()).run();
     }
+
+    String msg = "Key released: " + displayInfo(e) + "\n";
+    // resize our StringBuilder to double capacity
+    if (out.capacity() - out.length() < msg.length()) {
+      out.ensureCapacity(out.capacity() * 2);
+    }
+    out.append(msg);
   }
 
   /**
@@ -100,7 +126,7 @@ public class KeyboardHandler implements KeyListener {
     this.released.put(e, r);
   }
 
-  private void displayInfo(KeyEvent e, String keyStatus){
+  private String displayInfo(KeyEvent e){
 
     //You should only rely on the key char if the event
     //is a key typed event.
@@ -117,8 +143,17 @@ public class KeyboardHandler implements KeyListener {
           + ")";
     }
 
+    return keyString + " " + e.getExtendedKeyCode();
+  }
 
-    System.out.println(keyString);
-    System.out.println(e.getExtendedKeyCode());
+  public class TestKeyHandler implements Runnable {
+
+    public void run() {
+      out.append("Ran\n");
+    }
+  }
+
+  public String getOutput() {
+    return this.out.toString();
   }
 }

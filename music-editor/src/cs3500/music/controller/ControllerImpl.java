@@ -74,6 +74,8 @@ public class ControllerImpl implements Controller {
     this.kh.addPressedEvent(40, new MoveScreenDown()); // 'down
     this.kh.addTypedEvent(71, new ToEnd()); //            'g'
     this.kh.addTypedEvent(72, new ToHome()); //           'h'
+    this.kh.addTypedEvent(84, kh.new TestKeyHandler());// 't'
+
     this.view.addListener(this.kh);
   }
 
@@ -384,8 +386,9 @@ public class ControllerImpl implements Controller {
     public void run() {
       view.skipToEnd();
       model.setTimeStamp(model.getFinalEndBeat());
-      model.setViewableRange(new Point((int)((model.getFinalEndBeat() * ConcreteGuiViewPanel.BOX_SIZE)
-          - view.getViewableRange().getWidth()), 0));
+      model.setViewableRange(new Point(
+          (int) ((model.getFinalEndBeat() * ConcreteGuiViewPanel.BOX_SIZE) - view
+              .getViewableRange().getWidth()), 0));
       view.paintAgain(playing);
     }
   }
@@ -433,13 +436,4 @@ public class ControllerImpl implements Controller {
       view.shiftDown();
     }
   }
-
-
-  public class TestKeyHandler implements Runnable {
-
-    public void run() {
-
-    }
-  }
-
 }
