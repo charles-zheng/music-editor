@@ -58,10 +58,6 @@ public final class ConcreteGuiViewPanel extends JPanel {
 
     for (int i = highest.getValue(); i >= lowest.getValue(); i--) {
       Pitch p = new PitchImpl(i);
-      // draw pitch names
-      g.drawString(p.toString(), BOX_SIZE - 10,
-          BOX_SIZE * (highest.getValue() - p.getValue() + 2));
-
       // draws the horizontal grid
       g.drawRect(50, BOX_SIZE * (highest.getValue() - p.getValue()),
           m.getFinalEndBeat() * BOX_SIZE, BOX_SIZE);
@@ -107,9 +103,6 @@ public final class ConcreteGuiViewPanel extends JPanel {
             BOX_SIZE * (highest.getValue() - pitch + 1), BOX_SIZE, BOX_SIZE);
       }
     }
-
-    // draws the pitch names
-    drawPitches(g);
     addLine(g);
 
     this.revalidate();
@@ -131,28 +124,6 @@ public final class ConcreteGuiViewPanel extends JPanel {
       g.drawLine((time * BOX_SIZE) + 50 - BOX_SIZE / 2,
           lowest.getValue() - BOX_SIZE, (time * BOX_SIZE) + 50 - BOX_SIZE /2,
           (highest.getValue() - lowest.getValue() + 2) * BOX_SIZE);
-    }
-  }
-
-  /**
-   * Draws the pitches to the left of the frame, so they are always displayed when scrolling.
-   *
-   * @param g The graphics to draw onto.
-   */
-  public void drawPitches(Graphics g) {
-    Pitch highest = Objects.requireNonNull(m.getHighestPitch());
-    Pitch lowest = Objects.requireNonNull(m.getLowestPitch());
-    int range = highest.getValue() - lowest.getValue();
-    int curX = (int)m.getTopleft().getX();
-
-    g.setColor(Color.white);
-    g.fillRect(curX, 0, BOX_SIZE * 2, (range + 2) * BOX_SIZE);
-    for (int i = highest.getValue(); i >= lowest.getValue(); i--) {
-      Pitch p = new PitchImpl(i);
-      // draw pitch names
-      g.setColor(Color.black);
-      g.drawString(p.toString(), (curX + BOX_SIZE) - 10,
-          BOX_SIZE * (highest.getValue() - p.getValue() + 2));
     }
   }
 }

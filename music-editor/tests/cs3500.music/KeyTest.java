@@ -7,7 +7,6 @@ import javax.swing.plaf.basic.BasicTableUI;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.awt.*;
-import javax.swing.*;
 import static org.junit.Assert.assertEquals;
 
 /**

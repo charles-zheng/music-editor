@@ -31,7 +31,22 @@ public final class GuiViewFrame extends javax.swing.JFrame implements GuiView {
    */
   private final JPanel displayPanel; // You may want to refine this to a subtype of JPanel
 
+  /**
+   * Represents the graphoc display for the pitches.
+   * They scroll down with the model, but are always displayed on screen.
+   */
+  private final JPanel displayPitches;
+
+  /**
+   * Represents the JScrollPane for the actual notes.
+   */
   private JScrollPane js;
+
+  /**
+   * Represents the JScrollPane for the pitches.
+   * Only scrolls vertically, also scrolls in sync with this.js.
+   */
+  private JScrollPane pjs;
 
   /**
    * Represents the model to be displayed
@@ -48,12 +63,25 @@ public final class GuiViewFrame extends javax.swing.JFrame implements GuiView {
     this.displayPanel = new ConcreteGuiViewPanel(this.model);
     this.displayPanel.addMouseListener(new MouseHandler(this));
 
+    this.displayPitches = new ConcretePitchesPanel(this.model);
+
     this.setFocusable(true);
 
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
     this.displayPanel.setPreferredSize(this.getPreferredSize());
+
+
+    this.displayPitches.setPreferredSize(this.getPreferredSize());
     JScrollPane jScrollPane = new JScrollPane();
+    js = new JScrollPane();
+    JViewport pitchesView = new JViewport();
+    pitchesView.setView(displayPitches);
+    pitchesView.setViewPosition(new Point(0, 0));
+    js.setViewport(pitchesView);
+
+
+
     jScrollPane.setViewportBorder(new LineBorder(Color.RED));
     JViewport viewport = new JViewport();
     viewport.setView(displayPanel);
@@ -62,8 +90,14 @@ public final class GuiViewFrame extends javax.swing.JFrame implements GuiView {
     jScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
     jScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 
+    js.getVerticalScrollBar().setModel(jScrollPane.getVerticalScrollBar().getModel());
+    js.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+    js.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
+
     this.add(jScrollPane, BorderLayout.CENTER);
+    this.add(js, BorderLayout.WEST);
     this.setSize(700, 500);
+    this.pjs = js;
     this.js = jScrollPane;
   }
 

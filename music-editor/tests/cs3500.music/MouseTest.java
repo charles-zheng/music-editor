@@ -11,6 +11,7 @@ import static org.junit.Assert.assertEquals;
 
 /**
  * Tests our mouse handler, making sure everything is wired correctly.
+ * Represents tests for mouse events
  */
 public class MouseTest extends AbstractViewTest {
 
