@@ -2,7 +2,6 @@ package cs3500.music.view;
 
 import cs3500.music.model.*;
 
-import java.awt.Point;
 
 /**
  * An adapter that adds additional functionality to our model.

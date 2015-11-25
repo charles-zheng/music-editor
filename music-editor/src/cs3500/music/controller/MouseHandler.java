@@ -26,7 +26,7 @@ public final class MouseHandler implements MouseListener {
   /**
    * Constructs a new mouse handler with the given view.
    *
-   * @param view
+   * @param view the view to use
    */
   public MouseHandler(GuiView view) {
     this.view = view;
