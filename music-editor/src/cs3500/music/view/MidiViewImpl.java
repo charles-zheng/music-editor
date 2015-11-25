@@ -34,6 +34,9 @@ public final class MidiViewImpl implements MidiView {
    */
   private final Model m;
 
+  /**
+   * Whether or not playback is paused
+   */
   private boolean paused;
 
   /**
