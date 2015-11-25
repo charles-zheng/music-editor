@@ -85,8 +85,6 @@ public final class ConcreteGuiViewPanel extends JPanel {
       }
     }
 
-    //TODO
-    System.out.println("cur: " + m.getCurBeat() + " " + m.getCurPitch());
     // draws selected box
     int beat = m.getCurBeat();
     int pitch = m.getCurPitch();
