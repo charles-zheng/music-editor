@@ -94,4 +94,31 @@ public class KeyTest extends AbstractViewTest {
     kh.keyTyped(e);
     assertEquals(kh.getOutput(), "Ran\nKey typed: m key code = 77");
   }
+
+  @Test
+  public void testKey10() {
+    KeyboardHandler kh = new KeyboardHandler();
+    kh.addReleasedEvent(78, kh.new TestKeyHandler());
+    KeyEvent e = new KeyEvent(new Button(), 0, 0, 0, 0, 'n');
+    kh.keyReleased(e);
+    assertEquals(kh.getOutput(), "Ran\nKey released: n key code = 78");
+  }
+
+  @Test
+  public void testKey11() {
+    KeyboardHandler kh = new KeyboardHandler();
+    kh.addReleasedEvent(71, kh.new TestKeyHandler());
+    KeyEvent e = new KeyEvent(new Button(), 0, 0, 0, 0, 'g');
+    kh.keyReleased(e);
+    assertEquals(kh.getOutput(), "Ran\nKey released: g key code = 71");
+  }
+
+  @Test
+  public void testKey12() {
+    KeyboardHandler kh = new KeyboardHandler();
+    kh.addReleasedEvent(72, kh.new TestKeyHandler());
+    KeyEvent e = new KeyEvent(new Button(), 0, 0, 0, 0, 'h');
+    kh.keyReleased(e);
+    assertEquals(kh.getOutput(), "Ran\nKey released: h key code = 72");
+  }
 }
