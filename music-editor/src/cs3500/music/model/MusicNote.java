@@ -3,7 +3,7 @@ package cs3500.music.model;
 /**
  * Represents a cs3500.music.model.Note that is played and has a continuation
  */
-final public class MusicNote implements Note {
+public final class MusicNote implements Note {
 
   /**
    * The combination of the letter note and octave that the note is played at

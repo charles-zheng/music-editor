@@ -50,8 +50,8 @@ public class AbstractViewTest {
     this.smb = new GuiViewModel(MusicReader.parseFile(smbFile, new MusicModelBuilder()));
     BufferedReader tetrisFile = new BufferedReader(new FileReader("mystery-2.txt"));
     this.tetris = new GuiViewModel(MusicReader.parseFile(tetrisFile, new MusicModelBuilder()));
-    //BufferedReader testFile = new BufferedReader(new FileReader("test-1.txt"));
-    //this.test1 = new GuiViewModel(MusicReader.parseFile(testFile, new MusicModelBuilder()));
+    BufferedReader testFile = new BufferedReader(new FileReader("test-1.txt"));
+    this.test1 = new GuiViewModel(MusicReader.parseFile(testFile, new MusicModelBuilder()));
 
     this.scale = new GuiViewModel(new ModelImpl());
     scale.setTempo(100000);

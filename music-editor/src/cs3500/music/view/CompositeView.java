@@ -11,7 +11,7 @@ import java.util.Objects;
  * Plays the song while scrolling through the visual view.
  */
 
-public class CompositeView implements CompositeViewable {
+public final class CompositeView implements CompositeViewable {
 
   /**
    * The GuiView of the model that will be visually displayed.
