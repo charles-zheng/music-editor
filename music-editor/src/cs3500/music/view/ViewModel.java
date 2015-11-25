@@ -81,19 +81,4 @@ public interface ViewModel extends Model, View {
    * Resets the timestamp of this piece to 0
    */
   void resetTimestamp();
-
-  /**
-   * Sets the dimension of the view that is currently seen in the gui frame.
-   *
-   * @param corner The point on the view that is in the top left corner of the frame.
-   */
-  void setViewableRange(Point corner);
-
-  /**
-   * Get the point at the top left corner of the frame.
-   *
-   * @return The point of the display that is in the top left corner of the frame.
-   */
-  Point getTopleft();
-
 }

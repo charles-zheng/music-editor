@@ -7,7 +7,7 @@ import java.io.IOException;
 import static org.junit.Assert.assertEquals;
 
 /**
- * Created by Charles on 11/24/15.
+ * Tests the new functionality that was added to our model by our ViewModel
  */
 public class ViewModelTest extends AbstractViewTest {
 
@@ -75,6 +75,68 @@ public class ViewModelTest extends AbstractViewTest {
 
     this.mary.setCurrent(1038, 3);
     assertEquals(mary.getCurBeat(), 39);
+    assertEquals(mary.getCurPitch(), -1);
+  }
+
+  @Test
+  public void testSetCurBeat1() {
+    try {
+      initialize();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+
+    assertEquals(mary.getCurBeat(), -1);
+    this.mary.setCurBeat(5);
+    assertEquals(mary.getCurBeat(), 5);
+  }
+
+  @Test (expected = IllegalArgumentException.class)
+  public void testSetCurBeat2() {
+    try {
+      initialize();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+
+    this.mary.setCurBeat(80);
+  }
+
+  @Test
+  public void testSetCurPitch1() {
+    try {
+      initialize();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+
+    assertEquals(mary.getCurPitch(), -1);
+    this.mary.setCurPitch(60);
+    assertEquals(mary.getCurPitch(), 60);
+  }
+
+  @Test (expected = IllegalArgumentException.class)
+  public void testSetCurPitch2() {
+    try {
+      initialize();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+
+    this.mary.setCurPitch(20);
+  }
+
+  @Test
+  public void testSetCurrent4() {
+    try {
+      initialize();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+
+    this.mary.setCurrent(530, 200);
+    this.mary.setCurrent(0, 0);
+    assertEquals(mary.getCurBeat(), -1);
     assertEquals(mary.getCurPitch(), -1);
   }
 }

@@ -1,6 +1,8 @@
 package cs3500.music.view;
 
 
+import com.sun.javaws.exceptions.InvalidArgumentException;
+import com.sun.tools.corba.se.idl.InvalidArgument;
 import cs3500.music.model.*;
 import java.awt.Point;
 import javax.sound.midi.InvalidMidiDataException;
@@ -369,6 +371,9 @@ public class GuiViewModel implements ViewModel {
    * @param pitch The pitch of the note that is currently selected.
    */
   public void setCurPitch(int pitch) {
+    if (pitch < getLowestPitch().getValue() || pitch > getHighestPitch().getValue()) {
+      throw new IllegalArgumentException("Pitch out of range!");
+    }
     this.curPitch = pitch;
   }
 
@@ -378,6 +383,9 @@ public class GuiViewModel implements ViewModel {
    * @param beat The beat of the note that is currently selected.
    */
   public void setCurBeat(int beat) {
+    if (beat > getFinalEndBeat() || beat < 0) {
+      throw new IllegalArgumentException("Beat out of bounds!");
+    }
     this.curBeat = beat;
   }
 
@@ -389,23 +397,4 @@ public class GuiViewModel implements ViewModel {
   public void setCurInstrument(int instrument) {
     this.curInstrument = instrument;
   }
-
-  /**
-   * Sets the dimension of the view that is currently seen in the gui frame.
-   *
-   * @param corner The point on the view that is in the top left corner of the frame.
-   */
-  public void setViewableRange(Point corner) {
-    this.topleft = corner;
-  }
-
-  /**
-   * Get the point at the top left corner of the frame.
-   *
-   * @return The point of the display that is in the top left corner of the frame.
-   */
-  public Point getTopleft() {
-    return this.topleft;
-  }
-
 }
