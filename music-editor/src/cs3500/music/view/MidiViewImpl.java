@@ -93,17 +93,6 @@ public final class MidiViewImpl implements MidiView {
       receiver = r;
       seq = null;
     }
-
-    Sequence mySeq = null;
-    try{
-      mySeq = new Sequence(Sequence.PPQ, 20, 16);
-    } catch (Exception ex) {
-      ex.printStackTrace();
-    }
-    seq.setSequence(mySeq);
-    for (int i = 0; i < mySeq.getTracks().length; i++) {
-      seq.recordEnable(mySeq.getTracks()[i], i);
-    }
   }
 
 
@@ -153,22 +142,35 @@ public final class MidiViewImpl implements MidiView {
       }
     }
 
-    // for testing purposes, store the output stream in a string field
     if (this.mock) {
-      System.out.print(((MockReceiver) receiver).output());
-      // Create a stream to hold the output
-      ByteArrayOutputStream out = new ByteArrayOutputStream();
-      PrintStream ps = new PrintStream(out);
-      // IMPORTANT: Save the old System.out!
-      PrintStream old = System.out;
-      System.setOut(ps);
-      System.out.print(((MockReceiver) receiver).output());
-      // Put things back
-      System.out.flush();
-      System.setOut(old);
+      int t = m.getTempo();
+      for (int i = 0; i <= m.getFinalStartBeat(); i++) {
+        List<Note> ns = m.getNotesAtTime(i);
+        for (Note n : ns) {
+          MidiMessage start =
+              new ShortMessage(ShortMessage.NOTE_ON, n.getInstrument() - 1, n.getPitch().getValue(),
+                  n.getVelocity());
+          MidiMessage stop =
+              new ShortMessage(ShortMessage.NOTE_OFF, n.getInstrument() - 1, n.getPitch().getValue(),
+                  n.getVelocity());
+          receiver.send(start, t * n.getStartTime());
+          receiver.send(stop, t * (n.getStartTime() + (n.getEndTime() - n.getStartTime())));
+        }
 
-      this.output = out.toString();
-      //System.out.println("Here: " + baos.toString());
+        // Create a stream to hold the output
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        PrintStream ps = new PrintStream(out);
+        // IMPORTANT: Save the old System.out!
+        PrintStream old = System.out;
+        System.setOut(ps);
+        System.out.print(((MockReceiver) receiver).output());
+        // Put things back
+        System.out.flush();
+        System.setOut(old);
+
+        this.output = out.toString();
+      }
+      receiver.close();
     }
   }
 
@@ -199,6 +201,8 @@ public final class MidiViewImpl implements MidiView {
     for (Note n : ons) {
       chan[n.getInstrument() - 1].noteOn(n.getPitch().getValue(), n.getVelocity());
     }
+
+
 
     receiver.close();
   }

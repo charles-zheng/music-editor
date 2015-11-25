@@ -10,7 +10,7 @@ import cs3500.music.view.*;
 /**
  * Handles all of the Mouse events.
  */
-public class MouseHandler implements MouseListener {
+public final class MouseHandler implements MouseListener {
 
   /**
    * Represents the view with which the mouse events will interact.

@@ -9,7 +9,7 @@ import java.util.*;
 /**
  * Listens to and handles key events.
  */
-public class KeyboardHandler implements KeyListener {
+public final class KeyboardHandler implements KeyListener {
 
   /**
    * Represents all the events that should happen when a key is types

@@ -12,7 +12,7 @@ import java.util.TimerTask;
 /**
  * Controls the interactions between Model and the Composite and Gui views
  */
-public class ControllerImpl implements Controller {
+public final class ControllerImpl implements Controller {
 
   /**
    * The composite view, a combination of midi and gui views.
@@ -56,7 +56,6 @@ public class ControllerImpl implements Controller {
     int t = model.getTempo() / 1000;
     timer.schedule(new Record(), 0, t);
 
-    //TODO
 
     this.kh.addTypedEvent(65, new AddNewNote()); //       'a'
     this.kh.addTypedEvent(8, new DeleteNote()); //        'delete'

@@ -27,4 +27,6 @@ public interface MidiView extends View {
    * @return true if this view is paused or false if it is playing.
    */
   boolean isPaused();
+
+
 }
