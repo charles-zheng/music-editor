@@ -108,7 +108,7 @@ public final class ConcreteGuiViewPanel extends JPanel {
   }
 
   /**
-   * Adds the red line on top of the given graphic at the
+   * Adds the red line on top of the given graphic at the note currently playing
    *
    * @param g The graphics to draw onto.
    */
