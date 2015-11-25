@@ -27,11 +27,25 @@ public interface GuiView extends View {
   void addListener(KeyListener k);
 
   /**
+   * Adds a key listener to this gui view.
+   *
+   * @param m The Key Listener to be added.
+   */
+  void addListener(MouseListener m);
+
+  /**
    * Removes the given key listener from this gui view.
    *
    * @param kl The Key Listener to be removed.
    */
   void removeKeyListener(KeyListener kl);
+
+  /**
+   * Removes the given key listener from this gui view.
+   *
+   * @param ml The Key Listener to be removed.
+   */
+  void removeMouseListener(MouseListener ml);
 
   /**
    * Repaints the GUI view.

@@ -10,7 +10,7 @@ import java.util.Objects;
 /**
  * Represents the visual display of all the pitches in the piece.
  */
-public class ConcretePitchesPanel extends JPanel {
+public final class ConcretePitchesPanel extends JPanel {
 
   /**
    * Represents the model that the pitches are from.

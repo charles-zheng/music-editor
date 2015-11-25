@@ -129,6 +129,13 @@ public final class GuiViewFrame extends javax.swing.JFrame implements GuiView {
   }
 
   /**
+   * Adds a key listener to this gui view.
+   *
+   * @param m The Key Listener to be added.
+   */
+  public void addListener(MouseListener m) { this.addMouseListener(m); }
+
+  /**
    * Removes the given key listener from this gui view.
    *
    * @param kl The Key Listener to be removed.
@@ -136,6 +143,13 @@ public final class GuiViewFrame extends javax.swing.JFrame implements GuiView {
   public void removeKeyListener(KeyListener kl) {
     super.removeKeyListener(kl);
   }
+
+  /**
+   * Removes the given key listener from this gui view.
+   *
+   * @param ml The Key Listener to be removed.
+   */
+  public void removeMouseListener(MouseListener ml) {super.removeMouseListener(ml); }
 
   /**
    * Sends in the location of the mouse click to set the current Note that is being
