@@ -374,9 +374,11 @@ public class GuiViewModel implements ViewModel {
    * Saves the pitch of the current note.
    *
    * @param pitch The pitch of the note that is currently selected.
+   * @throw IllegalArgumentException is the pitch is not in the board.
    */
   public void setCurPitch(int pitch) {
-    if (pitch < getLowestPitch().getValue() || pitch > getHighestPitch().getValue()) {
+    if ((pitch < getLowestPitch().getValue() && pitch != -1) ||
+        (pitch > getHighestPitch().getValue() && pitch != -1)) {
       throw new IllegalArgumentException("Pitch out of range!");
     }
     this.curPitch = pitch;
@@ -386,9 +388,10 @@ public class GuiViewModel implements ViewModel {
    * Saves the beat of the current note.
    *
    * @param beat The beat of the note that is currently selected.
+   * @throw IllegalArgumentException is the beat is not in the board.
    */
   public void setCurBeat(int beat) {
-    if (beat > getFinalEndBeat() || beat < 0) {
+    if (beat > getFinalEndBeat() || beat < -1) {
       throw new IllegalArgumentException("Beat out of bounds!");
     }
     this.curBeat = beat;
