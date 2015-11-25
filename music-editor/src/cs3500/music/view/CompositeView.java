@@ -4,6 +4,7 @@ import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.MidiUnavailableException;
 import java.awt.event.KeyListener;
 import java.awt.Dimension;
+import java.awt.event.MouseListener;
 import java.util.Objects;
 
 /**
@@ -55,12 +56,30 @@ public final class CompositeView implements CompositeViewable {
   }
 
   /**
+   * Adds a key listener to this gui view.
+   *
+   * @param m The Key Listener to be added.
+   */
+  @Override public void addListener(MouseListener m) {
+    gv.addListener(m);
+  }
+
+  /**
    * Removes the given key listener from this gui view.
    *
    * @param kl The Key Listener to be removed.
    */
   @Override public void removeKeyListener(KeyListener kl) {
     gv.removeKeyListener(kl);
+  }
+
+  /**
+   * Removes the given key listener from this gui view.
+   *
+   * @param ml The Key Listener to be removed.
+   */
+  @Override public void removeMouseListener(MouseListener ml) {
+    gv.removeMouseListener(ml);
   }
 
   /**
