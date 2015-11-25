@@ -4,13 +4,14 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import java.util.*;
+
 import cs3500.music.model.*;
 import cs3500.music.view.*;
 
 /**
  * Handles all of the Mouse events.
  */
-public class MouseHandler implements MouseListener {
+public final class MouseHandler implements MouseListener {
 
   /**
    * Represents the view with which the mouse events will interact.
@@ -18,7 +19,7 @@ public class MouseHandler implements MouseListener {
   private GuiView view;
 
   /**
-   * Represents mock output, for testing purposes
+   * Represents mock output, for testing purposes.
    */
   private StringBuilder out;
 
@@ -35,7 +36,7 @@ public class MouseHandler implements MouseListener {
   /**
    * Handles all mouse clicked events from the user.
    *
-   * @param e the MouseEvent representing the user's click
+   * @param e the MouseEvent representing the user's click.
    */
   @Override public void mouseClicked(MouseEvent e) {
     view.setCurrent(e.getX(), e.getY());
@@ -108,6 +109,11 @@ public class MouseHandler implements MouseListener {
     out.append(msg);
   }
 
+  /**
+   * Return the testing output as a string.
+   *
+   * @return the string representation of the testing output.
+   */
   public String getOutput() {
     return this.out.toString();
   }

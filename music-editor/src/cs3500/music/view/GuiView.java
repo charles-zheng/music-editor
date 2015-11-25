@@ -13,6 +13,7 @@ public interface GuiView extends View {
   /**
    * Sends in the location of the mouse click to set the current Note that is being
    * selected.
+   *
    * @param x The x coordinate of the mouse click.
    * @param y The y coordinate of the mouse click.
    */
@@ -20,12 +21,14 @@ public interface GuiView extends View {
 
   /**
    * Adds a key listener to this gui view.
+   *
    * @param k The Key Listener to be added.
    */
   void addListener(KeyListener k);
 
   /**
    * Removes the given key listener from this gui view.
+   *
    * @param kl The Key Listener to be removed.
    */
   void removeKeyListener(KeyListener kl);

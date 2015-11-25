@@ -4,6 +4,7 @@ import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.MidiUnavailableException;
 import java.awt.event.KeyListener;
 import java.awt.Dimension;
+import java.util.Objects;
 
 /**
  * A view composed of both the gui view and the midi view.
@@ -29,13 +30,14 @@ public class CompositeView implements CompositeViewable {
    * @param gv The gui view that makes up this composite view.
    */
   public CompositeView(MidiView mv, GuiView gv) {
-    this.mv = mv;
-    this.gv = gv;
+    this.mv = Objects.requireNonNull(mv);
+    this.gv = Objects.requireNonNull(gv);
   }
 
   /**
    * Sends in the location of the mouse click to set the current Note that is being
    * selected.
+   *
    * @param x The x coordinate of the mouse click.
    * @param y The y coordinate of the mouse click.
    */
@@ -45,6 +47,7 @@ public class CompositeView implements CompositeViewable {
 
   /**
    * Adds a key listener to this composite view through the gui view.
+   *
    * @param k The Key Listener to be added.
    */
   @Override public void addListener(KeyListener k) {
@@ -122,12 +125,13 @@ public class CompositeView implements CompositeViewable {
 
   /**
    * Audibly plays all of the notes at the given time.
+   *
    * @param time The time that this view is currently at.
    * @throws InvalidMidiDataException if the Midi data is invalid.
    * @throws MidiUnavailableException if Midi is unavailable.
    */
-  @Override public void recordNotes(int time) throws InvalidMidiDataException,
-      MidiUnavailableException {
+  @Override public void recordNotes(int time)
+      throws InvalidMidiDataException, MidiUnavailableException {
     mv.recordNotes(time);
   }
 
@@ -140,10 +144,20 @@ public class CompositeView implements CompositeViewable {
 
   /**
    * Returns whether or not this CompositeView is currently paused.
+   *
    * @return true if this view is paused or false if it is playing.
    */
   @Override public boolean isPaused() {
     return mv.isPaused();
+  }
+
+  /**
+   * Returns the midi view as output to the console for testing purposes.
+   *
+   * @return The midi view represented as a string.
+   */
+  @Override public String getOutput() {
+    return mv.getOutput();
   }
 
   /**

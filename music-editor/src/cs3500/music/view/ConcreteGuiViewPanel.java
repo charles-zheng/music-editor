@@ -99,8 +99,8 @@ public final class ConcreteGuiViewPanel extends JPanel {
             (n.getEndTime() - n.getStartTime()) * BOX_SIZE, BOX_SIZE);
       } catch (Model.IllegalAccessNoteException e) {
         g.setColor(Color.cyan);
-        g.fillRect((beat + 2) * BOX_SIZE,
-            BOX_SIZE * (highest.getValue() - pitch + 1), BOX_SIZE, BOX_SIZE);
+        g.fillRect((beat + 2) * BOX_SIZE, BOX_SIZE * (highest.getValue() - pitch + 1), BOX_SIZE,
+            BOX_SIZE);
       }
     }
     addLine(g);
@@ -121,8 +121,8 @@ public final class ConcreteGuiViewPanel extends JPanel {
     int time = m.getTimeStamp();
     g.setColor(Color.red);
     if (time > 0) {
-      g.drawLine((time * BOX_SIZE) + 50 - BOX_SIZE / 2,
-          lowest.getValue() - BOX_SIZE, (time * BOX_SIZE) + 50 - BOX_SIZE /2,
+      g.drawLine((time * BOX_SIZE) + 50 - BOX_SIZE / 2, lowest.getValue() - BOX_SIZE,
+          (time * BOX_SIZE) + 50 - BOX_SIZE / 2,
           (highest.getValue() - lowest.getValue() + 2) * BOX_SIZE);
     }
   }

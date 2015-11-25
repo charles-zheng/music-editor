@@ -121,6 +121,7 @@ public final class GuiViewFrame extends javax.swing.JFrame implements GuiView {
 
   /**
    * Adds a key listener to this gui view.
+   *
    * @param k The Key Listener to be added.
    */
   public void addListener(KeyListener k) {
@@ -129,6 +130,7 @@ public final class GuiViewFrame extends javax.swing.JFrame implements GuiView {
 
   /**
    * Removes the given key listener from this gui view.
+   *
    * @param kl The Key Listener to be removed.
    */
   public void removeKeyListener(KeyListener kl) {
@@ -138,6 +140,7 @@ public final class GuiViewFrame extends javax.swing.JFrame implements GuiView {
   /**
    * Sends in the location of the mouse click to set the current Note that is being
    * selected.
+   *
    * @param x The x coordinate of the mouse click.
    * @param y The y coordinate of the mouse click.
    */
@@ -154,16 +157,16 @@ public final class GuiViewFrame extends javax.swing.JFrame implements GuiView {
   public void paintAgain(boolean playing) {
     this.displayPanel.setPreferredSize(this.getPreferredSize());
     JViewport jv = this.js.getViewport();
-    int limit = (int)(jv.getViewPosition().getX() + jv.getExtentSize().getWidth());
+    int limit = (int) (jv.getViewPosition().getX() + jv.getExtentSize().getWidth());
     int curX = (model.getTimeStamp() + 2) * ConcreteGuiViewPanel.BOX_SIZE;
-    int curY = (int)jv.getViewPosition().getY();
+    int curY = (int) jv.getViewPosition().getY();
 
     if (playing) {
       if (curX > limit) {
         jv.setViewPosition(new Point(limit - (ConcreteGuiViewPanel.BOX_SIZE * 2), curY));
       }
 
-      if (curX < (int)(jv.getViewPosition().getX())) {
+      if (curX < (int) (jv.getViewPosition().getX())) {
         jv.setViewPosition(new Point(curX, curY));
       }
     }
@@ -193,8 +196,8 @@ public final class GuiViewFrame extends javax.swing.JFrame implements GuiView {
    */
   public void shiftLeft() {
     JViewport jv = this.js.getViewport();
-    int curX = (int)jv.getViewPosition().getX();
-    int curY = (int)jv.getViewPosition().getY();
+    int curX = (int) jv.getViewPosition().getX();
+    int curY = (int) jv.getViewPosition().getY();
     if (curX > 50) {
       jv.setViewPosition(new Point(curX - 50, curY));
     }
@@ -205,8 +208,8 @@ public final class GuiViewFrame extends javax.swing.JFrame implements GuiView {
    */
   public void shiftRight() {
     JViewport jv = this.js.getViewport();
-    int curX = (int)jv.getViewPosition().getX();
-    int curY = (int)jv.getViewPosition().getY();
+    int curX = (int) jv.getViewPosition().getX();
+    int curY = (int) jv.getViewPosition().getY();
     if (curX < (model.getFinalEndBeat() + 2) * ConcreteGuiViewPanel.BOX_SIZE - 50) {
       jv.setViewPosition(new Point(curX + 50, curY));
     }
@@ -217,8 +220,8 @@ public final class GuiViewFrame extends javax.swing.JFrame implements GuiView {
    */
   public void shiftUp() {
     JViewport jv = this.js.getViewport();
-    int curX = (int)jv.getViewPosition().getX();
-    int curY = (int)jv.getViewPosition().getY();
+    int curX = (int) jv.getViewPosition().getX();
+    int curY = (int) jv.getViewPosition().getY();
     if (curY > 50) {
       jv.setViewPosition(new Point(curX, curY - 50));
     }
@@ -229,8 +232,8 @@ public final class GuiViewFrame extends javax.swing.JFrame implements GuiView {
    */
   public void shiftDown() {
     JViewport jv = this.js.getViewport();
-    int curX = (int)jv.getViewPosition().getX();
-    int curY = (int)jv.getViewPosition().getY();
+    int curX = (int) jv.getViewPosition().getX();
+    int curY = (int) jv.getViewPosition().getY();
     if (curY < (model.getHighestPitch().getValue() - model.getLowestPitch().getValue() + 1)
         * ConcreteGuiViewPanel.BOX_SIZE) {
       jv.setViewPosition(new Point(curX, curY + 50));
