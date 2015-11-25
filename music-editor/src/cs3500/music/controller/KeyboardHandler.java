@@ -69,9 +69,8 @@ public final class KeyboardHandler implements KeyListener {
    * @param e the KeyEvent that was pressed
    */
   @Override public void keyPressed(KeyEvent e) {
-    e.setKeyCode(ExtendedKeyCodes.getExtendedKeyCodeForChar(e.getKeyChar()));
-    if (this.pressed.containsKey(e.getKeyCode())) {
-      this.pressed.get(e.getKeyCode()).run();
+    if (this.pressed.containsKey(e.getExtendedKeyCode())) {
+      this.pressed.get(e.getExtendedKeyCode()).run();
     }
 
     String msg = "Key pressed: " + displayInfo(e);
@@ -88,9 +87,8 @@ public final class KeyboardHandler implements KeyListener {
    * @param e the KeyEvent that was released
    */
   @Override public void keyReleased(KeyEvent e) {
-    e.setKeyCode(ExtendedKeyCodes.getExtendedKeyCodeForChar(e.getKeyChar()));
-    if (this.released.containsKey(e.getKeyCode())) {
-      this.released.get(e.getKeyCode()).run();
+    if (this.released.containsKey(e.getExtendedKeyCode())) {
+      this.released.get(e.getExtendedKeyCode()).run();
     }
 
     String msg = "Key released: " + displayInfo(e);
@@ -132,7 +130,7 @@ public final class KeyboardHandler implements KeyListener {
   }
 
   /**
-   * Returns testing data
+   * Returns testing data.
    *
    * @param e Key event
    * @return The string with the key event
@@ -142,7 +140,7 @@ public final class KeyboardHandler implements KeyListener {
   }
 
   /**
-   * Made to imitate the behavior in testing
+   * Made to imitate the behavior in testing!
    */
   public class TestKeyHandler implements Runnable {
 
@@ -154,7 +152,7 @@ public final class KeyboardHandler implements KeyListener {
   /**
    * Returns the output as a string for testing.
    *
-   * @return the output as a string
+   * @return the output as a string.
    */
   public String getOutput() {
     return this.out.toString();

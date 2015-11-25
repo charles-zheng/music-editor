@@ -5,12 +5,11 @@ import cs3500.music.model.*;
 
 import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.MidiUnavailableException;
-import java.awt.Point;
 import java.util.Timer;
 import java.util.TimerTask;
 
 /**
- * Controls the interactions between Model and the Composite and Gui views
+ * Controls the interactions between Model and the Composite and Gui views.
  */
 public final class ControllerImpl implements Controller {
 
