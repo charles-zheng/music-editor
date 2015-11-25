@@ -19,7 +19,7 @@ public class MidiViewTest extends AbstractViewTest {
   /**
    * The MidiView object
    */
-  private MidiViewImpl v;
+  private CompositeViewable v;
 
   /**
    * Creates an appropriate MidiView in testing mode with the given model
@@ -28,7 +28,8 @@ public class MidiViewTest extends AbstractViewTest {
    * @throws InvalidMidiDataException
    */
   private void create(Model m) throws InvalidMidiDataException {
-    this.v = new MidiViewImpl(m, true);
+    this.v = new CompositeView(new MidiViewImpl(m, true),
+        new GuiViewFrame(new GuiViewModel(m)));
     v.initialize();
   }
 

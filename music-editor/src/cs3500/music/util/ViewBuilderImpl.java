@@ -61,8 +61,7 @@ public final class ViewBuilderImpl implements ViewBuilder {
         this.v = new MidiViewImpl(m);
         return this;
       case "composite":
-        this.v = new CompositeView(new MidiViewImpl(m),
-            new GuiViewFrame(new GuiViewModel(m)));
+        this.v = new CompositeView(new MidiViewImpl(m), new GuiViewFrame(new GuiViewModel(m)));
         return this;
       default:
         throw new IllegalArgumentException("Invalid view");

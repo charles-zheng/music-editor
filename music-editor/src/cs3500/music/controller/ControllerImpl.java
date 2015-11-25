@@ -17,12 +17,12 @@ public final class ControllerImpl implements Controller {
   /**
    * The composite view, a combination of midi and gui views.
    */
-  private CompositeViewable view;
+  private final CompositeViewable view;
 
   /**
    * The model that our composite view will work with.
    */
-  private ViewModel model;
+  private final ViewModel model;
 
   /**
    * The timer that will schedule all of our tasks, such as recording notes
@@ -38,7 +38,7 @@ public final class ControllerImpl implements Controller {
   /**
    * The Keyboard handler, deals with key events.
    */
-  private KeyboardHandler kh;
+  private final KeyboardHandler kh;
 
   /**
    * Makes a new Controller with the given view.
@@ -56,6 +56,7 @@ public final class ControllerImpl implements Controller {
     int t = model.getTempo() / 1000;
     timer.schedule(new Record(), 0, t);
 
+    // Ads our key events to our key handler
 
     this.kh.addTypedEvent(65, new AddNewNote()); //       'a'
     this.kh.addTypedEvent(8, new DeleteNote()); //        'delete'
@@ -75,6 +76,7 @@ public final class ControllerImpl implements Controller {
     this.kh.addTypedEvent(72, new ToHome()); //           'h'
     this.kh.addTypedEvent(84, kh.new TestKeyHandler());// 't'
 
+    // adds the key handler to the view
     this.view.addListener(this.kh);
   }
 

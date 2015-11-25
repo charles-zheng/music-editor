@@ -54,8 +54,7 @@ public class ConcretePitchesPanel extends JPanel {
    *
    * @return the Dimension of this pitch panel.
    */
-  @Override
-  public Dimension getPreferredSize() {
+  @Override public Dimension getPreferredSize() {
     Pitch highest = Objects.requireNonNull(m.getHighestPitch());
     Pitch lowest = Objects.requireNonNull(m.getLowestPitch());
     int range = highest.getValue() - lowest.getValue();

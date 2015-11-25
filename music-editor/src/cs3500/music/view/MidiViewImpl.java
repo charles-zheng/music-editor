@@ -58,7 +58,7 @@ public final class MidiViewImpl implements MidiView {
   /**
    * Creates a new Midi view with either playback or testing
    *
-   * @param m the model that this view will play back
+   * @param m    the model that this view will play back
    * @param mock whether or not to create a mock MidiDevice
    */
   public MidiViewImpl(Model m, boolean mock) throws InvalidMidiDataException {
@@ -176,6 +176,7 @@ public final class MidiViewImpl implements MidiView {
 
   /**
    * Returns the midi view as output to the console for testing purposes.
+   *
    * @return The midi view represented as a string.
    */
   public String getOutput() {
@@ -184,6 +185,7 @@ public final class MidiViewImpl implements MidiView {
 
   /**
    * Audibly plays all of the notes at the given time.
+   *
    * @param time The time that this view is currently at.
    * @throws InvalidMidiDataException if the Midi data is invalid.
    * @throws MidiUnavailableException if Midi is unavailable.
@@ -220,6 +222,7 @@ public final class MidiViewImpl implements MidiView {
 
   /**
    * Returns whether or not this view is currently paused.
+   *
    * @return true if this view is paused or false if it is playing.
    */
   public boolean isPaused() {

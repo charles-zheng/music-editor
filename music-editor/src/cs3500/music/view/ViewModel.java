@@ -1,6 +1,7 @@
 package cs3500.music.view;
 
 import cs3500.music.model.*;
+
 import java.awt.Point;
 
 /**
@@ -11,6 +12,7 @@ public interface ViewModel extends Model, View {
   /**
    * Sends in the location of the mouse click to set the current Note that is being
    * selected.
+   *
    * @param x The x coordinate of the mouse click.
    * @param y The y coordinate of the mouse click.
    */
@@ -31,7 +33,7 @@ public interface ViewModel extends Model, View {
   int getCurBeat();
 
   /**
-   *  Gets the instrument of the note that is currently selected.
+   * Gets the instrument of the note that is currently selected.
    *
    * @return The instrument of the note that is currently selected.
    */

@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * Represents the model for a music sheet implementation
  */
-final public class ModelImpl implements Model {
+public final class ModelImpl implements Model {
 
   /**
    * Maps all of the Notes that play at a specific time to that timestamp.
@@ -271,13 +271,13 @@ final public class ModelImpl implements Model {
    * Get the note that starts or continues through the given pitch and time with the
    * given instrument.
    *
-   * @param pitch The pitch of the note that we want to retrieve.
-   * @param time The start time or the time the note is continuing.
+   * @param pitch      The pitch of the note that we want to retrieve.
+   * @param time       The start time or the time the note is continuing.
    * @param instrument The instrument of the note we want to retrieve.
    * @return The Note that starts or continues at the given time played at the given pitch
    * with the given instrument
    * @throws cs3500.music.model.Model.IllegalAccessNoteException if there is no note
-   * at the given pitch, time, instrument
+   *                                                             at the given pitch, time, instrument
    */
   public Note getNoteIn(Pitch pitch, int time, int instrument) {
     for (int i = 0; i <= time; i++) {
@@ -287,8 +287,8 @@ final public class ModelImpl implements Model {
           if (n.getEndTime() > time &&
               n.getPitch().equals(pitch) &&
               n.getInstrument() == instrument) {
-            return new MusicNote(n.getPitch(), n.getStartTime(), n.getEndTime(),
-                n.getInstrument(), n.getVelocity());
+            return new MusicNote(n.getPitch(), n.getStartTime(), n.getEndTime(), n.getInstrument(),
+                n.getVelocity());
           }
         }
       }
@@ -300,20 +300,19 @@ final public class ModelImpl implements Model {
    * Get the note that starts or continues through the given pitch and time.
    *
    * @param pitch The pitch of the note that we want to retrieve.
-   * @param time The start time or the time the note is continuing.
+   * @param time  The start time or the time the note is continuing.
    * @return The Note that starts or continues at the given time played at the given pitch.
    * @throws cs3500.music.model.Model.IllegalAccessNoteException if there is no note
-   * at the given pitch and time
+   *                                                             at the given pitch and time
    */
   public Note getNoteIn(Pitch pitch, int time) {
     for (int i = 0; i <= time; i++) {
       if (this.musicSheet.containsKey(i)) {
         ArrayList<Note> notes = this.musicSheet.get(i);
         for (Note n : notes) {
-          if (n.getEndTime() > time &&
-              n.getPitch().equals(pitch)) {
-            return new MusicNote(n.getPitch(), n.getStartTime(), n.getEndTime(),
-                n.getInstrument(), n.getVelocity());
+          if (n.getEndTime() > time && n.getPitch().equals(pitch)) {
+            return new MusicNote(n.getPitch(), n.getStartTime(), n.getEndTime(), n.getInstrument(),
+                n.getVelocity());
           }
         }
       }
@@ -484,8 +483,8 @@ final public class ModelImpl implements Model {
   @Override public String toString() {
     String acc = String
         .format("Measure: %d\n Low Pitch: %d\n High Pitch: %d\n finalStartBeat: %d\n",
-            this.getMeasure(), this.getLowestPitch().getValue(),
-            this.getHighestPitch().getValue(), this.getFinalStartBeat());
+            this.getMeasure(), this.getLowestPitch().getValue(), this.getHighestPitch().getValue(),
+            this.getFinalStartBeat());
     for (int i = 0; i <= this.getFinalStartBeat(); i++) {
       if (this.musicSheet.containsKey(i)) {
         Iterator<Note> iter = this.musicSheet.get(i).iterator();

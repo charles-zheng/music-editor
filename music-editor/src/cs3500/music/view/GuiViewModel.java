@@ -4,6 +4,7 @@ package cs3500.music.view;
 import com.sun.javaws.exceptions.InvalidArgumentException;
 import com.sun.tools.corba.se.idl.InvalidArgument;
 import cs3500.music.model.*;
+
 import java.awt.Point;
 import javax.sound.midi.InvalidMidiDataException;
 import java.util.List;
@@ -22,7 +23,7 @@ public class GuiViewModel implements ViewModel {
 
   /**
    * The current pitch that is selected
-   *
+   * <p>
    * INVARIANT: always within m.getHighestPitch() and m.getLowestPitch(), or -1
    * if no pitch is selected
    */
@@ -30,21 +31,21 @@ public class GuiViewModel implements ViewModel {
 
   /**
    * The current beat that is selected
-   *
+   * <p>
    * INVARIANT: always within 0 and m.getFinalEndBeat(), or -1 if no beat is selected
    */
   private int curBeat;
 
   /**
    * The current instrument of the note that was selected
-   *
+   * <p>
    * INVARIANT: always within 1 and 16, or -1 if no note was selected
    */
   private int curInstrument;
 
   /**
    * Represents the timestamp that the piece is currently at
-   *
+   * <p>
    * INVARIANT: Must be within 0 and m.getFinalEndBeat();
    */
   private int timeStamp;
@@ -146,7 +147,9 @@ public class GuiViewModel implements ViewModel {
    * @param time the time at which to get the notes that end
    * @return the list of notes that should be turned off at the given time
    */
-  @Override public List<Note> getEndNotesAtTime(int time) { return m.getEndNotesAtTime(time); }
+  @Override public List<Note> getEndNotesAtTime(int time) {
+    return m.getEndNotesAtTime(time);
+  }
 
   /**
    * Adds a note to the music sheet at the given pitch and startTime
@@ -165,12 +168,11 @@ public class GuiViewModel implements ViewModel {
    *                                  than or equal to startTime, or if velocity or instrument
    *                                  is not within [0, 127]
    */
-  @Override
-  public void addNote(Pitch pitch, int startTime, int endTime, int instrument, int velocity) {
+  @Override public void addNote(Pitch pitch, int startTime, int endTime, int instrument,
+      int velocity) {
     try {
       m.addNote(pitch, startTime, endTime, instrument, velocity);
-    }
-    catch (IllegalAddException ex) {
+    } catch (IllegalAddException ex) {
       //do nothing
     }
   }
@@ -193,8 +195,8 @@ public class GuiViewModel implements ViewModel {
    * Get the note that starts or continues through the given pitch and time with the
    * given instrument.
    *
-   * @param pitch The pitch of the note that we want to retrieve.
-   * @param time The start time or the time the note is continuing.
+   * @param pitch      The pitch of the note that we want to retrieve.
+   * @param time       The start time or the time the note is continuing.
    * @param instrument The instrument of the note we want to retrieve.
    * @return The Note that starts or continues at the given time played at the given pitch
    * with the given instrument
@@ -207,7 +209,7 @@ public class GuiViewModel implements ViewModel {
    * Get the note that starts or continues through the given pitch and time.
    *
    * @param pitch The pitch of the note that we want to retrieve.
-   * @param time The start time or the time the note is continuing.
+   * @param time  The start time or the time the note is continuing.
    * @return The Note that starts or continues at the given time played at the given pitch.
    */
   @Override public Note getNoteIn(Pitch pitch, int time) {
@@ -238,8 +240,8 @@ public class GuiViewModel implements ViewModel {
    *                                    than or equal to the end time.
    * @throws IllegalAccessNoteException if there is no note at this position to edit.
    */
-  @Override
-  public void editNoteStartTime(Pitch pitch, int currentStart, int newStart, int instrument) {
+  @Override public void editNoteStartTime(Pitch pitch, int currentStart, int newStart,
+      int instrument) {
     m.editNoteStartTime(pitch, currentStart, newStart, instrument);
   }
 
@@ -254,8 +256,8 @@ public class GuiViewModel implements ViewModel {
    *                                    than or equal to the start time.
    * @throws IllegalAccessNoteException if there is no note at this position to edit.
    */
-  @Override
-  public void editNoteEndTime(Pitch pitch, int currentStart, int newEnd, int instrument) {
+  @Override public void editNoteEndTime(Pitch pitch, int currentStart, int newEnd,
+      int instrument) {
     m.editNoteEndTime(pitch, currentStart, newEnd, instrument);
   }
 
@@ -310,6 +312,7 @@ public class GuiViewModel implements ViewModel {
 
   /**
    * Initializes this view model
+   *
    * @throws InvalidMidiDataException if the midi data is invalid
    */
   @Override public void initialize() throws InvalidMidiDataException {
@@ -319,21 +322,23 @@ public class GuiViewModel implements ViewModel {
   /**
    * Sends in the location of the mouse click to set the current Note that is being
    * selected.
+   *
    * @param x The x coordinate of the mouse click.
    * @param y The y coordinate of the mouse click.
    */
   public void setCurrent(int x, int y) {
-    this.curBeat = (x >= 50 && x <= (m.getFinalEndBeat() + 2) *
-        ConcreteGuiViewPanel.BOX_SIZE)
-        ? (x - 50) / ConcreteGuiViewPanel.BOX_SIZE : -1;
-    this.curPitch = (y >= 25 && y <= ((m.getHighestPitch().getValue() -
-        m.getLowestPitch().getValue() + 2) * ConcreteGuiViewPanel.BOX_SIZE)) ?
-        m.getHighestPitch().getValue() -
-        ((y - ConcreteGuiViewPanel.BOX_SIZE) / ConcreteGuiViewPanel.BOX_SIZE) : -1;
+    this.curBeat = (x >= 50 && x <= (m.getFinalEndBeat() + 2) * ConcreteGuiViewPanel.BOX_SIZE) ?
+        (x - 50) / ConcreteGuiViewPanel.BOX_SIZE :
+        -1;
+    this.curPitch =
+        (y >= 25 && y <= ((m.getHighestPitch().getValue() - m.getLowestPitch().getValue() + 2)
+            * ConcreteGuiViewPanel.BOX_SIZE)) ?
+            m.getHighestPitch().getValue() - ((y - ConcreteGuiViewPanel.BOX_SIZE)
+                / ConcreteGuiViewPanel.BOX_SIZE) :
+            -1;
     try {
       this.curInstrument = m.getNoteIn(new PitchImpl(curPitch), curBeat).getInstrument();
-    }
-    catch(IllegalAccessNoteException ex) {
+    } catch (IllegalAccessNoteException ex) {
       this.curInstrument = -1;
     }
   }
@@ -345,7 +350,7 @@ public class GuiViewModel implements ViewModel {
    */
   public int getCurPitch() {
     return this.curPitch;
-}
+  }
 
   /**
    * Gets the beat of the note that is currently selected.
@@ -357,7 +362,7 @@ public class GuiViewModel implements ViewModel {
   }
 
   /**
-   *  Gets the instrument of the note that is currently selected.
+   * Gets the instrument of the note that is currently selected.
    *
    * @return The instrument of the note that is currently selected.
    */

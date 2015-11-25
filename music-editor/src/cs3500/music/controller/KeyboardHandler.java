@@ -131,10 +131,19 @@ public final class KeyboardHandler implements KeyListener {
     this.released.put(e, r);
   }
 
-  private String displayInfo(KeyEvent e){
+  /**
+   * Returns testing data
+   *
+   * @param e Key event
+   * @return The string with the key event
+   */
+  private String displayInfo(KeyEvent e) {
     return e.getKeyChar() + " key code = " + e.getKeyCode();
   }
 
+  /**
+   * Made to imitate the behavior in testing
+   */
   public class TestKeyHandler implements Runnable {
 
     public void run() {
@@ -142,6 +151,11 @@ public final class KeyboardHandler implements KeyListener {
     }
   }
 
+  /**
+   * Returns the output as a string for testing.
+   *
+   * @return the output as a string
+   */
   public String getOutput() {
     return this.out.toString();
   }
