@@ -7,7 +7,7 @@ import java.util.Scanner;
 /**
  * A helper to read music data and construct a music composition from it.
  */
-public class MusicReader {
+public final class MusicReader {
   /**
    * A factory for producing new music compositions, given a source of music and a
    * builder for constructing compositions.

@@ -16,7 +16,7 @@ import javax.sound.midi.InvalidMidiDataException;
 /**
  * Represents the music editor view
  */
-public class MusicEditor {
+public final class MusicEditor {
 
   /**
    * Runs the program automatically.
