@@ -276,6 +276,8 @@ final public class ModelImpl implements Model {
    * @param instrument The instrument of the note we want to retrieve.
    * @return The Note that starts or continues at the given time played at the given pitch
    * with the given instrument
+   * @throws cs3500.music.model.Model.IllegalAccessNoteException if there is no note
+   * at the given pitch, time, instrument
    */
   public Note getNoteIn(Pitch pitch, int time, int instrument) {
     for (int i = 0; i <= time; i++) {
@@ -300,6 +302,8 @@ final public class ModelImpl implements Model {
    * @param pitch The pitch of the note that we want to retrieve.
    * @param time The start time or the time the note is continuing.
    * @return The Note that starts or continues at the given time played at the given pitch.
+   * @throws cs3500.music.model.Model.IllegalAccessNoteException if there is no note
+   * at the given pitch and time
    */
   public Note getNoteIn(Pitch pitch, int time) {
     for (int i = 0; i <= time; i++) {

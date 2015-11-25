@@ -105,8 +105,7 @@ public class ModelTest {
   }
 
   @Test public void testToStringModel() {
-    assertEquals(m1.toString(),
-        "Measure: 4\n" + " Low Pitch: -1\n" + " High Pitch: -1\n" +
+    assertEquals(m1.toString(), "Measure: 4\n" + " Low Pitch: -1\n" + " High Pitch: -1\n" +
             " finalStartBeat: 0\n");
     assertEquals(m2.toString(),
         "Measure: 3\n" + " Low Pitch: -1\n" + " High Pitch: -1\n"
@@ -115,8 +114,7 @@ public class ModelTest {
 
   @Test public void testAddNote() {
     m1.addNote(new PitchImpl(2), 3, 4, 0, 5);
-    assertEquals(m1.toString(),
-        "Measure: 4\n" + " Low Pitch: 2\n" + " High Pitch: 2\n" +
+    assertEquals(m1.toString(), "Measure: 4\n" + " Low Pitch: 2\n" + " High Pitch: 2\n" +
             " finalStartBeat: 3\n" + "Pitch: 2, StartTime: 3, EndTime: 4\n");
     m1.addNote(new PitchImpl(4), 5, 9, 0, 4);
     assertEquals(m1.toString(),
@@ -134,8 +132,7 @@ public class ModelTest {
 
   @Test public void testAddNote2() {
     m2.addNote(new PitchImpl(2), 3, 4, 0, 6);
-    assertEquals(m2.toString(),
-        "Measure: 3\n" + " Low Pitch: 2\n" + " High Pitch: 2\n" +
+    assertEquals(m2.toString(), "Measure: 3\n" + " Low Pitch: 2\n" + " High Pitch: 2\n" +
             " finalStartBeat: 3\n" + "Pitch: 2, StartTime: 3, EndTime: 4\n");
     m2.addNote(new PitchImpl(4), 5, 9, 0, 7);
     assertEquals(m2.toString(),
@@ -187,8 +184,7 @@ public class ModelTest {
     assertEquals(m1.getFinalStartBeat(), 4);
     assertEquals(m1.getLowestPitch(), new PitchImpl(2));
     assertEquals(m1.getHighestPitch(), new PitchImpl(2));
-    assertEquals(m1.toString(),
-        "Measure: 4\n" + " Low Pitch: 2\n" + " High Pitch: 2\n" +
+    assertEquals(m1.toString(), "Measure: 4\n" + " Low Pitch: 2\n" + " High Pitch: 2\n" +
             " finalStartBeat: 4\n" + "Pitch: 2, StartTime: 3, EndTime: 4\n" +
             "Pitch: 2, StartTime: 4, EndTime: 9\n");
     m1.addNote(new PitchImpl(2), 7, 11, 0, 8);
@@ -204,9 +200,8 @@ public class ModelTest {
 
   @Test public void testAddNote5() {
     m2.addNote(new PitchImpl(2), 3, 4, 0, 4);
-    assertEquals(m2.toString(),
-        "Measure: 3\n" + " Low Pitch: 2\n" + " High Pitch: 2\n" +
-            " finalStartBeat: 3\n" + "Pitch: 2, StartTime: 3, EndTime: 4\n");
+    assertEquals(m2.toString(), "Measure: 3\n" + " Low Pitch: 2\n" + " High Pitch: 2\n" +
+        " finalStartBeat: 3\n" + "Pitch: 2, StartTime: 3, EndTime: 4\n");
     m2.addNote(new PitchImpl(3), 3, 4, 0, 10);
     assertEquals(m2.toString(),
         "Measure: 3\n" + " Low Pitch: 2\n" + " High Pitch: 3\n" +
@@ -242,8 +237,7 @@ public class ModelTest {
 
   @Test public void testAddNote7() {
     m1.addNote(new PitchImpl(5), 5, 10, 0, 124);
-    assertEquals(m1.toString(),
-        "Measure: 4\n" + " Low Pitch: 5\n" + " High Pitch: 5\n" +
+    assertEquals(m1.toString(), "Measure: 4\n" + " Low Pitch: 5\n" + " High Pitch: 5\n" +
             " finalStartBeat: 5\n" + "Pitch: 5, StartTime: 5, EndTime: 10\n");
     m1.addNote(new PitchImpl(5), 7, 17, 0, 123);
     assertEquals(m1.toString(),
@@ -261,8 +255,7 @@ public class ModelTest {
 
   @Test public void testAddNote8() {
     m2.addNote(new PitchImpl(5), 5, 10, 0, 1);
-    assertEquals(m2.toString(),
-        "Measure: 3\n" + " Low Pitch: 5\n" + " High Pitch: 5\n" +
+    assertEquals(m2.toString(), "Measure: 3\n" + " Low Pitch: 5\n" + " High Pitch: 5\n" +
             " finalStartBeat: 5\n" + "Pitch: 5, StartTime: 5, EndTime: 10\n");
     m2.addNote(new PitchImpl(5), 7, 17, 0, 2);
     assertEquals(m2.toString(),
@@ -282,8 +275,8 @@ public class ModelTest {
     m1.addNote(new PitchImpl(3), 4, 5, 0, 78);
     m1.addNote(new PitchImpl(9), 2, 10, 0, 90);
     m1.editNoteEndTime(new PitchImpl(3), 4, 9, 0);
-    assertEquals(m1.toString(),
-        "Measure: 4\n" + " Low Pitch: 3\n" + " High Pitch: 9\n" +
+    assertEquals(m1.toString(), "Measure: 4\n" +
+        " Low Pitch: 3\n" + " High Pitch: 9\n" +
             " finalStartBeat: 4\n" + "Pitch: 9, StartTime: 2, EndTime: 10\n" +
             "Pitch: 3, StartTime: 4, EndTime: 9\n");
     m1.editNoteStartTime(new PitchImpl(9), 2, 7, 0);
@@ -297,8 +290,8 @@ public class ModelTest {
     m2.addNote(new PitchImpl(3), 4, 5, 0, 122);
     m2.addNote(new PitchImpl(9), 2, 10, 0, 30);
     m2.editNoteEndTime(new PitchImpl(3), 4, 9, 0);
-    assertEquals(m2.toString(),
-        "Measure: 3\n" + " Low Pitch: 3\n" + " High Pitch: 9\n" +
+    assertEquals(m2.toString(), "Measure: 3\n" +
+        " Low Pitch: 3\n" + " High Pitch: 9\n" +
             " finalStartBeat: 4\n" + "Pitch: 9, StartTime: 2, EndTime: 10\n" +
             "Pitch: 3, StartTime: 4, EndTime: 9\n");
     m2.editNoteStartTime(new PitchImpl(9), 2, 7, 0);
@@ -313,17 +306,18 @@ public class ModelTest {
     m2.addNote(new PitchImpl(9), 2, 10, 0, 90);
     m2.addNote(new PitchImpl(9), 8, 14, 0, 35);
     m2.editNoteEndTime(new PitchImpl(3), 4, 9, 0);
-    assertEquals(m2.toString(),
-        "Measure: 3\n" + " Low Pitch: 3\n" + " High Pitch: 9\n" +
-            " finalStartBeat: 8\n" + "Pitch: 9, StartTime: 2, EndTime: 10\n" +
-            "Pitch: 3, StartTime: 4, EndTime: 9\n" +
-            "Pitch: 9, StartTime: 8, EndTime: 14\n");
+    assertEquals(m2.toString(), "Measure: 3\n" +
+        " Low Pitch: 3\n" + " High Pitch: 9\n" +
+        " finalStartBeat: 8\n" + "Pitch: 9, StartTime: 2, EndTime: 10\n" +
+        "Pitch: 3, StartTime: 4, EndTime: 9\n" +
+        "Pitch: 9, StartTime: 8, EndTime: 14\n");
     m2.editNoteStartTime(new PitchImpl(9), 2, 7, 0);
     m2.editNoteStartTime(new PitchImpl(9), 8, 10, 0);
     assertEquals(m2.toString(),
         "Measure: 3\n" + " Low Pitch: 3\n" + " High Pitch: 9\n" +
             " finalStartBeat: 10\n" + "Pitch: 3, StartTime: 4, EndTime: 9\n"
-            + "Pitch: 9, StartTime: 7, EndTime: 10\n" + "Pitch: 9, StartTime: 10, EndTime: 14\n");
+            + "Pitch: 9, StartTime: 7, EndTime: 10\n" +
+            "Pitch: 9, StartTime: 10, EndTime: 14\n");
   }
 
   @Test public void testEditStartAndEnd4() {
@@ -331,8 +325,8 @@ public class ModelTest {
     m1.addNote(new PitchImpl(9), 2, 10, 1, 54);
     m1.addNote(new PitchImpl(9), 8, 14, 1, 89);
     m1.editNoteEndTime(new PitchImpl(3), 4, 9, 1);
-    assertEquals(m1.toString(),
-        "Measure: 4\n" + " Low Pitch: 3\n" + " High Pitch: 9\n" +
+    assertEquals(m1.toString(), "Measure: 4\n" +
+        " Low Pitch: 3\n" + " High Pitch: 9\n" +
             " finalStartBeat: 8\n" + "Pitch: 9, StartTime: 2, EndTime: 10\n" +
             "Pitch: 3, StartTime: 4, EndTime: 9\n" +
             "Pitch: 9, StartTime: 8, EndTime: 14\n");
@@ -341,14 +335,14 @@ public class ModelTest {
     assertEquals(m1.toString(),
         "Measure: 4\n" + " Low Pitch: 3\n" + " High Pitch: 9\n" +
             " finalStartBeat: 10\n" + "Pitch: 3, StartTime: 4, EndTime: 9\n"
-            + "Pitch: 9, StartTime: 7, EndTime: 10\n" + "Pitch: 9, StartTime: 10, EndTime: 14\n");
+            + "Pitch: 9, StartTime: 7, EndTime: 10\n" +
+            "Pitch: 9, StartTime: 10, EndTime: 14\n");
   }
 
   @Test public void testGetNote() {
     m1.addNote(new PitchImpl(1), 4, 8, 2, 5);
     m1.addNote(new PitchImpl(3), 8, 9, 2, 90);
-    assertEquals(m1.getNoteAt(new PitchImpl(1), 4, 2),
-        new MusicNote(new PitchImpl(1), 4, 8, 2, 5));
+    assertEquals(m1.getNoteAt(new PitchImpl(1), 4, 2), new MusicNote(new PitchImpl(1), 4, 8, 2, 5));
     assertEquals(m1.getNoteAt(new PitchImpl(3), 8, 2),
         new MusicNote(new PitchImpl(3), 8, 9, 2, 90));
   }
@@ -372,8 +366,7 @@ public class ModelTest {
     m2.editNoteStartTime(new PitchImpl(5), 6, 9, 3);
     assertEquals(m2.getNoteAt(new PitchImpl(5), 9, 3),
         new MusicNote(new PitchImpl(5), 9, 10, 3, 89));
-    assertEquals(m2.getNoteAt(new PitchImpl(2), 3, 3),
-        new MusicNote(new PitchImpl(2), 3, 8, 3, 2));
+    assertEquals(m2.getNoteAt(new PitchImpl(2), 3, 3), new MusicNote(new PitchImpl(2), 3, 8, 3, 2));
     m2.editNoteEndTime(new PitchImpl(2), 3, 5, 3);
     assertEquals(m2.getNoteAt(new PitchImpl(5), 9, 3),
         new MusicNote(new PitchImpl(5), 9, 10, 3, 89));
@@ -391,8 +384,7 @@ public class ModelTest {
     m1.editNoteStartTime(new PitchImpl(5), 6, 9, 0);
     assertEquals(m1.getNoteAt(new PitchImpl(5), 9, 0),
         new MusicNote(new PitchImpl(5), 9, 10, 0, 0));
-    assertEquals(m1.getNoteAt(new PitchImpl(2), 3, 0),
-        new MusicNote(new PitchImpl(2), 3, 8, 0, 0));
+    assertEquals(m1.getNoteAt(new PitchImpl(2), 3, 0), new MusicNote(new PitchImpl(2), 3, 8, 0, 0));
     m1.editNoteEndTime(new PitchImpl(2), 3, 5, 0);
     assertEquals(m1.getNoteAt(new PitchImpl(5), 9, 0),
         new MusicNote(new PitchImpl(5), 9, 10, 0, 0));
@@ -408,9 +400,8 @@ public class ModelTest {
             " finalStartBeat: 9\n" + "Pitch: 4, StartTime: 6, EndTime: 10\n" +
             "Pitch: 7, StartTime: 9, EndTime: 11\n");
     m1.deleteNote(new PitchImpl(4), 6, 1);
-    assertEquals(m1.toString(),
-        "Measure: 4\n" + " Low Pitch: 7\n" + " High Pitch: 7\n" +
-            " finalStartBeat: 9\n" + "Pitch: 7, StartTime: 9, EndTime: 11\n");
+    assertEquals(m1.toString(), "Measure: 4\n" + " Low Pitch: 7\n" + " High Pitch: 7\n" +
+        " finalStartBeat: 9\n" + "Pitch: 7, StartTime: 9, EndTime: 11\n");
     m1.deleteNote(new PitchImpl(7), 9, 1);
     assertEquals(m1.toString(), "Measure: 4\n" + " Low Pitch: -1\n" +
         " High Pitch: -1\n" + " finalStartBeat: 0\n");
@@ -440,9 +431,8 @@ public class ModelTest {
             " finalStartBeat: 9\n" + "Pitch: 4, StartTime: 6, EndTime: 10\n" +
             "Pitch: 7, StartTime: 9, EndTime: 11\n");
     m2.deleteNote(new PitchImpl(4), 6, 1);
-    assertEquals(m2.toString(),
-        "Measure: 3\n" + " Low Pitch: 7\n" + " High Pitch: 7\n" +
-            " finalStartBeat: 9\n" + "Pitch: 7, StartTime: 9, EndTime: 11\n");
+    assertEquals(m2.toString(), "Measure: 3\n" + " Low Pitch: 7\n" + " High Pitch: 7\n" +
+        " finalStartBeat: 9\n" + "Pitch: 7, StartTime: 9, EndTime: 11\n");
     m2.deleteNote(new PitchImpl(7), 9, 1);
     assertEquals(m2.toString(), "Measure: 3\n" + " Low Pitch: -1\n" +
         " High Pitch: -1\n" + " finalStartBeat: 0\n");
@@ -668,26 +658,6 @@ public class ModelTest {
     assertEquals(p.toString(), " C#6");
   }
 
-  @Test public void testTimestamp() {
-    assertEquals(m3.getTimeStamp(), 0);
-    m3.advanceTimestamp();
-    assertEquals(m3.getTimeStamp(), 1);
-    m3.advanceTimestamp();
-    assertEquals(m3.getTimeStamp(), 2);
-    m3.resetTimestamp();
-    assertEquals(m3.getTimeStamp(), 0);
-  }
-
-  @Test public void testTimestamp2() {
-    assertEquals(m3.getTimeStamp(), 0);
-    m3.advanceTimestamp();
-    assertEquals(m3.getTimeStamp(), 1);
-    m3.advanceTimestamp();
-    assertEquals(m3.getTimeStamp(), 2);
-    m3.resetTimestamp();
-    assertEquals(m3.getTimeStamp(), 0);
-  }
-
   @Test public void testAddNoteInstrument() {
     m1.addNote(new PitchImpl(9), 4, 11, 13, 9);
     m1.addNote(new PitchImpl(9), 4, 11, 70, 3);
@@ -728,6 +698,96 @@ public class ModelTest {
             " finalStartBeat: 4\n" + "Pitch: 9, StartTime: 4, EndTime: 11\n"
             + "Pitch: 9, StartTime: 4, EndTime: 13\n" + "Pitch: 9, StartTime: 4, EndTime: 17\n");
 
+  }
+
+  @Test
+  public void testGetEndNotes() {
+    m1.addNote(new PitchImpl(34), 9, 23, 12, 2);
+    ArrayList<Note> a = new ArrayList<>();
+    a.add(new MusicNote(new PitchImpl(34), 9, 23, 12, 2));
+    assertEquals(m1.getEndNotesAtTime(23), a);
+  }
+  @Test
+  public void testGetEndNotes2() {
+    m1.addNote(new PitchImpl(34), 9, 23, 12, 2);
+    m1.addNote(new PitchImpl(56), 4, 70, 3, 1);
+    ArrayList<Note> a = new ArrayList<>();
+    a.add(new MusicNote(new PitchImpl(34), 9, 23, 12, 2));
+    assertEquals(m1.getEndNotesAtTime(23), a);
+    ArrayList<Note> b = new ArrayList<>();
+    b.add(new MusicNote(new PitchImpl(56), 4, 70, 3, 1));
+    assertEquals(m1.getEndNotesAtTime(70), b);
+  }
+
+  @Test
+  public void testGetEndNotes3() {
+    m1.addNote(new PitchImpl(34), 9, 23, 12, 2);
+    m1.addNote(new PitchImpl(56), 4, 70, 3, 1);
+    m1.addNote(new PitchImpl(43), 2, 23, 9, 3);
+    ArrayList<Note> a = new ArrayList<>();
+    a.add(new MusicNote(new PitchImpl(43), 2, 23, 9, 3));
+    a.add(new MusicNote(new PitchImpl(34), 9, 23, 12, 2));
+    assertEquals(m1.getEndNotesAtTime(23), a);
+    ArrayList<Note> b = new ArrayList<>();
+    b.add(new MusicNote(new PitchImpl(56), 4, 70, 3, 1));
+    assertEquals(m1.getEndNotesAtTime(70), b);
+  }
+
+  @Test
+  public void testGetEndNotes4() {
+    m1.addNote(new PitchImpl(34), 9, 23, 12, 2);
+    m1.addNote(new PitchImpl(56), 4, 70, 3, 1);
+    m1.addNote(new PitchImpl(43), 2, 23, 9, 3);
+    m1.addNote(new PitchImpl(11), 9, 70, 34, 1);
+    ArrayList<Note> a = new ArrayList<>();
+    a.add(new MusicNote(new PitchImpl(43), 2, 23, 9, 3));
+    a.add(new MusicNote(new PitchImpl(34), 9, 23, 12, 2));
+    assertEquals(m1.getEndNotesAtTime(23), a);
+    ArrayList<Note> b = new ArrayList<>();
+    b.add(new MusicNote(new PitchImpl(56), 4, 70, 3, 1));
+    b.add(new MusicNote(new PitchImpl(11), 9, 70, 34, 1));
+    assertEquals(m1.getEndNotesAtTime(70), b);
+  }
+
+  @Test
+  public void testGetEndNotes5() {
+    m1.addNote(new PitchImpl(34), 9, 23, 12, 2);
+    m1.addNote(new PitchImpl(56), 4, 70, 3, 1);
+    m1.addNote(new PitchImpl(43), 2, 23, 9, 3);
+    m1.addNote(new PitchImpl(11), 9, 70, 34, 1);
+    ArrayList<Note> a = new ArrayList<>();
+    assertEquals(m1.getEndNotesAtTime(9), a);
+  }
+
+  @Test
+  public void testGetNoteIn() {
+    m1.addNote(new PitchImpl(34), 9, 23, 12, 2);
+    m1.addNote(new PitchImpl(56), 4, 70, 3, 1);
+    m1.addNote(new PitchImpl(43), 2, 23, 9, 3);
+    m1.addNote(new PitchImpl(11), 9, 70, 34, 1);
+    assertEquals(m1.getNoteIn(new PitchImpl(34), 13),
+        new MusicNote(new PitchImpl(34), 9, 23, 12, 2));
+    assertEquals(m1.getNoteIn(new PitchImpl(43), 2), new MusicNote(new PitchImpl(43), 2, 23, 9, 3));
+    assertEquals(m1.getNoteIn(new PitchImpl(11), 69),
+        new MusicNote(new PitchImpl(11), 9, 70, 34, 1));
+    assertEquals(m1.getNoteIn(new PitchImpl(56), 60),
+        new MusicNote(new PitchImpl(56), 4, 70, 3, 1));
+  }
+
+  @Test
+  public void testGetNoteInInstrument() {
+    m1.addNote(new PitchImpl(34), 9, 23, 12, 2);
+    m1.addNote(new PitchImpl(56), 4, 70, 3, 1);
+    m1.addNote(new PitchImpl(43), 2, 23, 9, 3);
+    m1.addNote(new PitchImpl(11), 9, 70, 34, 1);
+    assertEquals(m1.getNoteIn(new PitchImpl(34), 13, 12),
+        new MusicNote(new PitchImpl(34), 9, 23, 12, 2));
+    assertEquals(m1.getNoteIn(new PitchImpl(43), 2, 9),
+        new MusicNote(new PitchImpl(43), 2, 23, 9, 3));
+    assertEquals(m1.getNoteIn(new PitchImpl(11), 69, 34),
+        new MusicNote(new PitchImpl(11), 9, 70, 34, 1));
+    assertEquals(m1.getNoteIn(new PitchImpl(56), 60, 3),
+        new MusicNote(new PitchImpl(56), 4, 70, 3, 1));
   }
 
   @Test(expected = IllegalArgumentException.class)
@@ -1046,5 +1106,39 @@ public class ModelTest {
   @Test(expected = IllegalArgumentException.class)
   public void makeNoteException4() {
     new MusicNote(new PitchImpl(8), 17, 18, 18, 180);
+  }
+
+  @Test(expected = Model.IllegalAccessNoteException.class)
+  public void testGetNoteInException() {
+    m1.getNoteIn(new PitchImpl(24), 6);
+  }
+
+  @Test(expected = Model.IllegalAccessNoteException.class)
+  public void testGetNoteInException2() {
+    m1.getNoteIn(new PitchImpl(24), 6, 8);
+  }
+
+  @Test(expected = Model.IllegalAccessNoteException.class)
+  public void testGetNoteInException3() {
+    m1.addNote(new PitchImpl(24), 2, 6, 9, 10);
+    m1.getNoteIn(new PitchImpl(24), 6);
+  }
+
+  @Test(expected = Model.IllegalAccessNoteException.class)
+  public void testGetNoteInException4() {
+    m1.addNote(new PitchImpl(24), 2, 6, 9, 10);
+    m1.getNoteIn(new PitchImpl(24), 6, 9);
+  }
+
+  @Test(expected = Model.IllegalAccessNoteException.class)
+  public void testGetNoteInException5() {
+    m1.addNote(new PitchImpl(24), 2, 6, 9, 10);
+    m1.getNoteIn(new PitchImpl(32), 4, 1);
+  }
+
+  @Test(expected = Model.IllegalAccessNoteException.class)
+  public void testGetNoteInException6() {
+    m1.addNote(new PitchImpl(24), 2, 6, 9, 10);
+    m1.getNoteIn(new PitchImpl(32), 4);
   }
 }
