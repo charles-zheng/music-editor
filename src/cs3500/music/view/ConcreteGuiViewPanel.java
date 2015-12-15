@@ -116,7 +116,7 @@ public final class ConcreteGuiViewPanel extends JPanel {
     Pitch highest = Objects.requireNonNull(m.getHighestPitch());
     Pitch lowest = Objects.requireNonNull(m.getLowestPitch());
 
-    int time = m.getTimeStamp();
+    int time = m.getBeatStamp();
     g.setColor(Color.red);
     if (time > 0) {
       g.drawLine((time * BOX_SIZE) + 50 - BOX_SIZE / 2, lowest.getValue() - BOX_SIZE,

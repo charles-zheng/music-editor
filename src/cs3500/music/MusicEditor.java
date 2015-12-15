@@ -5,12 +5,9 @@ import cs3500.music.model.*;
 import cs3500.music.view.*;
 import cs3500.music.util.*;
 import cs3500.music.controller.*;
-import jdk.internal.util.xml.impl.Pair;
 
 
 import java.io.*;
-import java.util.Objects;
-import java.util.Scanner;
 import javax.sound.midi.InvalidMidiDataException;
 
 /**

@@ -1,5 +1,7 @@
 package cs3500.music.util;
 
+
+import java.util.List;
 /**
  * A builder of compositions.  Since we do not know in advance what
  * the name of the main type is for a model, we parameterize this builder interface
@@ -35,4 +37,7 @@ public interface CompositionBuilder<T> {
    * @return This composition with the note added
    */
   CompositionBuilder<T> addNote(int start, int end, int instrument, int pitch, int volume);
+
+  //TODO
+  CompositionBuilder<T> addRepeat(List<Integer> range);
 }

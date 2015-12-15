@@ -3,6 +3,7 @@ package cs3500.music.util;
 
 import java.util.NoSuchElementException;
 import java.util.Scanner;
+import java.util.ArrayList;
 
 /**
  * A helper to read music data and construct a music composition from it.
@@ -50,6 +51,20 @@ public final class MusicReader {
             piece.addNote(startBeat, endBeat, instrument, pitch, volume);
           } catch (NoSuchElementException e) {
             throw new IllegalArgumentException("Malformed note line: " + scanner.nextLine());
+          }
+          break;
+        case "repeat":
+          try {
+            ArrayList<Integer> range = new ArrayList<>();
+            for (int i = 0; scanner.hasNextInt(); i++) {
+              range.add(scanner.nextInt());
+            }
+            if (range.size() < 2 || range.size() == 3) {
+              throw new IllegalArgumentException("Malformed repeat line: " + scanner.nextLine());
+            }
+            piece.addRepeat(range);
+          } catch (NoSuchElementException e) {
+            throw new IllegalArgumentException("Malformed repeat line: " + scanner.nextLine());
           }
           break;
         default:

@@ -251,10 +251,11 @@ public final class ControllerImpl implements Controller {
   public class Record extends TimerTask {
 
     public void run() {
-      if (playing && model.getTimeStamp() < model.getFinalEndBeat()) {
+      if (playing && model.getBeatStamp() < model.getFinalEndBeat()) {
         view.paintAgain(playing);
         try {
-          view.recordNotes(model.getTimeStamp());
+          System.out.println(model.getBeatStamp());
+          view.recordNotes(model.getBeatStamp());
         } catch (InvalidMidiDataException e) {
           e.printStackTrace();
         } catch (MidiUnavailableException e) {

@@ -1,9 +1,7 @@
 package cs3500.music.util;
 
-import cs3500.music.model.Model;
-import cs3500.music.model.ModelImpl;
-import cs3500.music.model.PitchImpl;
-
+import cs3500.music.model.*;
+import java.util.List;
 /**
  * Builds a model for a music sheet
  */
@@ -48,6 +46,12 @@ public final class MusicModelBuilder implements CompositionBuilder<Model> {
   @Override public CompositionBuilder<Model> addNote(int start, int end, int instrument, int pitch,
       int volume) {
     m.addNote(new PitchImpl(pitch), start, end, instrument, volume);
+    return this;
+  }
+
+  //TODO
+  @Override public CompositionBuilder<Model> addRepeat(List<Integer> range) {
+    m.addRepeat(new Repeat(range));
     return this;
   }
 }

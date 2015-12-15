@@ -18,6 +18,11 @@ public interface Model {
    */
   int DEFAULT_TEMPO = 100000;
 
+
+  //TODO
+  void addRepeat(Repeat repeat);
+  List<Repeat> getRepeats();
+
   /**
    * Gets the lowest pitch of the piece.
    *

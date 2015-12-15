@@ -196,7 +196,6 @@ public final class MidiViewImpl implements MidiView {
   public void recordNotes(int time) throws InvalidMidiDataException, MidiUnavailableException {
     receiver = synth.getReceiver();
     MidiChannel[] chan = synth.getChannels();
-    int t = m.getTempo();
     List<Note> offs = m.getEndNotesAtTime(time);
     for (Note n : offs) {
       chan[n.getInstrument() - 1].noteOff(n.getPitch().getValue(), n.getVelocity());
@@ -206,8 +205,6 @@ public final class MidiViewImpl implements MidiView {
     for (Note n : ons) {
       chan[n.getInstrument() - 1].noteOn(n.getPitch().getValue(), n.getVelocity());
     }
-
-
 
     receiver.close();
   }

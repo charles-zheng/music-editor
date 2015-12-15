@@ -1,5 +1,6 @@
 package cs3500.music.model;
 
+import java.lang.reflect.Array;
 import java.util.*;
 
 /**
@@ -58,6 +59,13 @@ public final class ModelImpl implements Model {
   private int finalEndBeat;
   // INVARIANT: Must not be negative, must be larger than this.finalStartBeat
 
+  //TODO
+  private ArrayList<Integer> repeatStarts;
+  private ArrayList<Integer> repeatEnds;
+
+  //TODO
+  private ArrayList<Repeat> repeats;
+
   /**
    * Makes a new cs3500.music.model.ModelImpl music sheet with the given measure.
    * Initializes all other fields to 0, since no notes have been added yet
@@ -77,6 +85,9 @@ public final class ModelImpl implements Model {
     this.finalStartBeat = 0;
     this.finalEndBeat = 0;
     this.musicSheet = new HashMap<Integer, ArrayList<Note>>();
+    this.repeatStarts = new ArrayList<Integer>(); //TODO;
+    this.repeatEnds = new ArrayList<Integer>(); //TODO;
+    this.repeats = new ArrayList<>();
   }
 
   /**
@@ -87,6 +98,11 @@ public final class ModelImpl implements Model {
   public ModelImpl() {
     this(DEFAULT_MEASURE, DEFAULT_TEMPO);
   }
+
+  //TODO
+  public void addRepeat(Repeat repeat) { this.repeats.add(repeat); }
+  public ArrayList<Repeat> getRepeats() { return this.repeats; }
+
 
   /**
    * Gets the lowest pitch of the piece
@@ -159,7 +175,7 @@ public final class ModelImpl implements Model {
    * @return the list of notes that should be played at the given timestamp
    */
   public List<Note> getNotesAtTime(int time) {
-    List<Note> copy = new ArrayList<>();
+    List<Note> copy = new ArrayList<Note>();
     if (!this.musicSheet.containsKey(time)) {
       return copy;
     }

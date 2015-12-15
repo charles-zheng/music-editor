@@ -8,6 +8,8 @@ import cs3500.music.model.*;
 import java.awt.Point;
 import javax.sound.midi.InvalidMidiDataException;
 import java.util.List;
+import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * Represents a ViewModel that adds additional functionality to our model.
@@ -50,6 +52,8 @@ public class GuiViewModel implements ViewModel {
    */
   private int timeStamp;
 
+  private ArrayList<Integer> beats;
+
   /**
    * Represents the top-left corner of the viewable screen
    */
@@ -66,8 +70,69 @@ public class GuiViewModel implements ViewModel {
     this.curBeat = -1;
     this.curInstrument = -1;
     this.timeStamp = 0;
+    this.beats = new ArrayList<>();
+    initBeats();
+    System.out.println(this.beats);
     this.topleft = new Point(0, 0);
   }
+
+  //TODO
+  private void initBeats() {
+    ArrayList<Integer> result = new ArrayList<>();
+
+    List<Repeat> repeats = m.getRepeats();
+    Collections.sort(repeats);
+    int beat = 0;
+    int repeat = 0;
+    int ending = 1;
+    while (beat < m.getFinalEndBeat()) {
+      result.add(beat);
+      beat++;
+
+      try {
+        Repeat cur = repeats.get(repeat);
+        if (!cur.isComplex()) {
+          if (beat == cur.getEnd()) {
+            beat = cur.getStart();
+            repeat++;
+          }
+        }
+        else if (ending == 1) {
+          if (beat == cur.getEnding(ending)) {
+            beat = cur.getStart();
+            ending++;
+          }
+        }
+        else {
+          if (beat == cur.getEnding(ending - 2)) {
+            beat = cur.getEnding(ending - 1);
+          }
+          if (beat == cur.getEnding(ending)) {
+            if (ending == cur.getEndings()) {
+              ending = 1;
+              repeat++;
+            } else {
+              ending++;
+              beat = cur.getStart();
+            }
+          }
+        }
+      } catch (IndexOutOfBoundsException e) {
+        // do nothing
+      }
+    }
+    this.beats = result;
+  }
+
+  //TODO
+  @Override public int getBeatStamp() {
+    initBeats();
+    return this.beats.get(this.timeStamp);
+  }
+
+  @Override public void addRepeat(Repeat repeat) { m.addRepeat(repeat); }
+
+  @Override public List<Repeat> getRepeats() { return m.getRepeats(); }
 
   /**
    * Gets the lowest pitch of the piece.
@@ -286,7 +351,7 @@ public class GuiViewModel implements ViewModel {
    * Advance the timestamp of this piece by 1;
    */
   public void advanceTimestamp() {
-    if (this.timeStamp < getFinalEndBeat()) {
+    if (this.timeStamp < this.beats.size() - 1) {
       this.timeStamp++;
     }
   }
@@ -297,7 +362,7 @@ public class GuiViewModel implements ViewModel {
    * @param t the new timestamp
    */
   public void setTimeStamp(int t) {
-    if (t > getFinalEndBeat() || t < 0) {
+    if (t > this.beats.size() - 1 || t < 0) {
       throw new IllegalArgumentException("Invalid timestamp");
     }
     this.timeStamp = t;

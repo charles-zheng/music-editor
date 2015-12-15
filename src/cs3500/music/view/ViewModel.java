@@ -82,4 +82,8 @@ public interface ViewModel extends Model, View {
    * Resets the timestamp of this piece to 0
    */
   void resetTimestamp();
+
+  //TODO
+  int getBeatStamp();
+
 }
