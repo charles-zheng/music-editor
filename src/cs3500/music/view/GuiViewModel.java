@@ -19,17 +19,19 @@ import java.util.Collections;
 public class GuiViewModel implements ViewModel {
 
   /**
-   * The model to add functionality to
+   * The model to add functionality to.
    */
   private Model m;
 
   /**
+   * Represents the previous beat that was selected.
    *
+   * INVARIANT: always within 0 and m.getFinalEndBeat(), or -1 if no beat is selected
    */
   private int prevBeat;
 
   /**
-   * The current pitch that is selected
+   * The current pitch that is selected.
    * <p>
    * INVARIANT: always within m.getHighestPitch() and m.getLowestPitch(), or -1
    * if no pitch is selected
@@ -57,12 +59,12 @@ public class GuiViewModel implements ViewModel {
    */
   private int timeStamp;
 
+  /**
+   * Represents all of the beats in order of which times they are played
+   */
   private ArrayList<Integer> beats;
 
-  /**
-   * Represents the top-left corner of the viewable screen
-   */
-  private Point topleft;
+  private boolean complexNotes;
 
   /**
    * Constructs a new GuiViewModel that wraps around the given model
@@ -76,9 +78,9 @@ public class GuiViewModel implements ViewModel {
     this.curInstrument = -1;
     this.timeStamp = 0;
     this.beats = new ArrayList<>();
+    this.complexNotes = false;
     initBeats();
     System.out.println(this.beats);
-    this.topleft = new Point(0, 0);
   }
 
   //TODO
@@ -129,11 +131,20 @@ public class GuiViewModel implements ViewModel {
     this.beats = result;
   }
 
-  //TODO
+  /**
+   * Returns the beat at the current timestamp
+   *
+   * @return the beat at the current timestamp
+   */
   @Override public int getBeatStamp() {
     return this.beats.get(this.timeStamp);
   }
 
+  /**
+   * Adds a simple or complex repeat
+   *
+   * @param repeat
+   */
   @Override public void addRepeat(Repeat repeat) {
     m.addRepeat(repeat);
   }
@@ -329,8 +340,7 @@ public class GuiViewModel implements ViewModel {
    *                                    than or equal to the start time.
    * @throws IllegalAccessNoteException if there is no note at this position to edit.
    */
-  @Override public void editNoteEndTime(Pitch pitch, int currentStart, int newEnd,
-      int instrument) {
+  @Override public void editNoteEndTime(Pitch pitch, int currentStart, int newEnd, int instrument) {
     m.editNoteEndTime(pitch, currentStart, newEnd, instrument);
   }
 
@@ -484,5 +494,9 @@ public class GuiViewModel implements ViewModel {
   //TODO
   public int getPrevBeat() {
     return this.prevBeat;
+  }
+
+  public void setComplexNotes(boolean init) {
+    this.complexNotes = init;
   }
 }

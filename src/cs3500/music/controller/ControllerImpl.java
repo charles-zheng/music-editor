@@ -455,6 +455,10 @@ public final class ControllerImpl implements Controller {
       if (startNote) {
         endNote = model.getCurBeat();
         startingNote = model.getPrevBeat();
+        if (startingNote > endNote) {
+          startNote = false;
+          return;
+        }
       }
       else {
         startNote = true;
@@ -467,6 +471,16 @@ public final class ControllerImpl implements Controller {
       model.initBeats();
       view.paintAgain(playing);
       startNote = false;
+    }
+  }
+
+  /**
+   *
+   */
+  public class AddComplexRepeat implements Runnable {
+
+    public void run() {
+
     }
   }
 }

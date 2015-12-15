@@ -83,12 +83,21 @@ public interface ViewModel extends Model, View {
    */
   void resetTimestamp();
 
-  //TODO
+  /**
+   *
+   * @return
+   */
   int getBeatStamp();
 
-  //TODO
+  /**
+   *
+   * @return
+   */
   int getPrevBeat();
 
+  /**
+   *
+   */
   void initBeats();
 
 }
