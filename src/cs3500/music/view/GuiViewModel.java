@@ -126,7 +126,6 @@ public class GuiViewModel implements ViewModel {
 
   //TODO
   @Override public int getBeatStamp() {
-    initBeats();
     return this.beats.get(this.timeStamp);
   }
 

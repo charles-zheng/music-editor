@@ -85,6 +85,23 @@ public final class ConcreteGuiViewPanel extends JPanel {
       }
     }
 
+    // draw repeats
+    for (Repeat r : m.getRepeats()) {
+      g.setColor(Color.magenta);
+      g.fillRect((r.getStart() + 2) * BOX_SIZE + 1, BOX_SIZE, 1, height);
+      if (!r.isComplex()) {
+        g.setColor(Color.orange);
+        g.fillRect((r.getEnd() + 2) * BOX_SIZE - 1, BOX_SIZE, 1, height);
+      }
+      else {
+        g.setColor(Color.orange);
+        for (int i = 1; i < r.getEndings(); i++) {
+          g.fillRect((r.getEnding(i) + 2) * BOX_SIZE + 3, BOX_SIZE - 1,
+              (r.getEnding(i) - r.getEnding(i-1)) * BOX_SIZE - 3, 5);
+        }
+      }
+    }
+
     // draws selected box
     int beat = m.getCurBeat();
     int pitch = m.getCurPitch();

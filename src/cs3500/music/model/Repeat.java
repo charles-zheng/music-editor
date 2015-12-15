@@ -7,20 +7,42 @@ import java.util.List;
  */
 public class Repeat implements Comparable<Repeat> {
 
-  protected List<Integer> range;
+  /**
+   *
+   */
+  private List<Integer> range;
+  //INVARIANT: must be of either size 2 or size >= 4
 
+  /**
+   *
+   *
+   * @param range
+   */
   public Repeat(List<Integer> range) {
     this.range = range;
   }
 
+  /**
+   *
+   * @return
+   */
   public int getStart() {
     return range.get(0);
   }
 
+  /**
+   *
+   * @return
+   */
   public boolean isComplex() {
     return range.size() > 3;
   }
 
+  /**
+   *
+   * @param ending
+   * @return
+   */
   public int getEnding(int ending) {
     if (ending >= range.size()) {
       throw new IllegalArgumentException("No such ending");
@@ -32,6 +54,10 @@ public class Repeat implements Comparable<Repeat> {
     }
   }
 
+  /**
+   *
+   * @return
+   */
   public int getEndings() {
     if (isComplex()) {
       return range.size() - 2;
@@ -40,10 +66,19 @@ public class Repeat implements Comparable<Repeat> {
     }
   }
 
+  /**
+   *
+   * @return
+   */
   public int getEnd() {
     return range.get(range.size() - 1);
   }
 
+  /**
+   *
+   * @param other
+   * @return
+   */
   public int compareTo(Repeat other) {
     return this.getEnd() - other.getEnd();
   }
