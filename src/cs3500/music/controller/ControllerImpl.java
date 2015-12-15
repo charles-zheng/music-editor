@@ -5,6 +5,8 @@ import cs3500.music.model.*;
 
 import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.MidiUnavailableException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -40,6 +42,11 @@ public final class ControllerImpl implements Controller {
   private final KeyboardHandler kh;
 
   /**
+   * True if a start for simple repeats was selected, False if not
+   */
+  private boolean startNote;
+
+  /**
    * Makes a new Controller with the given view.
    *
    * @param m The composite view that this controller will control
@@ -50,6 +57,7 @@ public final class ControllerImpl implements Controller {
     this.kh = new KeyboardHandler();
     this.timer = new Timer();
     this.playing = false;
+    this.startNote = false;
 
     // record the next few notes to be played
     int t = model.getTempo() / 1000;
@@ -73,6 +81,7 @@ public final class ControllerImpl implements Controller {
     this.kh.addPressedEvent(40, new MoveScreenDown()); // 'down
     this.kh.addTypedEvent(71, new ToEnd()); //            'g'
     this.kh.addTypedEvent(72, new ToHome()); //           'h'
+    this.kh.addTypedEvent(82, new AddSimpleRepeat());//   'r'
     this.kh.addTypedEvent(84, kh.new TestKeyHandler());// 't'
 
     // adds the key handler to the view
@@ -431,6 +440,33 @@ public final class ControllerImpl implements Controller {
 
     public void run() {
       view.shiftDown();
+    }
+  }
+
+
+  /**
+   * Adds a simple repeat to the piece.
+   */
+  public class AddSimpleRepeat implements Runnable {
+
+    public void run() {
+      int endNote;
+      int startingNote;
+      if (startNote) {
+        endNote = model.getCurBeat();
+        startingNote = model.getPrevBeat();
+      }
+      else {
+        startNote = true;
+        return;
+      }
+      List<Integer> ans = new ArrayList<Integer>();
+      ans.add(startingNote);
+      ans.add(endNote);
+      model.addRepeat(new Repeat(ans));
+      model.initBeats();
+      view.paintAgain(playing);
+      startNote = false;
     }
   }
 }

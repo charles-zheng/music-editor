@@ -24,6 +24,11 @@ public class GuiViewModel implements ViewModel {
   private Model m;
 
   /**
+   *
+   */
+  private int prevBeat;
+
+  /**
    * The current pitch that is selected
    * <p>
    * INVARIANT: always within m.getHighestPitch() and m.getLowestPitch(), or -1
@@ -77,7 +82,7 @@ public class GuiViewModel implements ViewModel {
   }
 
   //TODO
-  private void initBeats() {
+  public void initBeats() {
     ArrayList<Integer> result = new ArrayList<>();
 
     List<Repeat> repeats = m.getRepeats();
@@ -129,9 +134,13 @@ public class GuiViewModel implements ViewModel {
     return this.beats.get(this.timeStamp);
   }
 
-  @Override public void addRepeat(Repeat repeat) { m.addRepeat(repeat); }
+  @Override public void addRepeat(Repeat repeat) {
+    m.addRepeat(repeat);
+  }
 
-  @Override public List<Repeat> getRepeats() { return m.getRepeats(); }
+  @Override public List<Repeat> getRepeats() {
+    return m.getRepeats();
+  }
 
   /**
    * Gets the lowest pitch of the piece.
@@ -391,9 +400,10 @@ public class GuiViewModel implements ViewModel {
    * @param y The y coordinate of the mouse click.
    */
   public void setCurrent(int x, int y) {
-    this.curBeat = (x >= 50 && x <= (m.getFinalEndBeat() + 2) * ConcreteGuiViewPanel.BOX_SIZE) ?
+    int tempCurBeat = (x >= 50 && x <= (m.getFinalEndBeat() + 2) * ConcreteGuiViewPanel.BOX_SIZE) ?
         (x - 50) / ConcreteGuiViewPanel.BOX_SIZE :
         -1;
+    this.setCurBeat(tempCurBeat);
     this.curPitch =
         (y >= 25 && y <= ((m.getHighestPitch().getValue() - m.getLowestPitch().getValue() + 2)
             * ConcreteGuiViewPanel.BOX_SIZE)) ?
@@ -458,6 +468,7 @@ public class GuiViewModel implements ViewModel {
     if (beat > getFinalEndBeat() || beat < -1) {
       throw new IllegalArgumentException("Beat out of bounds!");
     }
+    this.prevBeat = this.curBeat;
     this.curBeat = beat;
   }
 
@@ -468,5 +479,10 @@ public class GuiViewModel implements ViewModel {
    */
   public void setCurInstrument(int instrument) {
     this.curInstrument = instrument;
+  }
+
+  //TODO
+  public int getPrevBeat() {
+    return this.prevBeat;
   }
 }

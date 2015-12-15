@@ -86,4 +86,9 @@ public interface ViewModel extends Model, View {
   //TODO
   int getBeatStamp();
 
+  //TODO
+  int getPrevBeat();
+
+  void initBeats();
+
 }

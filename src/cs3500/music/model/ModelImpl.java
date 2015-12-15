@@ -488,8 +488,6 @@ public final class ModelImpl implements Model {
     }
   }
 
-
-
   /**
    * Returns this music sheet as a String with the fields and Notes listed
    * for testing purposes exclusively
