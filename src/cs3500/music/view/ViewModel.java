@@ -2,6 +2,8 @@ package cs3500.music.view;
 
 import cs3500.music.model.*;
 
+import java.util.List;
+
 
 /**
  * An adapter that adds additional functionality to our model.
@@ -99,5 +101,15 @@ public interface ViewModel extends Model, View {
    *
    */
   void initBeats();
+
+  void setComplexNotes(boolean init);
+
+  boolean getComplexNotes();
+
+  List<Integer> getComplexEnds();
+
+  void addToComplex();
+
+  void initComplexNotes();
 
 }

@@ -62,9 +62,11 @@ public class GuiViewModel implements ViewModel {
   /**
    * Represents all of the beats in order of which times they are played
    */
-  private ArrayList<Integer> beats;
+  private List<Integer> beats;
 
   private boolean complexNotes;
+
+  private List<Integer> complexEnds;
 
   /**
    * Constructs a new GuiViewModel that wraps around the given model
@@ -79,6 +81,7 @@ public class GuiViewModel implements ViewModel {
     this.timeStamp = 0;
     this.beats = new ArrayList<>();
     this.complexNotes = false;
+    this.complexEnds = new ArrayList<>();
     initBeats();
     System.out.println(this.beats);
   }
@@ -414,6 +417,9 @@ public class GuiViewModel implements ViewModel {
         (x - 50) / ConcreteGuiViewPanel.BOX_SIZE :
         -1;
     this.setCurBeat(tempCurBeat);
+    if (this.complexNotes) {
+      this.addToComplex();
+    }
     this.curPitch =
         (y >= 25 && y <= ((m.getHighestPitch().getValue() - m.getLowestPitch().getValue() + 2)
             * ConcreteGuiViewPanel.BOX_SIZE)) ?
@@ -498,5 +504,21 @@ public class GuiViewModel implements ViewModel {
 
   public void setComplexNotes(boolean init) {
     this.complexNotes = init;
+  }
+
+  public boolean getComplexNotes() {
+    return this.complexNotes;
+  }
+
+  public void addToComplex() {
+    this.complexEnds.add(this.getCurBeat());
+  }
+
+  public List<Integer> getComplexEnds() {
+    return this.complexEnds;
+  }
+
+  public void initComplexNotes() {
+    this.complexEnds.clear();
   }
 }

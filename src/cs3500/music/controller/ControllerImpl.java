@@ -82,6 +82,7 @@ public final class ControllerImpl implements Controller {
     this.kh.addTypedEvent(71, new ToEnd()); //            'g'
     this.kh.addTypedEvent(72, new ToHome()); //           'h'
     this.kh.addTypedEvent(82, new AddSimpleRepeat());//   'r'
+    this.kh.addTypedEvent(67, new AddComplexRepeat());//  'c'
     this.kh.addTypedEvent(84, kh.new TestKeyHandler());// 't'
 
     // adds the key handler to the view
@@ -480,7 +481,18 @@ public final class ControllerImpl implements Controller {
   public class AddComplexRepeat implements Runnable {
 
     public void run() {
-
+      if (model.getComplexNotes()) {
+        model.addRepeat(new Repeat(model.getComplexEnds()));
+        model.initBeats();
+        model.setComplexNotes(false);
+        model.initComplexNotes();
+      }
+      else {
+        model.setComplexNotes(true);
+        model.addToComplex();
+      }
+      //model.initBeats();
+      view.paintAgain(playing);
     }
   }
 }
