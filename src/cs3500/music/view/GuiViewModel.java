@@ -417,9 +417,12 @@ public class GuiViewModel implements ViewModel {
         (x - 50) / ConcreteGuiViewPanel.BOX_SIZE :
         -1;
     this.setCurBeat(tempCurBeat);
+
     if (this.complexNotes) {
       this.addToComplex();
     }
+    System.out.println(this.complexEnds);
+
     this.curPitch =
         (y >= 25 && y <= ((m.getHighestPitch().getValue() - m.getLowestPitch().getValue() + 2)
             * ConcreteGuiViewPanel.BOX_SIZE)) ?

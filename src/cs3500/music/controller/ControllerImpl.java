@@ -485,7 +485,7 @@ public final class ControllerImpl implements Controller {
         model.addRepeat(new Repeat(model.getComplexEnds()));
         model.initBeats();
         model.setComplexNotes(false);
-        model.initComplexNotes();
+        //model.initComplexNotes();
       }
       else {
         model.setComplexNotes(true);
