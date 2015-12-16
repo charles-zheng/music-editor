@@ -96,7 +96,8 @@ public final class ConcreteGuiViewPanel extends JPanel {
       else {
         g.setColor(Color.orange);
         for (int i = 1; i <= r.getEndings(); i++) {
-          g.fillRect((r.getEnding(i) + 2) * BOX_SIZE + 3, BOX_SIZE - 1,
+          g.fillRect((r.getEnding(i) + 2) * BOX_SIZE + 3 -
+                  ((r.getEnding(i) - r.getEnding(i-1)) * BOX_SIZE - 3), BOX_SIZE - 1,
               (r.getEnding(i) - r.getEnding(i-1)) * BOX_SIZE - 3, 5);
           g.fillRect((r.getEnding(i) + 2) * BOX_SIZE - 1, BOX_SIZE, 1, height);
         }

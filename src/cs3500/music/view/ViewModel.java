@@ -86,14 +86,16 @@ public interface ViewModel extends Model, View {
   void resetTimestamp();
 
   /**
+   * Returns the beat at the current timestamp
    *
-   * @return
+   * @return the beat at the current timestamp
    */
   int getBeatStamp();
 
   /**
+   * Gets the beat that was previously clicked on
    *
-   * @return
+   * @return the beat that was previously clicked on
    */
   int getPrevBeat();
 
@@ -102,14 +104,35 @@ public interface ViewModel extends Model, View {
    */
   void initBeats();
 
+  /**
+   * Sets complex notes to true or false, depending on the param init.
+   *
+   * @param init True of complex notes are being collected, false if the collection is done.
+   */
   void setComplexNotes(boolean init);
 
+  /**
+   * Gets whether or not complex notes are being collected.
+   *
+   * @return true is complex notes for the repeat are being collected, false if not.
+   */
   boolean getComplexNotes();
 
+  /**
+   * Returns the list of complex notes.
+   *
+   * @return the list of complex notes.
+   */
   List<Integer> getComplexEnds();
 
+  /**
+   * Adds the current beat to the list of complex notes.
+   */
   void addToComplex();
 
+  /**
+   * Resets the complex notes list to empty.
+   */
   void initComplexNotes();
 
 }

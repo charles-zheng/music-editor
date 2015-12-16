@@ -64,8 +64,15 @@ public class GuiViewModel implements ViewModel {
    */
   private List<Integer> beats;
 
+  /**
+   * Represents whether or not complex notes are being collected to make
+   * alternate endings for repeats
+   */
   private boolean complexNotes;
 
+  /**
+   * Represents the list of beats that will become a complex repeat
+   */
   private List<Integer> complexEnds;
 
   /**
@@ -86,7 +93,11 @@ public class GuiViewModel implements ViewModel {
     System.out.println(this.beats);
   }
 
-  //TODO
+  /**
+   * Initializes the beats of this model based on its repeats into an ordered
+   * list, where the index represents the timestamp of this piece, and the
+   * element at that index represents the beat to play
+   */
   public void initBeats() {
     ArrayList<Integer> result = new ArrayList<>();
 
@@ -146,12 +157,17 @@ public class GuiViewModel implements ViewModel {
   /**
    * Adds a simple or complex repeat
    *
-   * @param repeat
+   * @param repeat the repeat to be added
    */
   @Override public void addRepeat(Repeat repeat) {
     m.addRepeat(repeat);
   }
 
+  /**
+   * Gets all the repeats contained in this piece
+   *
+   * @return the repeats in this piece
+   */
   @Override public List<Repeat> getRepeats() {
     return m.getRepeats();
   }
@@ -500,27 +516,52 @@ public class GuiViewModel implements ViewModel {
     this.curInstrument = instrument;
   }
 
-  //TODO
+  /**
+   * Gets the beat that was previously clicked on
+   *
+   * @return the beat that was previously clicked on
+   */
   public int getPrevBeat() {
     return this.prevBeat;
   }
 
+  /**
+   * Sets complex notes to true or false, depending on the param init.
+   *
+   * @param init True of complex notes are being collected, false if the collection is done.
+   */
   public void setComplexNotes(boolean init) {
     this.complexNotes = init;
   }
 
+  /**
+   * Gets whether or not complex notes are being collected.
+   *
+   * @return true is complex notes for the repeat are being collected, false if not.
+   */
   public boolean getComplexNotes() {
     return this.complexNotes;
   }
 
+  /**
+   * Adds the current beat to the list of complex notes.
+   */
   public void addToComplex() {
     this.complexEnds.add(this.getCurBeat());
   }
 
+  /**
+   * Returns the list of complex notes.
+   *
+   * @return the list of complex notes.
+   */
   public List<Integer> getComplexEnds() {
     return this.complexEnds;
   }
 
+  /**
+   * Resets the complex notes list to empty.
+   */
   public void initComplexNotes() {
     this.complexEnds = new ArrayList<>();
   }
