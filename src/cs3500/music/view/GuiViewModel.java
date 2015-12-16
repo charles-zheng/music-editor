@@ -114,7 +114,7 @@ public class GuiViewModel implements ViewModel {
           }
         }
         else {
-          if (beat == cur.getEnding(ending - 2)) {
+          if (beat == cur.getEnding(0)) {
             beat = cur.getEnding(ending - 1);
           }
           if (beat == cur.getEnding(ending)) {
@@ -522,6 +522,6 @@ public class GuiViewModel implements ViewModel {
   }
 
   public void initComplexNotes() {
-    this.complexEnds.clear();
+    this.complexEnds = new ArrayList<>();
   }
 }

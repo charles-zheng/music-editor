@@ -19,6 +19,13 @@ public class Repeat implements Comparable<Repeat> {
    * @param range
    */
   public Repeat(List<Integer> range) {
+    for (int i = 0; i < range.size(); i++) {
+      if (i != 0) {
+        if (range.get(i) < range.get(i - 1)) {
+          throw new IllegalArgumentException("Must be in consecutive order");
+        }
+      }
+    }
     this.range = range;
   }
 

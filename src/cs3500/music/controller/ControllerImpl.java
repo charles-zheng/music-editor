@@ -476,16 +476,24 @@ public final class ControllerImpl implements Controller {
   }
 
   /**
-   *
+   * Adds a commplex repeat
    */
   public class AddComplexRepeat implements Runnable {
 
     public void run() {
       if (model.getComplexNotes()) {
-        model.addRepeat(new Repeat(model.getComplexEnds()));
+        try {
+          model.addRepeat(new Repeat(model.getComplexEnds()));
+        }
+        catch (IllegalArgumentException ex) {
+          //do nothing
+          model.setComplexNotes(false);
+          model.initComplexNotes();
+          return;
+        }
         model.initBeats();
         model.setComplexNotes(false);
-        //model.initComplexNotes();
+        model.initComplexNotes();
       }
       else {
         model.setComplexNotes(true);
